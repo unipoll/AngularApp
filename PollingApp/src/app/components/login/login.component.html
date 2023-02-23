@@ -1,0 +1,71 @@
+<div class="login-page">
+<form layout-align='center center' id='loginForm' (ngSubmit)="submitForm()" [formGroup]="form" autocomplete="off">
+  <section class="login-header">
+    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+      <path class="logo-path"
+        d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm64 192c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm64-64c0-17.7 14.3-32 32-32s32 14.3 32 32V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V160zM320 288c17.7 0 32 14.3 32 32v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32z" />
+    </svg>
+    <h1 class="site-name">Polling App</h1>
+  </section>
+  <mat-form-field class="email">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" placeholder="email@example.com" formControlName="username">
+    <mat-error *ngIf="form.hasError('email') && !form.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="form.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="password">
+    <mat-error *ngIf="form.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+    <input matInput placeholder="Password" formControlName="password" type="password" />
+  </mat-form-field>
+  <div class="buttons">
+    <button mat-button color="primary" type="submit">
+      Sign Up
+    </button>
+    <button type="submit" mat-flat-button color="primary" type="submit">
+      Sign In
+    </button>
+  </div>
+</form>
+</div>
+
+
+<!-- <form (ngSubmit)="submitForm()" [formGroup]="form" autocomplete="off">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign In</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="email@example.com" formControlName="username">
+        <mat-error *ngIf="form.hasError('email') && !form.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="form.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-error *ngIf="form.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+        <input matInput placeholder="Password" formControlName="password" type="password" />
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="submit" mat-raised-button color="primary" type="submit">
+        Sign In
+      </button>
+      <button mat-raised-button color="primary" type="submit">
+        Sign Up
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form> -->

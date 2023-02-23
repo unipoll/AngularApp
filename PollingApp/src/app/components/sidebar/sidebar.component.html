@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<!-- [style.marginTop.px]="mobileQuery.matches ? 56 : 0" -->
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidebar [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+    fixedTopGap="56">
+    <mat-nav-list class="sidenav-list">
+      <!-- <a mat-list-item routerLink="{{nav.link}}" *ngFor="let nav of fillerNav">{{nav.name}}</a> -->
+      <a mat-list-item routerLink="#">Workspace</a>
+      <a mat-list-item routerLink="#">Profile</a>
+      <a mat-list-item routerLink="#">Settings</a>
+      <a mat-list-item (click)="this.logout()">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
