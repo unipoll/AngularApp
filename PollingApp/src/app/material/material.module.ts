@@ -13,6 +13,12 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const components = [
   MatCardModule,
@@ -28,7 +34,13 @@ const components = [
   MatSidenavModule,
   MatGridListModule,
   MatMenuModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatButtonToggleModule,
+  MatRadioModule,
+  MatOptionModule,
+  MatDialogModule,
+  MatSnackBarModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({
