@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
+import { SnackBarService } from './snackbar.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  // private _token = '';
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private snackBarService: SnackBarService) {
     const token = localStorage.getItem('access_token');
     this._isLoggedIn$.next(!!token);
   }
@@ -24,10 +24,24 @@ export class AuthService {
       throw 'Already logged in';
     }
     return this.apiService.login(username, password).pipe(
+      catchError((error) => {
+        switch (error.status) {
+          case 400:
+            console.log("Status 400");
+            this.snackBarService.openSnackBar('Invalid username or password');
+            break;
+          case 500:
+            this.snackBarService.openSnackBar('Internal server error');
+            break;
+          default:
+            this.snackBarService.openSnackBar('Unknown error');
+            break;
+        }
+        return error;
+      }),
       tap((response: any) => {
-
         this._isLoggedIn$.next(true);
-        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('access_token', response.body.access_token);
       })
     );
   }
