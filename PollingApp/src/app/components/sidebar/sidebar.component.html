@@ -6,14 +6,14 @@
     fixedTopGap="56">
     <mat-nav-list class="sidenav-list">
       <!-- <a mat-list-item routerLink="{{nav.link}}" *ngFor="let nav of fillerNav">{{nav.name}}</a> -->
-      <a mat-list-item routerLink="#">Workspace</a>
-      <a mat-list-item routerLink="#">Profile</a>
-      <a mat-list-item routerLink="#">Settings</a>
-      <a mat-list-item (click)="this.logout()">Logout</a>
+      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="/workspaces">Workspaces</a>
+      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="#">Profile</a>
+      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="#">Settings</a>
+      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle();this.logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content (click)="sidebar.close()">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
