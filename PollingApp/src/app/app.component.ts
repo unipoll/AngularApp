@@ -26,7 +26,7 @@ export class AppComponent {
     this.router.events.subscribe(
       (event: NavigationEvent) => {
         if (event instanceof NavigationStart) {
-            this._hide_sidebar = (event.url == '/login');
+            this._hide_sidebar = (event.url == '/login' || event.url == '/register');
         }
       });
   }
