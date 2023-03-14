@@ -2,7 +2,6 @@
 
 // Use the default configuration.
 $my-typography: mat.define-typography-config();
-@include mat.define-palette(mat.$deep-purple-palette);
 @include mat.typography-hierarchy($my-typography);
 
 html,
