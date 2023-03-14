@@ -7,7 +7,6 @@ import { SnackBarService } from './snackbar.service';
 @Injectable()
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  // private _token = '';
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
   constructor(private apiService: ApiService, private snackBarService: SnackBarService) {
@@ -27,7 +26,6 @@ export class AuthService {
       catchError((error) => {
         switch (error.status) {
           case 400:
-            console.log("Status 400");
             this.snackBarService.openSnackBar('Invalid username or password');
             break;
           case 500:
@@ -37,7 +35,7 @@ export class AuthService {
             this.snackBarService.openSnackBar('Unknown error');
             break;
         }
-        return error;
+        throw error;
       }),
       tap((response: any) => {
         this._isLoggedIn$.next(true);
