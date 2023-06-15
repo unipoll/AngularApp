@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+@import '../common.scss';
+@import 'src/app/app.component.scss';
+
+#register-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+#register-form {
+  width: 95%;
+  max-width: 40em;
+  margin: auto;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 2rem;
+  color: mat.get-color-from-palette($my-palette, 500)
+}

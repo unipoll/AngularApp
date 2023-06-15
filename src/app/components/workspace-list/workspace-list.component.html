@@ -1,0 +1,126 @@
+<div class="workspace-list">
+  <div class="title">
+    <h1>Workspaces</h1>
+    <button mat-flat-button color="primary" class="create-workspace-button" (click)="openCreateForm()">Create
+      Workspace</button>
+  </div>
+  <div class="workspace-list-header">
+    <!-- Search Field -->
+    <mat-form-field class="filter-field">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter workspace" #input>
+    </mat-form-field>
+    <!-- Button Toggle between Table/Grid -->
+    <mat-button-toggle-group class="toggle-group" value="grid" #viewToggle="matButtonToggleGroup">
+      <mat-button-toggle value="table">
+        <mat-icon>view_list</mat-icon>Table
+      </mat-button-toggle>
+      <mat-button-toggle value="grid">
+        <mat-icon>view_module</mat-icon>Grid
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div [ngClass]="{'mat-elevation-z1': viewToggle.value == 'table'}">
+    <!-- Grid View -->
+    <div [hidden]="viewToggle.value == 'table'">
+      <mat-card class="workspace-card" *ngFor="let workspace of workspaceList | async"
+        (click)="viewWorkspace(workspace);">
+        <mat-card-header class="workspace-card-header">
+          <mat-card-title>
+            {{workspace.name}}
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" (click)="$event.stopPropagation();">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="$event.stopPropagation();viewWorkspace(workspace);">View</button>
+              <button mat-menu-item (click)="$event.stopPropagation();openEditForm(workspace);">Edit</button>
+              <button mat-menu-item (click)="$event.stopPropagation();deleteWorkspace(workspace);">Remove</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="workspace-card-content">
+          <div>{{workspace.description}}</div>
+        </mat-card-content>
+      </mat-card>
+      <h1 class="mat-h1" *ngIf="(this.workspaceList | async)?.length == 0">No data matching the filter "{{input.value}}"</h1>
+    </div>
+
+    <!-- Table View -->
+    <div [hidden]="viewToggle.value == 'grid'">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+          <th class="table-header" mat-header-cell *matHeaderCellDef>{{column}}</th>
+          <td mat-cell class="table-cell" *matCellDef="let workspace">{{workspace[column]}}</td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="owner">
+        <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">Owner</th>
+        <td class="table-cell" mat-cell *matCellDef="let workspace">
+            <mat-icon class="owner-icon" *ngIf="workspace.owner == true">star</mat-icon>
+        </td>
+      </ng-container> -->
+        <ng-container matColumnDef="options">
+          <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+          <td class="table-cell table-option-cell" mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu"
+              (click)="$event.stopPropagation();">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+              <button mat-menu-item>Remove</button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsWithOptions"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsWithOptions;" class="workspace-row"
+          (click)="viewWorkspace(row);"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="2">No data matching the filter "{{input.value}}"</td>
+        </tr>
+
+      </table>
+    </div>
+    <mat-paginator class="paginator" [ngClass]="{'grid-paginator': viewToggle.value == 'grid'}" [pageSize]="10"
+      [pageSizeOptions]="[1, 2, 5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>
+
+
+
+<!--
+    <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+      <th class="table-header" mat-header-cell *matHeaderCellDef>{{column}}</th>
+      <td mat-cell *matCellDef="let workspace">{{workspace[column]}}</td>
+    </ng-container>
+    <ng-container matColumnDef="owner">
+      <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">Owner</th>
+      <td class="table-cell" mat-cell *matCellDef="let workspace">
+          <mat-icon class="owner-icon" *ngIf="workspace.owner == true">star</mat-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="options">
+      <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td class="table-option-cell" mat-cell *matCellDef="let element">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu" (click)="$event.stopPropagation();">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item>Expand</button>
+          <button mat-menu-item>Remove</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsWithOptions"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsWithOptions;" class="workspace-row" (click)="onRowClicked(row); $event.stopPropagation();"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="2">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+-->

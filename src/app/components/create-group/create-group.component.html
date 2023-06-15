@@ -1,0 +1,26 @@
+<div mat-dialog-title class="title">
+    <h1 class="mat-h1">{{data ? 'Update': 'Create'}} Group</h1>
+  </div>
+  <form [formGroup]="groupForm" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content class="content">
+      <div class="row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Group name</mat-label>
+          <input matInput type="text" placeholder="Ex. My awesome Group" formControlName="name">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Group Description</mat-label>
+          <textarea matInput type="text" placeholder="Briefly describe this workspace" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  
+  
+    <div mat-dialog-actions class="action">
+      <button mat-flat-button type="button" [mat-dialog-close]="false" class="button">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" class="button">{{data ? 'Update': 'Save'}}</button>
+    </div>
+  </form>
+  

@@ -1,0 +1,130 @@
+@use '@angular/material' as mat;
+@import 'src/app/app.component.scss';
+// @import 'src/styles.scss';
+
+
+.owner-icon {
+  font-size: 20px;
+  color: gold;
+}
+
+.paginator {
+  border-top: 1px solid #ddd;
+}
+
+.grid-paginator {
+  // width: 100%;
+  // position: absolute;
+  // bottom: 0;
+  border: none;
+  background-color: #fafafa;
+}
+
+.table-header {
+  text-align: center;
+}
+
+.table-cell {
+  padding: 1rem 3rem;
+}
+
+.table-option-cell {
+  text-align: right;
+  padding: 1rem;
+}
+
+.workspace-list {
+  margin: auto;
+  // margin-top: 56px;
+  max-width: 50rem;
+  padding-top: 1rem;
+}
+
+.workspace-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.workspace-card {
+  margin: 2rem 0;
+}
+
+.workspace-card:hover, tr.workspace-row:hover {
+  cursor: pointer;
+  background: whitesmoke;
+}
+
+.workspace-card-header {
+  padding: 0;
+}
+
+.more-button {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.title {
+  font-size: x-large;
+  font-weight: 50;
+  color: #ccc;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title h1 {
+  font-weight: 50;
+  color: #ccc;
+}
+
+
+
+$blue: #def5ff;
+$green: #f6ffdc;
+$yellow: #fff9d5;
+$red: #e0aaaa;
+$colors: $blue, $green, $yellow, $red;
+
+.workspace-card{
+  padding: 2rem;
+}
+
+.workspace-card-header {
+  // border-top-left-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+  // border-top-right-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.workspace-card-content {
+  border-top: 1px solid #ddd;
+  padding: 1rem 0;
+  color: #777;
+}
+
+
+// @for $i from 1 through length($colors) {
+//   .workspace-card:nth-child(#{length($colors)}n+#{$i}) {
+//     background: nth($colors, $i);
+//   }
+// }
+
+
+.workspace-list-header .mat-button-toggle-checked {
+  background: mat.get-color-from-palette($my-palette, 500);
+  color: #fff;
+}
+
+.create-workspace-button {
+  align-self: center;
+}
+
+.create_button {
+  color: #fff;
+  background-color: #4CAF50;
+}
+
+.create_button:hover {
+  background-color: #388E3C;
+}

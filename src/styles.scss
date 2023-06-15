@@ -1,0 +1,30 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@include mat.core();
+
+$my-palette: mat.define-palette(mat.$deep-purple-palette);
+$my-typography: mat.define-typography-config();
+@include mat.typography-hierarchy($my-typography);
+
+// $angular-dark-theme: mat.define-dark-theme(
+//   (
+//     color: (
+//       primary: $angular-primary,
+//       accent: $angular-accent,
+//       warn: $angular-warn,
+//     ),
+//   )
+// );
+
+// .darkMode {
+//   @include mat.all-component-colors($angular-dark-theme);
+// }
+
