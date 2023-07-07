@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 

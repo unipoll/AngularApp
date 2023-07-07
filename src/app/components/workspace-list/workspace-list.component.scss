@@ -8,42 +8,17 @@
   color: gold;
 }
 
-.paginator {
-  border-top: 1px solid #ddd;
-}
-
-.grid-paginator {
-  // width: 100%;
-  // position: absolute;
-  // bottom: 0;
-  border: none;
-  background-color: #fafafa;
-}
-
-.table-header {
-  text-align: center;
-}
-
-.table-cell {
-  padding: 1rem 3rem;
-}
-
-.table-option-cell {
-  text-align: right;
-  padding: 1rem;
-}
 
 .workspace-list {
   margin: auto;
   // margin-top: 56px;
-  max-width: 50rem;
-  padding-top: 1rem;
+  width: 60rem;
+  max-width: 100%;
 }
 
 .workspace-list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
+  // float: right;
+  // margin: 1rem 0;
 }
 
 .workspace-card {
@@ -55,31 +30,6 @@
   background: whitesmoke;
 }
 
-.workspace-card-header {
-  padding: 0;
-}
-
-.more-button {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-}
-
-.title {
-  font-size: x-large;
-  font-weight: 50;
-  color: #ccc;
-  display: flex;
-  justify-content: space-between;
-}
-
-.title h1 {
-  font-weight: 50;
-  color: #ccc;
-}
-
-
-
 $blue: #def5ff;
 $green: #f6ffdc;
 $yellow: #fff9d5;
@@ -87,7 +37,7 @@ $red: #e0aaaa;
 $colors: $blue, $green, $yellow, $red;
 
 .workspace-card{
-  padding: 2rem;
+  padding: 0 1rem;
 }
 
 .workspace-card-header {
@@ -110,8 +60,14 @@ $colors: $blue, $green, $yellow, $red;
 //   }
 // }
 
+.toggle-group {
+  height: 36px;
+  ::ng-deep >.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 36px !important;
+  }
+}
 
-.workspace-list-header .mat-button-toggle-checked {
+.mat-button-toggle-checked {
   background: mat.get-color-from-palette($my-palette, 500);
   color: #fff;
 }
@@ -128,3 +84,9 @@ $colors: $blue, $green, $yellow, $red;
 .create_button:hover {
   background-color: #388E3C;
 }
+
+.more-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+} 

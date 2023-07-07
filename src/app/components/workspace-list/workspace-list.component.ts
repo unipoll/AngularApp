@@ -8,11 +8,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ApiService } from '../../services/api.service';
-import { WorkspaceModel } from '../../models/workspace-list.model';
-import { WorkspaceListModel } from '../../models/workspace-list.model';
+import { WorkspaceModel, WorkspaceListModel } from '../../models/workspace.model';
 import { WorkspaceService } from '../../services/workspace.service';
-import { CreateWorkspaceComponent } from '../create-workspace/create-workspace.component';
-import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
+import { DialogCreateComponent } from '../dialogs/dialog-create/dialog-create.component'
+import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
+import { DialogUpdateModel } from '../../models/dialog.model';
+import { DialogUpdateComponent } from '../dialogs/dialog-update/dialog-update.component';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-workspace-list',
@@ -24,28 +27,22 @@ export class WorkspaceListComponent implements OnInit {
   displayedColumnsWithOptions!: string[];
   dataSource!: MatTableDataSource<WorkspaceModel>;
   workspaceList!: Observable<WorkspaceModel[]>;
+  permissions!: string[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private apiService: ApiService, private router: Router,
-    private route: ActivatedRoute, private workspaceService: WorkspaceService, private _dialog: MatDialog) {
-  }
-
-  updateWorkspaceList() {
-    this.apiService.getUserWorkspaces().pipe(
-      tap((data) => (
-        this.dataSource = new MatTableDataSource(data.workspaces),
-        this.workspaceList = this.dataSource.connect(),
-        this.dataSource.paginator = this.paginator,
-        this.dataSource.sort = this.sort
-      ))
-    ).subscribe();
+  constructor(
+    private apiService: ApiService, 
+    private router: Router,
+    private route: ActivatedRoute, 
+    private workspaceService: WorkspaceService, 
+    private _dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     if (window.innerWidth > 600) {
-      this.displayedColumns = ['name', 'description', 'owner'];
+      this.displayedColumns = ['name', 'description'];
     } else {
       this.displayedColumns = ['name'];
     }
@@ -62,23 +59,38 @@ export class WorkspaceListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  
+  updateWorkspaceList() {
+    this.apiService.getUserWorkspaces().pipe(
+      tap((data) => (
+        this.dataSource = new MatTableDataSource(data.workspaces),
+        this.workspaceList = this.dataSource.connect(),
+        this.dataSource.paginator = this.paginator,
+        this.dataSource.sort = this.sort
+      ))
+    ).subscribe();
+  }
 
-  viewWorkspace(row: any) {
-    this.workspaceService.setData(row);
+  getWorkspace(workspace: WorkspaceModel) {
+    this.workspaceService.setWorkspace(workspace);
     this.router.navigate(['/workspace/'], {
-      queryParams: { id: row.id },
+      queryParams: { id: workspace.id },
       relativeTo: this.route,
       state: {
-        workspace_id: row.id,
-        workspace_name: row.name,
-        workspace_description: row.description,
-        workspace_owner: row.owner
+        workspace_id: workspace.id,
+        workspace_name: workspace.name,
+        workspace_description: workspace.description,
       }
     });
   }
 
-  openCreateForm() {
-    const dialogRef = this._dialog.open(CreateWorkspaceComponent);
+  createWorkspace() {
+    const dialogRef = this._dialog.open(DialogCreateComponent, {
+      data: { 
+        resource_type: 'workspace',
+      },
+    });
+
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -88,8 +100,8 @@ export class WorkspaceListComponent implements OnInit {
     });
   }
 
-  openEditForm(data: any) {
-    const dialogRef = this._dialog.open(CreateWorkspaceComponent, { data, });
+  editWorkspace(data: any) {
+    const dialogRef = this._dialog.open(DialogUpdateComponent, { data });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -99,11 +111,12 @@ export class WorkspaceListComponent implements OnInit {
     });
   }
 
-  deleteWorkspace(data: any): void {
+  deleteWorkspace(workspace: WorkspaceModel): void {
     const dialogRef = this._dialog.open(DialogDeleteComponent, {
       data: {
-        resource_type: 'workspace',
-        workspace_id: data.id,
+        resourceType: 'workspace',
+        resourceID: workspace.id,
+        resourceName: workspace.name,
       }
     });
     dialogRef.afterClosed().subscribe({

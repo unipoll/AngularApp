@@ -7,6 +7,8 @@ import { WorkspaceListComponent } from './components/workspace-list/workspace-li
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { AuthGuard } from './auth.guard';
+import { GroupListComponent } from './components/group-list/group-list.component';
+import { GroupComponent } from './components/group/group.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'workspaces', pathMatch: 'full' },
@@ -14,7 +16,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'workspaces', component: WorkspaceListComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'workspace', component: WorkspaceComponent, canActivate: [AuthGuard] }
+  { path: 'workspace', component: WorkspaceComponent, canActivate: [AuthGuard] },
+  { path: 'group', component: GroupComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

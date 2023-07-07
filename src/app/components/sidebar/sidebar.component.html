@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <!-- [style.marginTop.px]="mobileQuery.matches ? 56 : 0" -->
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container autosize class="sidenav-container">
   <mat-sidenav #sidebar [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
     fixedTopGap="56">
     <mat-nav-list class="sidenav-list">
@@ -14,6 +14,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content (click)="sidebar.close()">
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -16,19 +16,22 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavService } from './services/sidenav.service';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
+import { GroupComponent } from './components/group/group.component';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './services/auth.service';
 import { WorkspaceService } from './services/workspace.service';
 import { ApiService } from './services/api.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { CreateWorkspaceComponent } from './components/create-workspace/create-workspace.component';
 import { SnackBarService } from './services/snackbar.service';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { GroupListComponent } from './components/group-list/group-list.component';
-import { CreateGroupComponent } from './components/create-group/create-group.component';
 import { AddMemberComponent } from './components/add-member/add-member.component';
-import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
-import { GroupComponent } from './components/group/group.component';
+import { DialogDeleteComponent } from './components/dialogs/dialog-delete/dialog-delete.component';
+import { DialogCreateComponent } from './components/dialogs/dialog-create/dialog-create.component';
+import { DialogUpdateComponent } from './components/dialogs/dialog-update/dialog-update.component';
+import { DialogAddMemberComponent } from './components/dialogs/dialog-add-member/dialog-add-member.component';
+import { DialogAddPolicyComponent } from './components/dialogs/dialog-add-policy/dialog-add-policy.component';
+import { PolicyListComponent } from './components/policy-list/policy-list.component';
 
 @NgModule({
   declarations: [
@@ -40,13 +43,16 @@ import { GroupComponent } from './components/group/group.component';
     SidebarComponent,
     HeaderComponent,
     WorkspaceComponent,
-    CreateWorkspaceComponent,
     MemberListComponent,
     GroupListComponent,
-    CreateGroupComponent,
     AddMemberComponent,
     DialogDeleteComponent,
-    GroupComponent
+    GroupComponent,
+    DialogCreateComponent,
+    DialogUpdateComponent,
+    DialogAddMemberComponent,
+    DialogAddPolicyComponent,
+    PolicyListComponent
   ],
   imports: [
     BrowserModule,

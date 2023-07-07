@@ -3,18 +3,23 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
+import { environment } from '../../environments/environment'
 import { WorkspaceModel } from '../models/workspace.model';
-import { WorkspaceListModel } from '../models/workspace-list.model';
-import { MemberListModel } from '../models/member-list.model';
-import { GroupListModel } from '../models/group-list.model';
+import { WorkspaceListModel } from '../models/workspace.model';
+import { MemberListModel } from '../models/member.model';
+import { GroupListModel, GroupModel } from '../models/group.model';
+import { AccountListModel } from '../models/account.model';
+import { PolicyListModel, PolicyModel } from '../models/policy.model';
 
-// const API_URL = 'http://10.0.0.10:8000';
-const API_URL = 'https://pollapi.mpisman.studio';
+
+const API_URL = environment.apiUrl;
 
 @Injectable()
 export class ApiService {
   constructor(private http: HttpClient) {}
 
+
+  // Authentification
   login(username: string, password: string) {
     let fd = new FormData();
     fd.append('username', username);
@@ -35,47 +40,109 @@ export class ApiService {
     }, { observe: 'response' });
   }
 
+  // Workspaces
+
+  // Get list of workspaces
   getUserWorkspaces(): Observable<WorkspaceListModel> {
     return this.http.get<WorkspaceListModel>(API_URL + '/workspaces');
   }
 
-  getWorkspace(id: string): Observable<WorkspaceModel> {
-    return this.http.get<WorkspaceModel>(API_URL + '/workspaces/' + id);
+  // Get workspace by workspace_id
+  getWorkspace(workspace_id: string): Observable<WorkspaceModel> {
+    return this.http.get<WorkspaceModel>(API_URL + '/workspaces/' + workspace_id);
   }
 
-  getWorkspaceMembers(id: string): Observable<MemberListModel> {
-    return this.http.get<MemberListModel>(API_URL + '/workspaces/' + id + '/members');
+  // Create workspace
+  createWorkspace(data: any) {
+    return this.http.post(API_URL + '/workspaces', data);
   }
 
+  // Update workspace
+  updateWorkspace(workspace_id: string, data: any) {
+    return this.http.put(API_URL + '/workspaces/' + workspace_id, data);
+  }
+
+  // Delete workspace
+  deleteWorkspace(workspace_id: string) {
+    return this.http.delete(API_URL + '/workspaces/' + workspace_id);
+  }
+
+  // Get list of members in workspace
+  getWorkspaceMembers(workspace_id: string): Observable<MemberListModel> {
+    return this.http.get<MemberListModel>(API_URL + '/workspaces/' + workspace_id + '/members');
+  }
+
+  // Add member to workspace
+  addMemberToWorkspace(workspace_id: string, data: any) {
+    return this.http.post(API_URL + '/workspaces/' + workspace_id + '/members', data);
+  }
+
+  // Remove member from workspace
+  removeMemberFromWorkspace(workspace_id: string, member_workspace_id: string) {
+    return this.http.delete(API_URL + '/workspaces/' + workspace_id + '/members/' + member_workspace_id);
+  }
+
+  // Get all policies
+  getAllWorkspacesPolicies(workspace_id: string): Observable<PolicyListModel> {
+    return this.http.get<PolicyListModel>(API_URL + '/workspaces/' + workspace_id + '/policies');
+  }
+
+  // Get workspace policy for specific account, or current user if account_id was not provided
+  getWorkspacePolicy(workspace_id: string, account_id?: string): Observable<PolicyModel> {
+    const options = account_id ? { params: { account_id: account_id } } : {}; 
+    return this.http.get<PolicyModel>(API_URL + '/workspaces/' + workspace_id + '/policy/', options);
+  }
+
+  // Get list of groups in workspace
   getWorkspaceGroups(id: string): Observable<GroupListModel> {
     return this.http.get<GroupListModel>(API_URL + '/workspaces/' + id + '/groups');
   }
 
-  createWorkspace(data: any) {
-    // let fd = new FormData();
-    // fd.append('name', name);
-    // fd.append('description', description);
-    return this.http.post(API_URL + '/workspaces', data);
-  }
+  // Groups
 
-  updateWorkspace(id: string, data: any) {
-    // let fd = new FormData();
-    // fd.append('name', name);
-    // fd.append('description', description);
-    return this.http.put(API_URL + '/workspaces/' + id, data);
-  }
-
-  deleteWorkspace(id: string) {
-    return this.http.delete(API_URL + '/workspaces/' + id);
-  }
-
-
+  // Create group in workspace
   createGroup(workspace_id: string, data: any) {  
     return this.http.post(API_URL + '/workspaces/' + workspace_id + '/groups', data);
   }
+  
+  // Get group by id
+  getGroup(group_id: string): Observable<GroupModel> {
+    return this.http.get<GroupModel>(API_URL + '/groups/' + group_id);
+  }
 
+  // Delete group by id
+  deleteGroup(group_id: string) {
+    return this.http.delete(API_URL + '/groups/' + group_id);
+  }
 
-  deleteGroup(workspace_id: string, group_id: string) {
-    return this.http.delete(API_URL + '/workspaces/' + workspace_id + '/groups/' + group_id);
+  // Update group
+  updateGroup(group_id: string, data: any) {
+    return this.http.put(API_URL + '/groups/' + group_id, data);
+  }
+
+  // Get list of members in group
+  getGroupMembers(group_id: string): Observable<MemberListModel> {
+    return this.http.get<MemberListModel>(API_URL + '/groups/' + group_id + '/members');
+  }
+
+  // Add member to group
+  addMemberToGroup(group_id: string, data: any) {
+    return this.http.post(API_URL + '/groups/' + group_id + '/members', data);
+  }
+
+  // Remove member from group
+  removeMemberFromGroup(group_id: string, member_id: string) {
+    return this.http.delete(API_URL + '/groups/' + group_id + '/members/' + member_id);
+  }
+
+  // Get all group policies
+  getAllGroupsPolicies(group_id: string): Observable<PolicyListModel> {
+    return this.http.get<PolicyListModel>(API_URL + '/groups/policies');
+  }
+
+  // Accounts
+
+  getAllAccounts(): Observable<AccountListModel> {
+    return this.http.get<AccountListModel>(API_URL + '/accounts');
   }
 }

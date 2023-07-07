@@ -8,6 +8,21 @@ import { SnackBarService } from './snackbar.service';
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
+  permissions: string[] = [];
+
+  setPermissions(resourse_id: string) {
+    return this.apiService.getWorkspacePolicy(resourse_id).pipe(
+      catchError((error) => {
+        throw error;
+      }), tap((response: any) => {
+        this.permissions = response.permissions;
+      })
+    );
+  }
+
+  getPermissions() {
+    return this.permissions;
+  }
 
   constructor(private apiService: ApiService, private snackBarService: SnackBarService) {
     const token = localStorage.getItem('access_token');

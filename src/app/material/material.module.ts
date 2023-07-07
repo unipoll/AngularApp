@@ -21,6 +21,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const components = [
   MatCardModule,
@@ -45,6 +47,8 @@ const components = [
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatTabsModule,
+  MatChipsModule,
+  MatAutocompleteModule
 ]
 
 @NgModule({

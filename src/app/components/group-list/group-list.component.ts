@@ -1,22 +1,29 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { timer, tap, Observable } from 'rxjs';
-import { GroupModel, GroupListModel } from 'src/app/models/group-list.model';
-import { ApiService } from 'src/app/services/api.service';
-import { CreateGroupComponent } from '../create-group/create-group.component';
-import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
+
+import { GroupModel, GroupListModel } from '../../models/group.model';
+import { ApiService } from '../../services/api.service';
+import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
+import { WorkspaceService } from '../../services/workspace.service';
+import { DialogUpdateModel } from 'src/app/models/dialog.model';
+import { DialogCreateComponent } from '../dialogs/dialog-create/dialog-create.component';
+import { DialogUpdateComponent } from '../dialogs/dialog-update/dialog-update.component';
+
 
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.component.html',
-  styleUrls: ['./group-list.component.scss']
+  styleUrls: ['./group-list.component.scss'],
+  // encapsulation : ViewEncapsulation.None,
 })
 export class GroupListComponent {
   @Input() workspace_id!: string;
+  @Input() can_create_groups: boolean = false;
 
   displayedColumns!: string[];
   displayedColumnsWithOptions!: string[];
@@ -31,8 +38,12 @@ export class GroupListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private apiService: ApiService, private router: Router,
-    private route: ActivatedRoute, private _dialog: MatDialog) { }
+  constructor(
+    private apiService: ApiService, 
+    private router: Router,
+    private route: ActivatedRoute, 
+    private _dialog: MatDialog, 
+    private workspaceService: WorkspaceService) { }
 
   updateGroupList() {
     this.apiService.getWorkspaceGroups(this.workspace_id).pipe(
@@ -51,14 +62,7 @@ export class GroupListComponent {
         this.loading = false;
       }
     });
-
-    this.apiService.getWorkspaceGroups(this.workspace_id).pipe(
-      tap((data) => (
-        this.dataSource = new MatTableDataSource(data.groups),
-        this.dataSource.paginator = this.paginator,
-        this.dataSource.sort = this.sort
-      ))
-    ).subscribe();
+    this.updateGroupList();
   }
 
   applyFilter(event: Event) {
@@ -75,9 +79,26 @@ export class GroupListComponent {
     return this.loading;
   }
 
+
+  viewGroup(group: GroupModel) {
+    this.workspaceService.setGroup(group);
+    this.router.navigate(['/group/'], {
+      queryParams: { id: group.id },
+      relativeTo: this.route,
+      state: {
+        workspace_id: this.workspace_id,
+        group_id: group.id,
+        group_name: group.name,
+        group_description: group.description
+      }
+    });
+  }
+
+
   createGroup() {
-    const dialogRef = this._dialog.open(CreateGroupComponent, {
+    const dialogRef = this._dialog.open(DialogCreateComponent, {
       data: { 
+        resource_type: 'group',
         workspace_id: this.workspace_id 
       },
     });
@@ -90,8 +111,9 @@ export class GroupListComponent {
     });
   }
 
-  editGroup(data: any) {
-    const dialogRef = this._dialog.open(CreateGroupComponent, { data, });
+  editGroup(data: DialogUpdateModel) {
+    data.resource_type = 'group';
+    const dialogRef = this._dialog.open(DialogUpdateComponent, { data });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {

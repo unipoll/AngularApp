@@ -1,0 +1,15 @@
+<div mat-dialog-title class="title">
+  <!-- <h1 *ngIf="resourceType != 'member'" class="mat-h1">Are you sure you want to delete </h1> -->
+  <!-- <h1 *ngIf="resourceType == 'member'" class="mat-h1">Are you sure you want to remove member from </h1> -->
+  <h1 class="mat-h1">{{ dialogMessage }}</h1>
+  <!-- <h1 class="mat-h1">{{ resourceType }} "{{ resourceName }}"?</h1> -->
+</div>
+<form>
+  <div mat-dialog-content class="content">
+    Warning: This action cannot be undone!
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-flat-button type="button" class="button" [mat-dialog-close]="false" >Cancel</button>
+    <button mat-flat-button color="primary" type="submit" class="button" (click)="delete()">Delete</button>
+  </div>
+</form>

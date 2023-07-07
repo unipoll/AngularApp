@@ -1,45 +1,53 @@
+<div class="tab-title">
+  <h1>Groups</h1>
+  <button class="add-button" *ngIf="can_create_groups" mat-flat-button color="primary" (click)="createGroup()">Create Group</button>
+</div>
 <div>
-    <button mat-flat-button color="primary" (click)="createGroup()">Create Group</button>
-  </div>
+  <!-- Filter Field -->
   <mat-form-field class="filter-field">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filter members" #input>
   </mat-form-field>
+  
+  <!-- Table  -->
+  <table class="table" mat-table [dataSource]="dataSource" matSort>
+    <!-- Column definitions -->
+    <!-- Name column -->
+    <ng-container matColumnDef="name">
+      <th class="table-header" mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let group">{{ group.name }}</td>
+    </ng-container>
+    <!-- Options button column -->
+    <ng-container matColumnDef="options">
+      <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let group" class="table-option-cell">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="$event.stopPropagation();viewGroup(group);">Expand</button>
+          <button mat-menu-item>Remove</button>
+        </mat-menu>
+      </td>
+    </ng-container>
 
-  <div>
-    <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Header row -->
+    <!-- <tr mat-header-row *matHeaderRowDef="['name', 'options']"></tr> -->
 
-      <ng-container matColumnDef="name">
-        <th class="table-header" mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let group">{{ group.name }}</td>
-      </ng-container>
-      <ng-container matColumnDef="options">
-        <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-        <td mat-cell *matCellDef="let element" class="table-option-cell">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu" xPosition="before">
-            <button mat-menu-item>Expand</button>
-            <button mat-menu-item>Remove</button>
-          </mat-menu>
-        </td>
-      </ng-container>
+    <!-- Data row -->
+    <tr mat-row *matRowDef="let row; columns: ['name', 'options'];" class="row"></tr>
 
-      <tr mat-header-row *matHeaderRowDef="['name', 'options']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['name', 'options'];" class="workspace-row"></tr>
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="2">
+        <p>No data matching the filter "{{input.value}}"</p>
+      </td>
+    </tr>
+  </table>
 
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="2">No data matching the filter "{{input.value}}"</td>
-      </tr>
-    </table>
-
-    <mat-paginator class="paginator" [pageSize]="10" [pageSizeOptions]="[1, 2, 5, 10, 25, 100]"
-      aria-label="Select page of users"></mat-paginator>
-  </div>
-
-
+  <mat-paginator class="paginator" [pageSize]="10" [pageSizeOptions]="[1, 2, 5, 10, 25, 100]"
+    aria-label="Select page of users"></mat-paginator>
+</div>
 <div class="error" *ngIf="dataSource == null">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <div *ngIf="!isLoading">

@@ -1,29 +1,25 @@
+
 <div *ngIf="workspace">
-  <div class="workspace-header">
-    <div class="workspace-header title">
-      <h1>{{workspace.name}}</h1>
-    </div>
+  <div class="page-title">
+    <div></div>
+    <h1>Workspace {{ workspace.name }}</h1>
+    <div></div>
   </div>
-  <mat-tab-group>
+  <mat-tab-group animationDuration="0ms">
     <mat-tab label="Overview">
       <div class="overview-tab">
-        <h2>Description</h2>
-        <p>{{workspace.description}}</p>
-        <h2>Other Information</h2>
-        <h3>Owner</h3>
-        <p><strong>Name:</strong> {{ workspace.owner.first_name }} {{ workspace.owner.last_name }} </p>
-        <p><strong>Email:</strong> {{ workspace.owner.email }} </p>
+        {{ permissions }}
       </div>
     </mat-tab>
-    <mat-tab label="Polls">
-
+    <mat-tab *ngIf="can_get_policies" label="Policies">
+      <app-policy-list *ngIf="workspace_id" [workspace]="workspace" [can_set_policies]="can_set_policies"></app-policy-list>
     </mat-tab>
-    <mat-tab label="Members">
-      <app-member-list *ngIf="workspace_id" [workspace_id]="workspace_id"></app-member-list>
+    <mat-tab *ngIf="can_get_members" label="Members">
+      <app-member-list *ngIf="workspace_id" [workspace]="workspace" [can_add_members]="can_add_members"></app-member-list>
     </mat-tab>
-    <mat-tab label="Groups">
-      <app-group-list *ngIf="workspace_id" [workspace_id]="workspace_id"></app-group-list>
+    <mat-tab *ngIf="can_get_groups" label="Groups">
+      <app-group-list *ngIf="workspace_id" [workspace_id]="workspace_id" [can_create_groups]="can_create_groups"></app-group-list>
     </mat-tab>
-    <mat-tab label="Setting">Permissions and other settings</mat-tab>
+    <!-- <mat-tab label="Setting">Permissions and other settings</mat-tab> -->
   </mat-tab-group>
 </div>
