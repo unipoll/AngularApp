@@ -90,7 +90,7 @@ export class ApiService {
   // Get workspace policy for specific account, or current user if account_id was not provided
   getWorkspacePolicy(workspace_id: string, account_id?: string): Observable<PolicyModel> {
     const options = account_id ? { params: { account_id: account_id } } : {}; 
-    return this.http.get<PolicyModel>(API_URL + '/workspaces/' + workspace_id + '/policy/', options);
+    return this.http.get<PolicyModel>(API_URL + '/workspaces/' + workspace_id + '/policy', options);
   }
 
   // Get list of groups in workspace
