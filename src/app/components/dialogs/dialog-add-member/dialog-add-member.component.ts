@@ -32,10 +32,10 @@ export class DialogAddMemberComponent {
   // });
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  accountCtrl = new FormControl('');
+  accountCtrl = new FormControl<string | MemberModel>('');
   filteredAccounts: Observable<MemberModel[]>;
   accounts: MemberModel[] = [];
-  allAccounts: [] = []; 
+  allAccounts: AccountModel[] = []; 
 
   @ViewChild('accountInput')
   accountInput!: ElementRef<HTMLInputElement>;
@@ -50,18 +50,26 @@ export class DialogAddMemberComponent {
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
     this.allAccounts = this.data.accountList;
-    console.log("All Accounts", this.allAccounts);
-
     this.filteredAccounts = this.accountCtrl.valueChanges.pipe(
-      startWith(null),
-      map((filter_field: string | null) => (filter_field ? this._filter(filter_field) : this.allAccounts.slice()))
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.first_name;
+        return name ? this._filter(name as string) : this.allAccounts.slice();
+      }),
+      // map((filter_field: string | null) => (filter_field ? this._filter(filter_field) : this.allAccounts))
     );
   }
 
-  add(event: MatChipInputEvent): void {
-    // const value = (event.value || '').trim();
-    const value = event.value;
-    console.log("Value", value);
+  displayFn(account: MemberModel): string {
+    return account && account.first_name ? account.first_name : '';
+  }
+
+  // Use add method for adding custom filds values(not from the list)
+  /*add(event: MatChipInputEvent): void {
+    alert("added");
+    const value = (event.value || '').trim();
+    // const value = event.value;
+    console.log("Add Value", value);
 
     // Add the member
     if (value) {
@@ -76,25 +84,33 @@ export class DialogAddMemberComponent {
     // Clear the input value
     event.chipInput!.clear();
     this.accountCtrl.setValue(null);
-  }
+  }*/
 
+  // When a chip is removed
   remove(member: MemberModel): void {
     const index = this.accounts.indexOf(member);
-    console.log("Index", index);
+    // console.log("Index", index);
 
     if (index >= 0) {
-      this.accounts.splice(index, 1);
+      this.accounts.splice(index, 1);   // Remove chip
+      this.allAccounts.push(member);    // Add back to the autocomplete list
+      this.accountCtrl.setValue(null);  // Clear the input value to reset the autocomplete
       this.announcer.announce(`Removed ${member}`);
     }
   }
 
+  // When item is selected from the list
   selected(event: MatAutocompleteSelectedEvent): void {
     this.accounts.push(event.option.value);
+    let index = this.allAccounts.indexOf(event.option.value);
+    this.allAccounts.splice(index, 1);  // Remove from autocomplete list
+    
     this.accountInput.nativeElement.value = '';
     this.accountCtrl.setValue(null);
   }
 
   private _filter(value: string): MemberModel[] {
+    console.log("Filter Value", value);
     const filterValue = value.toLowerCase();
     return this.allAccounts.filter((account: MemberModel) => (
       account.first_name.toLowerCase().includes(filterValue) || 

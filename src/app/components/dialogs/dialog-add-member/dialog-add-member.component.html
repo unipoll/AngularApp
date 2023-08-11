@@ -1,12 +1,12 @@
 <div mat-dialog-title class="title">
-  <h1 class="mat-h1">Add new Member</h1>
+  <h1 class="mat-h1">Add New Member</h1>
 </div>
 <!-- <form [formGroup]="form" (ngSubmit)="onFormSubmit()"> -->
 <form>
   <div mat-dialog-content class="content">
   <mat-form-field class="chip-list">
-    <mat-label>Favorite Fruits</mat-label>
-    <mat-chip-grid #chipGrid aria-label="Fruit selection">
+    <mat-label>Account to add</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Account selection">
       <mat-chip-row *ngFor="let account of accounts" (removed)="remove(account)">
         {{account.first_name}} {{account.last_name}} ({{account.email}})
         <button matChipRemove [attr.aria-label]="'remove ' + account">
@@ -14,11 +14,11 @@
         </button>
       </mat-chip-row>
     </mat-chip-grid>
-    <input placeholder="New Fruit..." #accountInput [formControl]="accountCtrl"
+    <input placeholder="Select Account..." #accountInput [formControl]="accountCtrl"
       [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="add($event)"/>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
+      <!-- (matChipInputTokenEnd)="add($event)"/> -->
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" [displayWith]="displayFn">
       <mat-option *ngFor="let account of filteredAccounts | async" [value]="account">
         {{account.first_name}} {{account.last_name}} ({{account.email}})
       </mat-option>
