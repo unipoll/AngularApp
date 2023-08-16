@@ -93,6 +93,11 @@ export class ApiService {
     return this.http.get<PolicyModel>(API_URL + '/workspaces/' + workspace_id + '/policy', options);
   }
 
+  // Update workspace policy
+  setWorkspacePolicy(workspace_id: string, data: any) {
+    return this.http.put(API_URL + '/workspaces/' + workspace_id + '/policy', data);
+  }
+
   // Get list of groups in workspace
   getWorkspaceGroups(id: string): Observable<GroupListModel> {
     return this.http.get<GroupListModel>(API_URL + '/workspaces/' + id + '/groups');
@@ -138,6 +143,10 @@ export class ApiService {
   // Get all group policies
   getAllGroupsPolicies(group_id: string): Observable<PolicyListModel> {
     return this.http.get<PolicyListModel>(API_URL + '/groups/policies');
+  }
+
+  setGroupPolicy(group_id: string, data: any) {
+    return this.http.put(API_URL + '/groups/' + group_id + '/policy', data);
   }
 
   // Accounts
