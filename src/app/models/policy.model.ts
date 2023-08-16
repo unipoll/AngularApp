@@ -14,5 +14,8 @@ export interface PolicyListModel {
 }
 
 export interface SetPolicyRequest{
+    account_id: string;
+    group_id: string;
+    policy_id: string;
     permissions: string[];
 }
