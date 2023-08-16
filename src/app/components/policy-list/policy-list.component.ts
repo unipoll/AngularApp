@@ -12,7 +12,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
 import { DialogAddMemberComponent } from '../dialogs/dialog-add-member/dialog-add-member.component';
 import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
-import { PolicyModel } from 'src/app/models/policy.model';
+import { PolicyModel, SetPolicyRequest } from 'src/app/models/policy.model';
+import { DialogSetPolicyComponent } from '../dialogs/dialog-set-policy/dialog-set-policy.component';
 
 @Component({
   selector: 'app-policy-list',
@@ -109,33 +110,66 @@ export class PolicyListComponent {
     return this.loading;
   }
 
-  // updatePolicy() {
-  //   let dialogRef;
-  //   let resource: { type: string; id: string; };
-  //   if (this.workspace) {
-  //     resource = {
-  //       type: 'workspace',
-  //       id: this.workspace.id,
-  //     };
-  //   }
-  //   this.apiService.().pipe(
-  //       tap((data) => (
-  //         dialogRef = this._dialog.open(DialogAddMemberComponent, {
-  //           data: {
-  //             accountList: data.accounts,
-  //             resource: resource,
-  //           },
-  //         }),
-  //         dialogRef.afterClosed().subscribe({
-  //           next: (val) => {
-  //             if (val) {
-  //               this.updateMemberList();
-  //             }
-  //           },
-  //         })
-  //       ))
-  //     ).subscribe();
-  // }
+  editPolicy(policyData: PolicyModel) {
+    // let dialogRef;
+    // By default, we are editing a workspace policy
+    let resource = {
+      type: 'workspace',
+      id: this.workspace.id,
+    };
+    
+    // If group is defined, then we are editing a group policy
+    if (this.group) {
+      resource = {
+        type: 'group',
+        id: this.group.id,
+      };
+    }
+    
+
+    const dialogRef = this._dialog.open(DialogSetPolicyComponent, {
+      data: {
+        resource: resource,
+        policy: policyData
+      },
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.updatePolicyList();
+        }
+      },
+    });
+
+    // let api_call;
+    // if (this.group) {
+    //   api_call = this.apiService.setGroupPolicy(this.group.id, data);
+    // } else if (this.workspace) {
+    //   api_call = this.apiService.setWorkspacePolicy(this.workspace.id, data);
+    // }
+
+    // if (api_call) {
+    //   api_call.pipe(
+    //     tap((data) => (
+    //       dialogRef = this._dialog.open(DialogSetPolicyComponent, {
+    //         data: {
+    //           resource: resource,
+    //           policy: data
+    //         },
+    //       }),
+    //       dialogRef.afterClosed().subscribe({
+    //         next: (val) => {
+    //           if (val) {
+    //             this.updatePolicyList();
+    //           }
+    //         },
+    //       })
+    //     ))
+    //   ).subscribe();
+    // }
+
+  }
 
   // removeMember(member: MemberModel) {
   //   let resource: { type: string; id: string; name: string; } | undefined;
