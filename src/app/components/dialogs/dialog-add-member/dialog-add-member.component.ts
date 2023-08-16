@@ -110,7 +110,7 @@ export class DialogAddMemberComponent {
   }
 
   private _filter(value: string): MemberModel[] {
-    console.log("Filter Value", value);
+    // console.log("Filter Value", value);
     const filterValue = value.toLowerCase();
     return this.allAccounts.filter((account: MemberModel) => (
       account.first_name.toLowerCase().includes(filterValue) || 
