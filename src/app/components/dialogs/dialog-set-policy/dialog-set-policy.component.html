@@ -7,7 +7,7 @@
     <mat-form-field class="chip-list">
       <mat-label>Allowed actions</mat-label>
       <mat-chip-grid #chipGrid aria-label="Permission selection">
-        <mat-chip-row *ngFor="let permission of permissions" (removed)="remove(permission)">
+        <mat-chip-row *ngFor="let permission of permissions" (removed)="remove(permission)" highlighted>
           {{ permission.replaceAll('_', ' ') | titlecase }}
           <button matChipRemove [attr.aria-label]="'remove ' + permission">
             <mat-icon>cancel</mat-icon>

@@ -7,7 +7,7 @@
   <mat-form-field class="chip-list">
     <mat-label>Account to add</mat-label>
     <mat-chip-grid #chipGrid aria-label="Account selection">
-      <mat-chip-row *ngFor="let account of accounts" (removed)="remove(account)">
+      <mat-chip-row *ngFor="let account of accounts" (removed)="remove(account)" highlighted>
         {{account.first_name}} {{account.last_name}} ({{account.email}})
         <button matChipRemove [attr.aria-label]="'remove ' + account">
           <mat-icon>cancel</mat-icon>
