@@ -32,6 +32,7 @@ import { DialogUpdateComponent } from './components/dialogs/dialog-update/dialog
 import { DialogAddMemberComponent } from './components/dialogs/dialog-add-member/dialog-add-member.component';
 import { DialogAddPolicyComponent } from './components/dialogs/dialog-add-policy/dialog-add-policy.component';
 import { PolicyListComponent } from './components/policy-list/policy-list.component';
+import { DialogSetPolicyComponent } from './components/dialogs/dialog-set-policy/dialog-set-policy.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { PolicyListComponent } from './components/policy-list/policy-list.compon
     DialogUpdateComponent,
     DialogAddMemberComponent,
     DialogAddPolicyComponent,
-    PolicyListComponent
+    PolicyListComponent,
+    DialogSetPolicyComponent
   ],
   imports: [
     BrowserModule,
