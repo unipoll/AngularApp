@@ -19,3 +19,7 @@ export interface SetPolicyRequest{
     policy_id: string;
     permissions: string[];
 }
+
+export interface Permissions {
+    permissions: string[];
+}

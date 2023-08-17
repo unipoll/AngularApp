@@ -9,9 +9,9 @@ import { WorkspaceListModel } from '../models/workspace.model';
 import { MemberListModel } from '../models/member.model';
 import { GroupListModel, GroupModel } from '../models/group.model';
 import { AccountListModel } from '../models/account.model';
-import { PolicyListModel, PolicyModel } from '../models/policy.model';
+import { Permissions, PolicyListModel, PolicyModel } from '../models/policy.model';
 
-
+// @ts-ignore
 const API_URL = environment.apiUrl;
 
 @Injectable()
@@ -98,6 +98,10 @@ export class ApiService {
     return this.http.put(API_URL + '/workspaces/' + workspace_id + '/policy', data);
   }
 
+  getWorkspacePermissions(): Observable<Permissions> {
+    return this.http.get<Permissions>(API_URL + '/workspaces/permissions');
+  }
+
   // Get list of groups in workspace
   getWorkspaceGroups(id: string): Observable<GroupListModel> {
     return this.http.get<GroupListModel>(API_URL + '/workspaces/' + id + '/groups');
@@ -147,6 +151,10 @@ export class ApiService {
 
   setGroupPolicy(group_id: string, data: any) {
     return this.http.put(API_URL + '/groups/' + group_id + '/policy', data);
+  }
+
+  getGroupPermissions(): Observable<Permissions> {
+    return this.http.get<Permissions>(API_URL + '/groups/permissions');
   }
 
   // Accounts
