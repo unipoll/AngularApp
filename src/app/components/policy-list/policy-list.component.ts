@@ -111,7 +111,7 @@ export class PolicyListComponent {
   }
 
   editPolicy(policyData: PolicyModel) {
-    // let dialogRef;
+    let dialogRef;
     // By default, we are editing a workspace policy
     let resource = {
       type: 'workspace',
@@ -127,47 +127,34 @@ export class PolicyListComponent {
     }
     
 
-    const dialogRef = this._dialog.open(DialogSetPolicyComponent, {
-      data: {
-        resource: resource,
-        policy: policyData
-      },
-    });
+    let api_call;
+    if (resource.type == 'group') {
+      api_call = this.apiService.getGroupPermissions();
+    } else if (resource.type == 'workspace') {
+      api_call = this.apiService.getWorkspacePermissions();
+    }
 
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.updatePolicyList();
-        }
-      },
-    });
-
-    // let api_call;
-    // if (this.group) {
-    //   api_call = this.apiService.setGroupPolicy(this.group.id, data);
-    // } else if (this.workspace) {
-    //   api_call = this.apiService.setWorkspacePolicy(this.workspace.id, data);
-    // }
-
-    // if (api_call) {
-    //   api_call.pipe(
-    //     tap((data) => (
-    //       dialogRef = this._dialog.open(DialogSetPolicyComponent, {
-    //         data: {
-    //           resource: resource,
-    //           policy: data
-    //         },
-    //       }),
-    //       dialogRef.afterClosed().subscribe({
-    //         next: (val) => {
-    //           if (val) {
-    //             this.updatePolicyList();
-    //           }
-    //         },
-    //       })
-    //     ))
-    //   ).subscribe();
-    // }
+    if (api_call) {
+      api_call.pipe(
+        tap((allPermissions) => (
+          console.log("All Permissions", allPermissions),
+          dialogRef = this._dialog.open(DialogSetPolicyComponent, {
+            data: {
+              resource: resource,
+              allPermissions:allPermissions.permissions,
+              policy: policyData
+            },
+          }),
+          dialogRef.afterClosed().subscribe({
+            next: (val) => {
+              if (val) {
+                this.updatePolicyList();
+              }
+            },
+          })
+        ))
+      ).subscribe();
+    }
 
   }
 

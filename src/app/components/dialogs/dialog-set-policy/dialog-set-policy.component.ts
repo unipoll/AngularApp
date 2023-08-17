@@ -22,8 +22,8 @@ export class DialogSetPolicyComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   permissionCtrl = new FormControl('');
   filteredPermissions: Observable<string[]>;
-  permissions: string[] = [];
-  allPermission: string[] = ["get_workspace","get_workspace_members","get_groups","get_workspace_policies","get_workspace_policy"];
+  permissions: string[] = [];  // Current permissions
+  allPermissions: string[]; // All permissions available
   policy: PolicyModel;
 
   @ViewChild('permissionInput') permissionInput!: ElementRef<HTMLInputElement>;
@@ -37,17 +37,15 @@ export class DialogSetPolicyComponent {
     private _snackBarService: SnackBarService,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
-    // this.allPermission = this.data.allPermission;
-    console.log("Data", this.data);
-    console.log("All Permission", this.data);
+    console.log("All Permissions", this.data);
     this.policy = this.data.policy;
-    console.log("Policy Data", this.policy);
     this.permissions = this.data.policy.permissions.map((permission: string) => permission);
-    this.allPermission = this.allPermission.filter((permission: string) => !this.permissions.includes(permission));
+    this.allPermissions = this.data.allPermissions;
+    this.allPermissions = this.allPermissions.filter((permission: string) => !this.permissions.includes(permission));
 
     this.filteredPermissions = this.permissionCtrl.valueChanges.pipe(
       startWith(''),
-      map((permission: string | null) => (permission ? this.filter(permission) : this.allPermission.slice())),
+      map((permission: string | null) => (permission ? this.filter(permission) : this.allPermissions.slice())),
     );
   }
 
@@ -100,7 +98,7 @@ export class DialogSetPolicyComponent {
 
     if (index >= 0) {
       this.permissions.splice(index, 1);   // Remove chip
-      this.allPermission.push(permission);    // Add back to the autocomplete list
+      this.allPermissions.push(permission);    // Add back to the autocomplete list
       this.permissionCtrl.setValue(null);  // Clear the input value to reset the autocomplete
       this.announcer.announce(`Removed ${permission}`);
     }
@@ -109,8 +107,8 @@ export class DialogSetPolicyComponent {
   // When item is selected from the list
   selected(event: MatAutocompleteSelectedEvent): void {
     this.permissions.push(event.option.value);
-    let index = this.allPermission.indexOf(event.option.value);
-    this.allPermission.splice(index, 1);  // Remove from autocomplete list
+    let index = this.allPermissions.indexOf(event.option.value);
+    this.allPermissions.splice(index, 1);  // Remove from autocomplete list
     console.log("Permission Input", this.permissionInput);
     this.permissionInput.nativeElement.value = '';
     this.permissionCtrl.setValue(null);
@@ -119,7 +117,7 @@ export class DialogSetPolicyComponent {
   private filter(value: string): string[] {
     // console.log("Filter Value", value);
     const filterValue = value.toLowerCase().replaceAll(' ', '_');
-    return this.allPermission.filter(permission => permission.toLowerCase().includes(filterValue));
+    return this.allPermissions.filter(permission => permission.toLowerCase().includes(filterValue));
   }
 
 }
