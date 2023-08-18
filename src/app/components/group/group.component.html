@@ -14,7 +14,7 @@
         <app-member-list [group]="group"></app-member-list>
       </mat-tab>
       <mat-tab label="Policies">
-  
+        <app-policy-list *ngIf="can_get_policies" [group]="group" [can_set_policies]="can_set_policies"></app-policy-list>
       </mat-tab>
       <!-- <mat-tab label="Groups">
         <app-group-list [group]="group"></app-group-list>
