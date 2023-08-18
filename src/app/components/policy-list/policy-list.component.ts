@@ -112,10 +112,20 @@ export class PolicyListComponent {
 
   editPolicy(policyData: PolicyModel) {
     let dialogRef;
+    let resource: {
+      type: string;
+      id: string;
+    };
+    resource = {
+      type: '',
+      id: '',
+    };
     // By default, we are editing a workspace policy
-    let resource = {
-      type: 'workspace',
-      id: this.workspace.id,
+    if (this.workspace) {
+      resource = {
+        type: 'workspace',
+        id: this.workspace.id,
+      };
     };
     
     // If group is defined, then we are editing a group policy
@@ -124,36 +134,37 @@ export class PolicyListComponent {
         type: 'group',
         id: this.group.id,
       };
-    }
+    };
     
+    if (resource.type == 'workspace' || resource.type == 'group') {
+      let api_call;
+      if (resource.type == 'group') {
+        api_call = this.apiService.getGroupPermissions();
+      } else if (resource.type == 'workspace') {
+        api_call = this.apiService.getWorkspacePermissions();
+      }
 
-    let api_call;
-    if (resource.type == 'group') {
-      api_call = this.apiService.getGroupPermissions();
-    } else if (resource.type == 'workspace') {
-      api_call = this.apiService.getWorkspacePermissions();
-    }
-
-    if (api_call) {
-      api_call.pipe(
-        tap((allPermissions) => (
-          console.log("All Permissions", allPermissions),
-          dialogRef = this._dialog.open(DialogSetPolicyComponent, {
-            data: {
-              resource: resource,
-              allPermissions:allPermissions.permissions,
-              policy: policyData
-            },
-          }),
-          dialogRef.afterClosed().subscribe({
-            next: (val) => {
-              if (val) {
-                this.updatePolicyList();
-              }
-            },
-          })
-        ))
-      ).subscribe();
+      if (api_call) {
+        api_call.pipe(
+          tap((allPermissions) => (
+            console.log("All Permissions", allPermissions),
+            dialogRef = this._dialog.open(DialogSetPolicyComponent, {
+              data: {
+                resource: resource,
+                allPermissions: allPermissions.permissions,
+                policy: policyData
+              },
+            }),
+            dialogRef.afterClosed().subscribe({
+              next: (val) => {
+                if (val) {
+                  this.updatePolicyList();
+                }
+              },
+            })
+          ))
+        ).subscribe();
+      }
     }
 
   }
