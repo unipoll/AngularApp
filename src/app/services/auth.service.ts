@@ -10,14 +10,8 @@ export class AuthService {
   isLoggedIn$ = this._isLoggedIn$.asObservable();
   permissions: string[] = [];
 
-  setPermissions(resourse_id: string) {
-    return this.apiService.getWorkspacePolicy(resourse_id).pipe(
-      catchError((error) => {
-        throw error;
-      }), tap((response: any) => {
-        this.permissions = response.permissions;
-      })
-    );
+  setPermissions(permissions: string[]) {
+    this.permissions = permissions;
   }
 
   getPermissions() {
