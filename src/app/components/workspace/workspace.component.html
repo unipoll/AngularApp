@@ -8,17 +8,17 @@
   <mat-tab-group animationDuration="0ms">
     <mat-tab label="Overview">
       <div class="overview-tab">
-        {{ permissions }}
+        {{ workspace.description }}
       </div>
     </mat-tab>
     <mat-tab *ngIf="can_get_policies" label="Policies">
-      <app-policy-list *ngIf="workspace_id" [workspace]="workspace" [can_set_policies]="can_set_policies"></app-policy-list>
+      <app-policy-list *ngIf="workspace" [workspace]="workspace" [can_set_policies]="can_set_policies"></app-policy-list>
     </mat-tab>
     <mat-tab *ngIf="can_get_members" label="Members">
-      <app-member-list *ngIf="workspace_id" [workspace]="workspace" [can_add_members]="can_add_members"></app-member-list>
+      <app-member-list *ngIf="workspace" [workspace]="workspace" [can_add_members]="can_add_members"></app-member-list>
     </mat-tab>
     <mat-tab *ngIf="can_get_groups" label="Groups">
-      <app-group-list *ngIf="workspace_id" [workspace_id]="workspace_id" [can_create_groups]="can_create_groups"></app-group-list>
+      <app-group-list *ngIf="workspace" [workspace]="workspace" [can_create_groups]="can_create_groups"></app-group-list>
     </mat-tab>
     <!-- <mat-tab label="Setting">Permissions and other settings</mat-tab> -->
   </mat-tab-group>
