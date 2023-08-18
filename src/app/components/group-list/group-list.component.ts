@@ -13,6 +13,7 @@ import { WorkspaceService } from '../../services/workspace.service';
 import { DialogUpdateModel } from 'src/app/models/dialog.model';
 import { DialogCreateComponent } from '../dialogs/dialog-create/dialog-create.component';
 import { DialogUpdateComponent } from '../dialogs/dialog-update/dialog-update.component';
+import { WorkspaceModel } from 'src/app/models/workspace.model';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { DialogUpdateComponent } from '../dialogs/dialog-update/dialog-update.co
   // encapsulation : ViewEncapsulation.None,
 })
 export class GroupListComponent {
-  @Input() workspace_id!: string;
+  @Input() workspace!: WorkspaceModel;
   @Input() can_create_groups: boolean = false;
 
   displayedColumns!: string[];
@@ -46,7 +47,7 @@ export class GroupListComponent {
     private workspaceService: WorkspaceService) { }
 
   updateGroupList() {
-    this.apiService.getWorkspaceGroups(this.workspace_id).pipe(
+    this.apiService.getWorkspaceGroups(this.workspace.id).pipe(
       tap((data) => (
         this.dataSource = new MatTableDataSource(data.groups),
         this.groupList = this.dataSource.connect(),
@@ -86,7 +87,7 @@ export class GroupListComponent {
       queryParams: { id: group.id },
       relativeTo: this.route,
       state: {
-        workspace_id: this.workspace_id,
+        workspace_id: this.workspace.id,
         group_id: group.id,
         group_name: group.name,
         group_description: group.description
@@ -99,7 +100,7 @@ export class GroupListComponent {
     const dialogRef = this._dialog.open(DialogCreateComponent, {
       data: { 
         resource_type: 'group',
-        workspace_id: this.workspace_id 
+        workspace_id: this.workspace.id 
       },
     });
     dialogRef.afterClosed().subscribe({
