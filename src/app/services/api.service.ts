@@ -146,7 +146,13 @@ export class ApiService {
 
   // Get all group policies
   getAllGroupsPolicies(group_id: string): Observable<PolicyListModel> {
-    return this.http.get<PolicyListModel>(API_URL + '/groups/policies');
+    return this.http.get<PolicyListModel>(API_URL + '/groups/' + group_id + '/policies');
+  }
+
+  // Get group policy for specific account, or current user if account_id was not provided
+  getGroupPolicy(group_id: string, account_id?: string): Observable<PolicyModel> {
+    const options = account_id ? { params: { account_id: account_id } } : {}; 
+    return this.http.get<PolicyModel>(API_URL + '/groups/' + group_id + '/policy', options);
   }
 
   setGroupPolicy(group_id: string, data: any) {
@@ -158,7 +164,6 @@ export class ApiService {
   }
 
   // Accounts
-
   getAllAccounts(): Observable<AccountListModel> {
     return this.http.get<AccountListModel>(API_URL + '/accounts');
   }
