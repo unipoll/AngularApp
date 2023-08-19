@@ -68,7 +68,7 @@ export class DialogSetPolicyComponent {
     if (this.data.resource.type == 'workspace') {
       console.log("request_data", request_data);
       request_method = this._apiService.setWorkspacePolicy(this.data.resource.id, request_data);
-    } else if (this.data.resource_type == 'group') {
+    } else if (this.data.resource.type == 'group') {
       request_method = this._apiService.setGroupPolicy(this.data.resource.id, request_data);
     }
 
