@@ -48,7 +48,6 @@ export class GroupComponent {
 
   async getGroup(): Promise<void> {
     let group = this.workspaceService.getGroup();
-    console.log("Group from service", this.group);
 
     if (!group)
       group = await lastValueFrom(this.apiService.getGroup(this.group_id));
@@ -57,7 +56,6 @@ export class GroupComponent {
     this.workspace = group.workspace;
 
     await lastValueFrom(this.apiService.getGroupPolicy(group.id)).then((response: any) => {
-      console.log("Group policy", response);
       this.permissions = response.permissions;
       this.can_get_members = this.permissions.includes('get_group_members');
       this.can_add_members = this.permissions.includes('add_group_members');
