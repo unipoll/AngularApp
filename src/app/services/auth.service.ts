@@ -8,19 +8,26 @@ import { SnackBarService } from './snackbar.service';
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
-  permissions: string[] = [];
 
-  setPermissions(permissions: string[]) {
-    this.permissions = permissions;
-  }
-
-  getPermissions() {
-    return this.permissions;
-  }
+  private _permissions$ = new BehaviorSubject<string[]>([]);
+  permissions$ = this._permissions$.asObservable();
 
   constructor(private apiService: ApiService, private snackBarService: SnackBarService) {
     const token = localStorage.getItem('access_token');
     this._isLoggedIn$.next(!!token);
+  }
+
+  setPermissions(permissions: string[]) {
+    // this.permissions = permissions;
+    this._permissions$.next(permissions);
+  }
+
+  getPermissions() {
+    return this._permissions$.value;
+  }
+
+  isAllowed(permission: string) {
+    return this._permissions$.value.includes(permission);
   }
 
   public get isLoggedIn(): boolean {
