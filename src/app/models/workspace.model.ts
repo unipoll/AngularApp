@@ -1,11 +1,15 @@
-import { MemberListModel } from "./member.model";
+import { GroupListModel, GroupModel } from "./group.model";
+import { MemberListModel, MemberModel } from "./member.model";
+import { PolicyListModel, PolicyModel } from "./policy.model";
 
 
 export interface WorkspaceModel {
   id: string;
   name: string;
   description: string;
-  members: MemberListModel;
+  members: MemberModel[];
+  groups: GroupModel[];
+  policies: PolicyModel[];
 }
 
 export interface WorkspaceListModel {
