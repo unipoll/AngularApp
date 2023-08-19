@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -48,8 +48,21 @@ export class ApiService {
   }
 
   // Get workspace by workspace_id
-  getWorkspace(workspace_id: string): Observable<WorkspaceModel> {
-    return this.http.get<WorkspaceModel>(API_URL + '/workspaces/' + workspace_id);
+  getWorkspace(workspace_id: string, policies = false, groups = false, members = false): Observable<WorkspaceModel> {
+    let params = new HttpParams();
+
+    params.append("include", "none");
+    
+    if (policies && groups && members) {
+      params = params.append("include", "all");
+    }
+    else {
+      params = policies ? params.append("include", "policies") : params;
+      params = groups ? params.append("include", "groups") : params;
+      params = members ? params.append("include", "members") : params;
+    }
+
+    return this.http.get<WorkspaceModel>(API_URL + '/workspaces/' + workspace_id, { params: params });
   }
 
   // Create workspace
