@@ -13,6 +13,7 @@ import { WorkspaceService } from 'src/app/services/workspace.service';
 import { DialogAddMemberComponent } from '../dialogs/dialog-add-member/dialog-add-member.component';
 import { AccountListModel, AccountModel } from '../../models/account.model'
 import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-member-list',
@@ -20,28 +21,34 @@ import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.co
   styleUrls: ['./member-list.component.scss']
 })
 export class MemberListComponent implements OnInit {
-  // @Input() memberList!: UserShortModel[];
   @Input() workspace!: WorkspaceModel;
   @Input() group!: GroupModel;
-  @Input() can_add_members: boolean = false;
+  @Input() memberList!: MemberModel[];
 
+  // Table data
   displayedColumns!: string[];
   displayedColumnsWithOptions!: string[];
   dataSource!: MatTableDataSource<MemberModel>;
 
+  // Table attributes
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Permissions
+  public can_add_members: boolean = false;
+
+  // Timer for loading content
   private loading = true;
   private timer = timer(3000);
   userFlow!: boolean;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private apiService: ApiService, 
     private router: Router,
     private route: ActivatedRoute, 
     private _dialog: MatDialog, 
-    private workspaceService: WorkspaceService) { }
+    private workspaceService: WorkspaceService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     if (window.innerWidth > 600) {
@@ -56,23 +63,29 @@ export class MemberListComponent implements OnInit {
         this.loading = false;
       }
     });  
-    this.updateMemberList();
+
+    this.memberList ? this.makeTable(this.memberList) : this.updateMemberList();
+
+    if (this.group)
+      this.can_add_members = this.authService.isAllowed('add_group_policy');
+    else if (this.workspace)
+      this.can_add_members = this.authService.isAllowed('add_workspace_policy');
   }
 
   updateMemberList() {
-    if (this.group) {
-      this.apiService.getGroupMembers(this.group.id).pipe(
-        tap((data) => (
-          this.makeTable(data.members)
-        ))
-      ).subscribe();
-    } else if (this.workspace) {
-      this.apiService.getWorkspaceMembers(this.workspace.id).pipe(
-        tap((data) => (
-          this.makeTable(data.members)
-        ))
-      ).subscribe();
-    }
+    let requst;
+    if (this.group)
+      requst = this.apiService.getGroupMembers(this.group.id);
+    else if (this.workspace)
+      requst = this.apiService.getWorkspaceMembers(this.workspace.id);
+    else
+      return;
+
+    requst.pipe(
+      tap((data) => (
+        this.makeTable(data.members)
+      ))
+    ).subscribe();
   }
 
   makeFullName(members: Array<MemberModel>) {

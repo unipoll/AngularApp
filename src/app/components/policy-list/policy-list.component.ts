@@ -12,8 +12,9 @@ import { ApiService } from 'src/app/services/api.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
 import { DialogAddMemberComponent } from '../dialogs/dialog-add-member/dialog-add-member.component';
 import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
-import { PolicyModel, SetPolicyRequest } from 'src/app/models/policy.model';
+import { PolicyListModel, PolicyModel, SetPolicyRequest } from 'src/app/models/policy.model';
 import { DialogSetPolicyComponent } from '../dialogs/dialog-set-policy/dialog-set-policy.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-policy-list',
@@ -21,27 +22,33 @@ import { DialogSetPolicyComponent } from '../dialogs/dialog-set-policy/dialog-se
   styleUrls: ['./policy-list.component.scss']
 })
 export class PolicyListComponent {
-  // @Input() memberList!: UserShortModel[];
   @Input() workspace!: WorkspaceModel;
   @Input() group!: GroupModel;
-  @Input() can_set_policies: boolean = false;
+  @Input() policyList!: PolicyModel[];
 
+  // Table data
   displayedColumns!: string[];
   displayedColumnsWithOptions!: string[];
   dataSource!: MatTableDataSource<PolicyModel>;
+  
+  // Table attributes
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
+  // Permissions
+  public can_set_policies: boolean = false;
+
+  // Timer for loading content
   private loading = true;
   private timer = timer(3000);
   userFlow!: boolean;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
   constructor(
     private apiService: ApiService, 
     private router: Router,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private _dialog: MatDialog, 
+    private authService: AuthService,
     private workspaceService: WorkspaceService) { }
 
   ngOnInit(): void {
@@ -57,23 +64,30 @@ export class PolicyListComponent {
         this.loading = false;
       }
     });  
-    this.updatePolicyList();
+
+    this.policyList ? this.makeTable(this.policyList) : this.updatePolicyList();
+
+    if (this.group)
+      this.can_set_policies = this.authService.isAllowed('set_group_policy');
+    else if (this.workspace)
+      this.can_set_policies = this.authService.isAllowed('set_workspace_policy');
+
   }
 
   updatePolicyList() {
-    if (this.group) {
-      this.apiService.getAllGroupsPolicies(this.group.id).pipe(
-        tap((data) => (
-          this.makeTable(data.policies)
-        ))
-      ).subscribe();
-    } else if (this.workspace) {
-      this.apiService.getAllWorkspacesPolicies(this.workspace.id).pipe(
-        tap((data) => (
-          this.makeTable(data.policies)
-        ))
-      ).subscribe();
-    }
+    let requst;
+    if (this.group)
+      requst = this.apiService.getAllGroupsPolicies(this.group.id);
+    else if (this.workspace)
+      requst = this.apiService.getAllWorkspacesPolicies(this.workspace.id);
+    else
+      return;
+
+    requst.pipe(
+      tap((data) => (
+        this.makeTable(data.policies)
+      ))
+    ).subscribe();
   }
 
   makeFullName(policies: Array<PolicyModel>) {
@@ -111,61 +125,51 @@ export class PolicyListComponent {
   }
 
   editPolicy(policyData: PolicyModel) {
-    let dialogRef;
+    let dialogRef, api_call;
     let resource: {
       type: string;
       id: string;
     };
-    resource = {
-      type: '',
-      id: '',
-    };
-    // By default, we are editing a workspace policy
-    if (this.workspace) {
+    
+    if (this.workspace) { // By default, we are editing a workspace policy
       resource = {
         type: 'workspace',
         id: this.workspace.id,
       };
-    };
-    
-    // If group is defined, then we are editing a group policy
-    if (this.group) {
+      api_call = this.apiService.getWorkspacePermissions();
+    }
+    else if (this.group) { // If group is defined, then we are editing a group policy
       resource = {
         type: 'group',
         id: this.group.id,
       };
-    };
-    
-    if (resource.type == 'workspace' || resource.type == 'group') {
-      let api_call;
-      if (resource.type == 'group') {
-        api_call = this.apiService.getGroupPermissions();
-      } else if (resource.type == 'workspace') {
-        api_call = this.apiService.getWorkspacePermissions();
-      }
-
-      if (api_call) {
-        api_call.pipe(
-          tap((allPermissions) => (
-            console.log("All Permissions", allPermissions),
-            dialogRef = this._dialog.open(DialogSetPolicyComponent, {
-              data: {
-                resource: resource,
-                allPermissions: allPermissions.permissions,
-                policy: policyData
-              },
-            }),
-            dialogRef.afterClosed().subscribe({
-              next: (val) => {
-                if (val) {
-                  this.updatePolicyList();
-                }
-              },
-            })
-          ))
-        ).subscribe();
-      }
+      api_call = this.apiService.getGroupPermissions();
     }
+    else {  // If neither workspace nor group is defined
+      console.log("Error: No resource defined");
+      return;
+    }
+
+    api_call.pipe(
+      tap((allPermissions) => (
+        // console.log("All Permissions", allPermissions),
+        dialogRef = this._dialog.open(DialogSetPolicyComponent, {
+          data: {
+            resource: resource,
+            allPermissions: allPermissions.permissions,
+            policy: policyData
+          },
+        }),
+        console.log("Group Permissions", allPermissions),
+        dialogRef.afterClosed().subscribe({
+          next: (val) => {
+            if (val) {
+              this.updatePolicyList();
+            }
+          },
+        })
+      ))
+    ).subscribe();
 
   }
 

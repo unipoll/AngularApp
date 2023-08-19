@@ -24,20 +24,24 @@ import { WorkspaceModel } from 'src/app/models/workspace.model';
 })
 export class GroupListComponent {
   @Input() workspace!: WorkspaceModel;
-  @Input() can_create_groups: boolean = false;
+  @Input() groupList!: GroupModel[];
 
+  // Table data
   displayedColumns!: string[];
   displayedColumnsWithOptions!: string[];
   dataSource!: MatTableDataSource<GroupModel>;
 
-  groupList!: Observable<GroupModel[]>;
+  // Table attributes
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
+  // Permissions
+  can_create_groups: boolean = false;
+
+  // Timer for loading
   private loading = true;
   private timer = timer(3000);
   userFlow!: boolean;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private apiService: ApiService, 
@@ -46,24 +50,30 @@ export class GroupListComponent {
     private _dialog: MatDialog, 
     private workspaceService: WorkspaceService) { }
 
-  updateGroupList() {
-    this.apiService.getWorkspaceGroups(this.workspace.id).pipe(
-      tap((data) => (
-        this.dataSource = new MatTableDataSource(data.groups),
-        this.groupList = this.dataSource.connect(),
-        this.dataSource.paginator = this.paginator,
-        this.dataSource.sort = this.sort
-      ))
-    ).subscribe();
-  }
-
   ngOnInit(): void {
     this.timer.subscribe(val => {
       if (val == 0) {
         this.loading = false;
       }
     });
-    this.updateGroupList();
+
+    this.groupList ? this.makeTable(this.groupList) : this.updateGroupList();
+
+    // this.can_create_groups = this.authService.isAllowed('set_workspace_policy');
+  }
+
+  updateGroupList() {
+    this.apiService.getWorkspaceGroups(this.workspace.id).pipe(
+      tap((data) => (
+        this.makeTable(data.groups)
+      ))
+    ).subscribe();
+  }
+
+  makeTable(groups: Array<GroupModel>) {
+    this.dataSource = new MatTableDataSource(groups),
+    this.dataSource.paginator = this.paginator,
+    this.dataSource.sort = this.sort
   }
 
   applyFilter(event: Event) {
@@ -81,7 +91,7 @@ export class GroupListComponent {
   }
 
 
-  viewGroup(group: GroupModel) {
+  openGroup(group: GroupModel) {
     this.workspaceService.setGroup(group);
     this.router.navigate(['/group/'], {
       queryParams: { id: group.id },
