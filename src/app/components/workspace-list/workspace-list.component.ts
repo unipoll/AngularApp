@@ -100,7 +100,14 @@ export class WorkspaceListComponent implements OnInit {
     });
   }
 
-  editWorkspace(data: any) {
+  editWorkspace(workspace: WorkspaceModel) {
+    const data: DialogUpdateModel = {
+      workspace_id: workspace.id,
+      id: workspace.id,
+      name: workspace.name,
+      description: workspace.description,
+      resource_type: 'workspace',
+    };
     const dialogRef = this._dialog.open(DialogUpdateComponent, { data });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
