@@ -16,7 +16,7 @@ export class WorkspaceComponent {
   // Workspace data
   public workspace!: WorkspaceModel | null;
   public workspace_id!: string;
-  public memberListData!: MemberModel[];
+  // public memberListData!: MemberModel[];
   // public permissions!: string[];
   
   // TODO: Make permissions an observable
