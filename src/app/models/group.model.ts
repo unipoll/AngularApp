@@ -1,4 +1,5 @@
-import { MemberListModel } from "./member.model";
+import { MemberModel } from "./member.model";
+import { PolicyModel } from "./policy.model";
 import { WorkspaceModel } from "./workspace.model";
 
 export interface GroupModel {
@@ -6,7 +7,8 @@ export interface GroupModel {
     name: string;
     description: string;
     workspace: WorkspaceModel;
-    members: MemberListModel
+    members: MemberModel[];
+    policies: PolicyModel[]; 
 }
 
 export interface GroupListModel {
