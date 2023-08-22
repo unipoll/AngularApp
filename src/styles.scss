@@ -28,7 +28,18 @@ $my-typography: mat.define-typography-config();
 //   @include mat.all-component-colors($angular-dark-theme);
 // }
 
-.page-title,
+.page-title {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem 0;
+
+  &h1 {
+    font-size: x-large;
+    font-weight: 50;
+    color: #ccc;
+  }
+}
+
 .tab-title {
   display: flex;
   justify-content: space-between;
