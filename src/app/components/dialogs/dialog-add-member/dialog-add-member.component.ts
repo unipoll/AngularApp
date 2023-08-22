@@ -49,7 +49,9 @@ export class DialogAddMemberComponent {
     private _snackBarService: SnackBarService,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
-    this.allAccounts = this.data.accountList;
+    this.allAccounts = this.data.accountList.filter(
+      ({ id: id1 }: { id: string }) => (!this.data.memberList.some(({ id: id2 }: { id: string }) => id2 === id1))
+    );
     this.filteredAccounts = this.accountCtrl.valueChanges.pipe(
       startWith(''),
       map(value => {
