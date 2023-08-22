@@ -9,13 +9,17 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./dialog-delete.component.scss']
 })
 export class DialogDeleteComponent {
-
-  public resourceType!: string;
-  public resourceName!: string;
+  
   public dialogMessage!: string;
+
+  private resourceType!: string;
+  private resourceName!: string;
   private resourceID!: string;
   private memberID!: string;
   private memberName!: string;
+  private parentResourceType!: string;
+  private parentResourceName!: string;
+  private parentResourceID!: string;
 
   constructor(
     public dialogRef: MatDialogRef<DialogDeleteComponent>, 
@@ -27,9 +31,10 @@ export class DialogDeleteComponent {
       this.resourceID = data.resourceID;
       switch (this.resourceType) {
         case 'member':
-          this.dialogMessage = `Are you sure you want to remove member ${data.memberName} from the  ${this.resourceName}?`;
-          this.memberID = data.memberID;
-          this.memberName = data.memberName;
+          this.dialogMessage = `Are you sure you want to remove member ${data.resourceName} from the ${data.parentResourceType} ${data.parentResourceName}?`;
+          this.parentResourceType = data.parentResourceType;
+          this.parentResourceName = data.parentResourceName;
+          this.parentResourceID = data.parentResourceID;
           break;
         default:
           this.dialogMessage = `Are you sure you want to delete the ${this.resourceType} "${this.resourceName}"?`;
@@ -52,7 +57,11 @@ export class DialogDeleteComponent {
         request_method = this.apiService.deleteGroup(this.resourceID);
         break;
       case 'member':
-        request_method = this.apiService.removeMemberFromWorkspace(this.resourceID, this.memberID);
+        if (this.parentResourceType === 'workspace') {
+          request_method = this.apiService.removeMemberFromWorkspace(this.parentResourceID, this.resourceID);
+        } else if (this.parentResourceType === 'group') {
+          request_method = this.apiService.removeMemberFromGroup(this.parentResourceID, this.resourceID);
+        }
         break;
     }
 

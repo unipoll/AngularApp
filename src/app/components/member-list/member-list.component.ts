@@ -67,9 +67,9 @@ export class MemberListComponent implements OnInit {
     this.memberList ? this.makeTable(this.memberList) : this.updateMemberList();
 
     if (this.group)
-      this.can_add_members = this.authService.isAllowed('add_group_policy');
+      this.can_add_members = this.authService.isAllowed('add_group_members');
     else if (this.workspace)
-      this.can_add_members = this.authService.isAllowed('add_workspace_policy');
+      this.can_add_members = this.authService.isAllowed('add_workspace_members');
   }
 
   updateMemberList() {
@@ -125,17 +125,17 @@ export class MemberListComponent implements OnInit {
         type: 'workspace',
         id: this.workspace.id,
       };
-    }
-    this.apiService.getAllAccounts().pipe(
+      this.apiService.getAllAccounts().pipe(
         tap((data) => (
           dialogRef = this._dialog.open(DialogAddMemberComponent, {
             data: {
-              accountList: data.accounts,
+              accountList: data.members,
+              memberList: this.memberList,
               resource: resource,
-            },
+            }
           }),
           dialogRef.afterClosed().subscribe({
-            next: (val) => {
+            next: (val: any) => {
               if (val) {
                 this.updateMemberList();
               }
@@ -143,6 +143,33 @@ export class MemberListComponent implements OnInit {
           })
         ))
       ).subscribe();
+    }
+    else if (this.group) {
+      resource = {
+        type: 'group',
+        id: this.group.id,
+      };
+
+      this.apiService.getWorkspaceMembers(this.group.workspace.id).pipe(
+        tap((data) => (
+          dialogRef = this._dialog.open(DialogAddMemberComponent, {
+            data: {
+              accountList: data.members,
+              memberList: this.memberList,
+              resource: resource,
+            }
+          }),
+          dialogRef.afterClosed().subscribe({
+            next: (val: any) => {
+              if (val) {
+                this.updateMemberList();
+              }
+            },
+          })
+        ))
+      ).subscribe();
+    }
+    
   }
 
   removeMember(member: MemberModel) {
@@ -151,17 +178,25 @@ export class MemberListComponent implements OnInit {
       resource = {
         type: 'workspace',
         id: this.workspace.id,
-        name: `workspace ${this.workspace.name}`,
+        name: this.workspace.name,
+      };
+    }
+    if (this.group) {
+      resource = {
+        type: 'group',
+        id: this.group.id,
+        name: this.group.name,
       };
     }
     if (resource) {
       const dialogRef = this._dialog.open(DialogDeleteComponent, {
         data: {
           resourceType: 'member',
-          resourceID: resource.id,
-          resourceName: resource.name,
-          memberName: member.first_name + ' ' + member.last_name,
-          memberID: member.id,
+          resourceID: member.id,
+          resourceName: member.first_name + ' ' + member.last_name,
+          parentResourceType: resource.type,
+          parentResourceID: resource.id,
+          parentResourceName: resource.name,
         }
       });
 
