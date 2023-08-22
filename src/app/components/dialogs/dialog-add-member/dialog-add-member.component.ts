@@ -132,9 +132,8 @@ export class DialogAddMemberComponent {
       console.log("Resource Type", this.data.resource.type);
       if (this.data.resource.type == 'workspace') {
         request_method = this._apiService.addMemberToWorkspace(this.data.resource.id, req);
-      } else if (this.data.resource_type == 'group') {
-        // request_method = this._apiService.createGroup(this.data.workspace_id, this.form.value);
-        console.log("Group ID", this.data.group_id);
+      } else if (this.data.resource.type == 'group') {
+        request_method = this._apiService.addMemberToGroup(this.data.resource.id, req);
       }
       if (request_method) {
         request_method.subscribe({
