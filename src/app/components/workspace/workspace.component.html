@@ -1,9 +1,7 @@
 
 <div *ngIf="workspace">
   <div class="page-title">
-    <div></div>
-    <h1>Workspace {{ workspace.name }}</h1>
-    <div></div>
+    <h1>{{ workspace.name }}</h1>
   </div>
   <mat-tab-group animationDuration="0ms">
     <mat-tab label="Overview" *ngIf="workspace">

@@ -1,5 +1,9 @@
 <div class="page-title">
-  <!-- Button Toggle between Table/Grid -->
+  <!-- Title -->
+  <h1>Workspaces</h1>
+</div>
+<div class="top-buttons">
+<!-- Button Toggle between Table/Grid -->
   <mat-button-toggle-group class="toggle-group" value="grid" #viewToggle="matButtonToggleGroup">
     <mat-button-toggle value="table">
       <mat-icon>view_list</mat-icon>Table
@@ -8,8 +12,6 @@
       <mat-icon>view_module</mat-icon>Grid
     </mat-button-toggle>
   </mat-button-toggle-group>  
-  <!-- Title -->
-  <h1>Workspaces</h1>
   <!-- Create Workspace Button -->
   <button mat-flat-button color="primary" (click)="createWorkspace()">Create Workspace</button>
 </div>
