@@ -72,7 +72,7 @@ export class ApiService {
 
   // Update workspace
   updateWorkspace(workspace_id: string, data: any) {
-    return this.http.put(API_URL + '/workspaces/' + workspace_id, data);
+    return this.http.patch(API_URL + '/workspaces/' + workspace_id, data);
   }
 
   // Delete workspace
@@ -128,8 +128,20 @@ export class ApiService {
   }
   
   // Get group by id
-  getGroup(group_id: string): Observable<GroupModel> {
-    return this.http.get<GroupModel>(API_URL + '/groups/' + group_id);
+  getGroup(group_id: string, policies = false, members = false): Observable<GroupModel> {
+    let params = new HttpParams();
+
+    params.append("include", "none");
+    
+    if (policies && members) {
+      params = params.append("include", "all");
+    }
+    else {
+      params = policies ? params.append("include", "policies") : params;
+      params = members ? params.append("include", "members") : params;
+    }
+
+    return this.http.get<GroupModel>(API_URL + '/groups/' + group_id, { params: params });
   }
 
   // Delete group by id
@@ -139,7 +151,7 @@ export class ApiService {
 
   // Update group
   updateGroup(group_id: string, data: any) {
-    return this.http.put(API_URL + '/groups/' + group_id, data);
+    return this.http.patch(API_URL + '/groups/' + group_id, data);
   }
 
   // Get list of members in group
@@ -177,7 +189,7 @@ export class ApiService {
   }
 
   // Accounts
-  getAllAccounts(): Observable<AccountListModel> {
-    return this.http.get<AccountListModel>(API_URL + '/accounts');
+  getAllAccounts(): Observable<MemberListModel> {
+    return this.http.get<MemberListModel>(API_URL + '/accounts');
   }
 }
