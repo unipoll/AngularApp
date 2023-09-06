@@ -14,6 +14,7 @@ import { DialogUpdateModel } from 'src/app/models/dialog.model';
 import { DialogCreateComponent } from '../dialogs/dialog-create/dialog-create.component';
 import { DialogUpdateComponent } from '../dialogs/dialog-update/dialog-update.component';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -48,7 +49,8 @@ export class GroupListComponent {
     private router: Router,
     private route: ActivatedRoute, 
     private _dialog: MatDialog, 
-    private workspaceService: WorkspaceService) { }
+    private workspaceService: WorkspaceService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.timer.subscribe(val => {
@@ -59,7 +61,7 @@ export class GroupListComponent {
 
     this.groupList ? this.makeTable(this.groupList) : this.updateGroupList();
 
-    // this.can_create_groups = this.authService.isAllowed('set_workspace_policy');
+    this.can_create_groups = this.authService.isAllowed('create_group');
   }
 
   updateGroupList() {
