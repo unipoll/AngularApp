@@ -129,7 +129,7 @@ export class MemberListComponent implements OnInit {
         tap((data) => (
           dialogRef = this._dialog.open(DialogAddMemberComponent, {
             data: {
-              accountList: data.members,
+              accountList: data.accounts,
               memberList: this.memberList,
               resource: resource,
             }

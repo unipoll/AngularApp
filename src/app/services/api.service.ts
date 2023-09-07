@@ -189,7 +189,7 @@ export class ApiService {
   }
 
   // Accounts
-  getAllAccounts(): Observable<MemberListModel> {
-    return this.http.get<MemberListModel>(API_URL + '/accounts');
+  getAllAccounts(): Observable<AccountListModel> {
+    return this.http.get<AccountListModel>(API_URL + '/accounts');
   }
 }
