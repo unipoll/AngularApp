@@ -1,0 +1,37 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material/material.module';
+
+import { DialogDeleteComponent } from '../../components/dialogs/dialog-delete/dialog-delete.component';
+import { DialogCreateComponent } from '../../components/dialogs/dialog-create/dialog-create.component';
+import { DialogUpdateComponent } from '../../components/dialogs/dialog-update/dialog-update.component';
+import { DialogAddMemberComponent } from '../../components/dialogs/dialog-add-member/dialog-add-member.component';
+import { DialogAddPolicyComponent } from '../../components/dialogs/dialog-add-policy/dialog-add-policy.component';
+import { PolicyListComponent } from '../../components/policy-list/policy-list.component';
+import { DialogSetPolicyComponent } from '../../components/dialogs/dialog-set-policy/dialog-set-policy.component';
+
+@NgModule({
+  declarations: [
+    DialogDeleteComponent,
+    DialogCreateComponent,
+    DialogUpdateComponent,
+    DialogAddMemberComponent,
+    DialogAddPolicyComponent,
+    PolicyListComponent,
+    DialogSetPolicyComponent
+  ],
+  imports: [
+    CommonModule,
+    MaterialModule
+  ],
+  exports: [
+    DialogDeleteComponent,
+    DialogCreateComponent,
+    DialogUpdateComponent,
+    DialogAddMemberComponent,
+    DialogAddPolicyComponent,
+    PolicyListComponent,
+    DialogSetPolicyComponent
+  ]
+})
+export class DialogsModule { }
