@@ -1,5 +1,5 @@
 // Modules
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -23,6 +23,7 @@ import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { GroupComponent } from './components/group/group.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { GroupListComponent } from './components/group-list/group-list.component';
+import { PollListComponent } from './components/poll-list/poll-list.component';
 
 // Services
 import { SidenavService } from './services/sidenav.service';
@@ -44,7 +45,8 @@ import { SnackBarService } from './services/snackbar.service';
     WorkspaceComponent,
     MemberListComponent,
     GroupListComponent,
-    GroupComponent
+    GroupComponent,
+    PollListComponent
   ],
   imports: [
     BrowserModule,
