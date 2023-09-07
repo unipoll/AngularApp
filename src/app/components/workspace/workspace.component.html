@@ -9,6 +9,10 @@
         {{ workspace.description }}
       </div>
     </mat-tab>
+    <mat-tab label="Polls">
+      <!-- [workspace]="workspace" [pollList]="workspace.polls" -->
+      <app-poll-list></app-poll-list>
+    </mat-tab>
     <mat-tab *ngIf="isAllowed('get_workspace_policies')" label="Policies">
       <app-policy-list [workspace]="workspace" [policyList]="workspace.policies"></app-policy-list>
     </mat-tab>
