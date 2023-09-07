@@ -32,6 +32,7 @@ import { WorkspaceService } from './services/workspace.service';
 import { ApiService } from './services/api.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SnackBarService } from './services/snackbar.service';
+import { PollComponent } from './components/poll/poll.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { SnackBarService } from './services/snackbar.service';
     MemberListComponent,
     GroupListComponent,
     GroupComponent,
-    PollListComponent
+    PollListComponent,
+    PollComponent
   ],
   imports: [
     BrowserModule,
