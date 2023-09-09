@@ -1,0 +1,15 @@
+<h1>Poll Editor</h1>
+<h2>Create polls using markdown</h2>
+<p>
+    Try adding a poll using the following markdown:
+   <code>[poll]test[/poll]</code> 
+</p>
+
+<div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
+    <mat-form-field appearance="fill" color="accent" fxFlex.gt-sm="calc(50% - 8px)" style="width:100%">
+      <textarea matInput [(ngModel)]="markdownData" (ngModelChange)="addPollComponent($event)"></textarea>
+    </mat-form-field>
+    <markdown [data]="replacePoll(this.markdownData)"></markdown>
+  </div>
+
+<ng-container #exampleContainer ></ng-container>
