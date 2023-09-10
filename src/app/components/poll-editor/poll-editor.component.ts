@@ -3,6 +3,7 @@ import { PollComponent } from '../poll/poll.component';
 import { FormControl } from '@angular/forms';
 
 import { SingleChoiceComponent } from '../questions/single-choice/single-choice.component';
+import { MultipleChoiceComponent } from '../questions/multiple-choice/multiple-choice.component';
 
 @Component({
   selector: 'app-poll-editor',
@@ -42,6 +43,15 @@ export class PollEditorComponent {
 
   addSingleChoice() {
     const newPoll = this.pollsContainer.createComponent(SingleChoiceComponent)
+    this.polls.push(newPoll);
+    newPoll.setInput("question_number", this.polls.length);
+    newPoll.instance.delete.subscribe((index: number) => {
+      this.removePoll(index);
+    });
+  }
+
+  addMultipleChoice() {
+    const newPoll = this.pollsContainer.createComponent(MultipleChoiceComponent)
     this.polls.push(newPoll);
     newPoll.setInput("question_number", this.polls.length);
     newPoll.instance.delete.subscribe((index: number) => {

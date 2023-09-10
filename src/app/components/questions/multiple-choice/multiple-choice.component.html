@@ -20,7 +20,8 @@
                                 <mat-label>Option {{ i + 1 }}</mat-label>
                                 <textarea matInput id="option-{{ i }}" type="text" [formControlName]="i"></textarea>
                             </mat-form-field>
-                            <button mat-icon-button="button" (click)="removeOption(i)" *ngIf="options.controls.length > 2">
+                            <button mat-icon-button="button" (click)="removeOption(i)"
+                                *ngIf="options.controls.length > 2">
                                 <mat-icon>close</mat-icon>
                             </button>
                         </div>
@@ -34,7 +35,7 @@
                     </div>
                     <mat-form-field>
                         <mat-label>Correct Option</mat-label>
-                        <mat-select required formControlName="correct_option">
+                        <mat-select required formControlName="correct_options" multiple>
                             <mat-option *ngFor="let option of options.controls; let i=index" [value]="i">
                                 Option {{ i + 1 }}
                             </mat-option>
@@ -46,7 +47,7 @@
         <mat-tab label="Preview">
             <div class="question-preview">
                 <markdown emoji katex [data]="questionForm.get('question')?.value"></markdown>
-                <mat-selection-list [multiple]="false" color="primary">
+                <mat-selection-list color="primary">
                     <mat-list-option *ngFor="let option of questionForm.get('options')?.value" [value]="option"
                         togglePosition="before" class="option-preview-list-item">
                         <markdown emoji katex [data]="option"></markdown>
@@ -54,7 +55,5 @@
                 </mat-selection-list>
             </div>
         </mat-tab>
-        </mat-tab-group>
-
-    
+    </mat-tab-group>
 </mat-card>
