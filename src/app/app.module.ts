@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './modules/material/material.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { DialogsModule } from './modules/dialogs/dialogs.module';
+import { QuestionsModule } from './modules/questions/questions.module';
 
 // Guards
 import { AuthGuard } from './auth.guard';
@@ -24,6 +25,8 @@ import { GroupComponent } from './components/group/group.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { GroupListComponent } from './components/group-list/group-list.component';
 import { PollListComponent } from './components/poll-list/poll-list.component';
+import { PollEditorComponent } from './components/poll-editor/poll-editor.component';
+import { PollComponent } from './components/poll/poll.component';
 
 // Services
 import { SidenavService } from './services/sidenav.service';
@@ -32,7 +35,6 @@ import { WorkspaceService } from './services/workspace.service';
 import { ApiService } from './services/api.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SnackBarService } from './services/snackbar.service';
-import { PollComponent } from './components/poll/poll.component';
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { PollComponent } from './components/poll/poll.component';
     GroupListComponent,
     GroupComponent,
     PollListComponent,
-    PollComponent
+    PollEditorComponent,
+    PollComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,10 +61,10 @@ import { PollComponent } from './components/poll/poll.component';
     LayoutModule,
     MaterialModule,
     MarkdownModule.forRoot({
-      loader: HttpClient,
-      // sanitize: SecurityContext.NONE,
+      loader: HttpClient
     }),
     DialogsModule,
+    QuestionsModule
   ],
   providers: [
     ApiService,

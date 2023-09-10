@@ -1,5 +1,8 @@
-import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { PollComponent } from '../poll/poll.component';
+import { FormControl } from '@angular/forms';
+
+import { SingleChoiceComponent } from '../questions/single-choice/single-choice.component';
 
 @Component({
   selector: 'app-poll-editor',
@@ -11,6 +14,9 @@ export class PollEditorComponent {
   `# My Poll
   `;
   @ViewChild('exampleContainer', { read: ViewContainerRef }) exampleContainer!: ViewContainerRef;
+  @ViewChild('pollsContainer', { read: ViewContainerRef }) pollsContainer!: ViewContainerRef;
+
+  polls: ComponentRef<any>[] = [];
 
   replacePoll(data: string) {
     // Use regex to extract the poll content
@@ -19,7 +25,7 @@ export class PollEditorComponent {
   }
 
   // Add app-poll component if poll tag is found
-  addPollComponent(data: string) {
+  addPollForm(data: string) {
     // Use regex to extract the poll content
     let regexp = /(?<poll_open>\[poll\])(?<content>.*?)(?<poll_close>\[\/poll\])/g;
     this.exampleContainer.clear();
@@ -33,4 +39,34 @@ export class PollEditorComponent {
     }
 
   }
+
+  addSingleChoice() {
+    const newPoll = this.pollsContainer.createComponent(SingleChoiceComponent)
+    this.polls.push(newPoll);
+    newPoll.setInput("question_number", this.polls.length);
+    newPoll.instance.delete.subscribe((index: number) => {
+      this.removePoll(index);
+    });
+  }
+
+  removePoll(index: number) {
+    console.log("Removing poll at index: " + index);
+    console.log(this.polls[index]);
+    // Remove the poll from the array
+    this.polls[index].destroy();
+    this.polls.splice(index, 1);
+    // Update the question numbers
+    for (let i = index; i < this.polls.length; i++) {
+      this.polls[i].instance.question_number = i + 1;
+    }
+  }
+
+  savePoll() {
+    let pollData = [];
+    for (let poll of this.polls) {
+      pollData.push(poll.instance.getQuestion());
+    }
+    console.log(JSON.stringify(pollData));
+  }
+
 }
