@@ -1,9 +1,11 @@
 import { Component, ComponentRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { PollComponent } from '../poll/poll.component';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 import { SingleChoiceComponent } from '../questions/single-choice/single-choice.component';
 import { MultipleChoiceComponent } from '../questions/multiple-choice/multiple-choice.component';
+import { AddQuestionComponent } from '../dialogs/add-question/add-question.component';
 
 @Component({
   selector: 'app-poll-editor',
@@ -11,13 +13,11 @@ import { MultipleChoiceComponent } from '../questions/multiple-choice/multiple-c
   styleUrls: ['./poll-editor.component.scss']
 })
 export class PollEditorComponent {
-  @Input() markdownData: string = 
-  `# My Poll
-  `;
-  @ViewChild('exampleContainer', { read: ViewContainerRef }) exampleContainer!: ViewContainerRef;
   @ViewChild('pollsContainer', { read: ViewContainerRef }) pollsContainer!: ViewContainerRef;
 
   polls: ComponentRef<any>[] = [];
+
+  constructor(private dialog: MatDialog) { }
 
   replacePoll(data: string) {
     // Use regex to extract the poll content
@@ -25,20 +25,21 @@ export class PollEditorComponent {
     return data.replaceAll(regexp, "");
   }
 
-  // Add app-poll component if poll tag is found
-  addPollForm(data: string) {
-    // Use regex to extract the poll content
-    let regexp = /(?<poll_open>\[poll\])(?<content>.*?)(?<poll_close>\[\/poll\])/g;
-    this.exampleContainer.clear();
-    let match = data.match(regexp)
-    if (match) {
-      console.log(match);
-      for (let i of match) {
-        this.exampleContainer.createComponent(PollComponent);
-      }
-      // this.markdownData = this.replacePoll(this.markdownData);
-    }
+  addQuestion() {
+    const dialogRef = this.dialog.open(AddQuestionComponent);
 
+    dialogRef.afterClosed().subscribe(
+      result => {
+        switch (result) {
+          case "single-choice":
+            this.addSingleChoice();
+            break;
+          case "multiple-choice":
+            this.addMultipleChoice();
+            break;
+        }
+      }
+    );
   }
 
   addSingleChoice() {

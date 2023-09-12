@@ -1,19 +1,13 @@
 <h1>Poll Editor</h1>
-<!-- <h2>Create polls using markdown</h2>
-<p>
-    Try adding a poll using the following markdown:
-   <code>[poll]test[/poll]</code> 
-</p> -->
-
-<!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
-    <mat-form-field appearance="fill" color="accent" fxFlex.gt-sm="calc(50% - 8px)" style="width:100%">
-      <textarea matInput [(ngModel)]="markdownData" (ngModelChange)="addPollComponent($event)"></textarea>
-    </mat-form-field>
-    <markdown [data]="replacePoll(this.markdownData)"></markdown>
-  </div> -->
-
 <ng-container #pollsContainer></ng-container>
 
-<button mat-raised-button color="primary" (click)="addSingleChoice()">Add Single Choice Question</button>
-<button mat-raised-button color="primary" (click)="addMultipleChoice()">Add Multiple Choice Question</button>
-<button mat-raised-button color="primary" (click)="savePoll()">Save</button>
+<div class="addQuestionButton">
+  <!-- <button mat-raised-button color="primary" (click)="addQuestion()">Add Question</button> -->
+  <button mat-fab color="primary" (click)="addQuestion()" matTooltip="Add question">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<div class="formSubmit">
+  <button mat-button color="primary">Cancel</button>
+  <button mat-raised-button color="primary" (click)="savePoll()">Save</button>
+</div>

@@ -24,6 +24,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const components = [
   MatCardModule,
@@ -50,7 +51,8 @@ const components = [
   MatTabsModule,
   MatChipsModule,
   MatAutocompleteModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTooltipModule
 ]
 
 @NgModule({

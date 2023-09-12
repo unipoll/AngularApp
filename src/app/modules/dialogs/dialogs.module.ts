@@ -9,6 +9,7 @@ import { DialogAddMemberComponent } from '../../components/dialogs/dialog-add-me
 import { DialogAddPolicyComponent } from '../../components/dialogs/dialog-add-policy/dialog-add-policy.component';
 import { PolicyListComponent } from '../../components/policy-list/policy-list.component';
 import { DialogSetPolicyComponent } from '../../components/dialogs/dialog-set-policy/dialog-set-policy.component';
+import { AddQuestionComponent } from '../../components/dialogs/add-question/add-question.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DialogSetPolicyComponent } from '../../components/dialogs/dialog-set-po
     DialogAddMemberComponent,
     DialogAddPolicyComponent,
     PolicyListComponent,
-    DialogSetPolicyComponent
+    DialogSetPolicyComponent,
+    AddQuestionComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { DialogSetPolicyComponent } from '../../components/dialogs/dialog-set-po
     DialogAddMemberComponent,
     DialogAddPolicyComponent,
     PolicyListComponent,
-    DialogSetPolicyComponent
+    DialogSetPolicyComponent,
+    AddQuestionComponent,
   ]
 })
 export class DialogsModule { }
