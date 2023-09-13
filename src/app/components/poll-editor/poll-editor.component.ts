@@ -16,7 +16,7 @@ export class PollEditorComponent {
   @ViewChild('pollsContainer', { read: ViewContainerRef }) pollsContainer!: ViewContainerRef;
 
   polls: ComponentRef<any>[] = [];
-
+  
   constructor(private dialog: MatDialog) { }
 
   replacePoll(data: string) {
@@ -73,8 +73,18 @@ export class PollEditorComponent {
   }
 
   savePoll() {
+    if (this.polls.length == 0) {
+      console.log("No polls");
+      return;
+    }
     let pollData = [];
     for (let poll of this.polls) {
+      poll.instance.questionForm.markAllAsTouched();
+      // poll.instance.questionForm.updateValueAndValidity();
+      if (poll.instance.questionForm.invalid) {
+        console.log("Invalid form");
+        return;
+      }
       pollData.push(poll.instance.getQuestion());
     }
     console.log(JSON.stringify(pollData));
