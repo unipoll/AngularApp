@@ -1,5 +1,23 @@
-.addQuestionButton {
+.add-question-button, .form-submit{
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.form-submit{
+    margin: 3em 0;
+}
+
+.submit-button{
+    margin: 0 2em;
+}
+
+.divider{
+    margin: 2em 0;
+}
+
+.page-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }

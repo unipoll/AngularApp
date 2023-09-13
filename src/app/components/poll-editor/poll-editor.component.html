@@ -1,13 +1,18 @@
-<h1>Poll Editor</h1>
+<div class="page-header">
+  <h1>Poll Editor</h1>
+  <button mat-flat-button color="primary" (click)="addQuestion()">
+    Add Question <mat-icon>add</mat-icon>
+  </button>
+</div>
 <ng-container #pollsContainer></ng-container>
-
-<div class="addQuestionButton">
+<div class="add-question-button">
   <!-- <button mat-raised-button color="primary" (click)="addQuestion()">Add Question</button> -->
-  <button mat-fab color="primary" (click)="addQuestion()" matTooltip="Add question">
+  <button mat-fab *ngIf="polls.length > 0" color="primary" (click)="addQuestion()" matTooltip="Add question">
     <mat-icon>add</mat-icon>
   </button>
 </div>
-<div class="formSubmit">
-  <button mat-button color="primary">Cancel</button>
-  <button mat-raised-button color="primary" (click)="savePoll()">Save</button>
+<!-- <mat-divider class="divider"></mat-divider> -->
+<div class="form-submit">
+  <button mat-button color="primary" class="submit-button">Cancel</button>
+  <button mat-raised-button color="primary" (click)="savePoll()" class="submit-button" disabled="polls.length==0">Save</button>
 </div>
