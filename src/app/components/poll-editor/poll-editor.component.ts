@@ -1,11 +1,13 @@
 import { Component, ComponentRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
-import { PollComponent } from '../poll/poll.component';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { SingleChoiceComponent } from '../questions/single-choice/single-choice.component';
 import { MultipleChoiceComponent } from '../questions/multiple-choice/multiple-choice.component';
 import { AddQuestionComponent } from '../dialogs/add-question/add-question.component';
+import { DialogCancelComponent } from '../dialogs/cancel/cancel.component';
+
 
 @Component({
   selector: 'app-poll-editor',
@@ -17,13 +19,8 @@ export class PollEditorComponent {
 
   polls: ComponentRef<any>[] = [];
   
-  constructor(private dialog: MatDialog) { }
-
-  replacePoll(data: string) {
-    // Use regex to extract the poll content
-    let regexp = /\[poll\](.*?)\[\/poll\]/g;
-    return data.replaceAll(regexp, "");
-  }
+  constructor(private dialog: MatDialog, private router: Router,
+    private location: Location) { }
 
   addQuestion() {
     const dialogRef = this.dialog.open(AddQuestionComponent);
@@ -88,6 +85,22 @@ export class PollEditorComponent {
       pollData.push(poll.instance.getQuestion());
     }
     console.log(JSON.stringify(pollData));
+  }
+
+  cancel() {
+    const dialogRef = this.dialog.open(DialogCancelComponent, {
+      data: {
+        dialogTitle: "Cancel creating a poll?",
+        dialogMessage: "Are you sure you want to cancel creating a poll? All unsaved changes will be lost."
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.router.
+        this.location.back();
+      }
+    });
   }
 
 }

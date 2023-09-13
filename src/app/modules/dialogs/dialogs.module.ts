@@ -10,31 +10,30 @@ import { DialogAddPolicyComponent } from '../../components/dialogs/dialog-add-po
 import { PolicyListComponent } from '../../components/policy-list/policy-list.component';
 import { DialogSetPolicyComponent } from '../../components/dialogs/dialog-set-policy/dialog-set-policy.component';
 import { AddQuestionComponent } from '../../components/dialogs/add-question/add-question.component';
+import { DialogCancelComponent } from 'src/app/components/dialogs/cancel/cancel.component';
+
+const dialogs = [
+  DialogDeleteComponent,
+  DialogCreateComponent,
+  DialogUpdateComponent,
+  DialogAddMemberComponent,
+  DialogAddPolicyComponent,
+  PolicyListComponent,
+  DialogSetPolicyComponent,
+  AddQuestionComponent,
+  DialogCancelComponent,
+];
 
 @NgModule({
   declarations: [
-    DialogDeleteComponent,
-    DialogCreateComponent,
-    DialogUpdateComponent,
-    DialogAddMemberComponent,
-    DialogAddPolicyComponent,
-    PolicyListComponent,
-    DialogSetPolicyComponent,
-    AddQuestionComponent,
+    dialogs
   ],
   imports: [
     CommonModule,
     MaterialModule
   ],
   exports: [
-    DialogDeleteComponent,
-    DialogCreateComponent,
-    DialogUpdateComponent,
-    DialogAddMemberComponent,
-    DialogAddPolicyComponent,
-    PolicyListComponent,
-    DialogSetPolicyComponent,
-    AddQuestionComponent,
+    dialogs
   ]
 })
 export class DialogsModule { }
