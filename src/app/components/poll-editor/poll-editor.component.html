@@ -14,5 +14,5 @@
 <!-- <mat-divider class="divider"></mat-divider> -->
 <div class="form-submit">
   <button mat-button color="primary" class="submit-button" (click)="cancel()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="savePoll()" class="submit-button" disabled="polls.length==0">Save</button>
+  <button mat-raised-button color="primary" (click)="savePoll()" class="submit-button" [disabled]="polls.length == 0">Save</button>
 </div>
