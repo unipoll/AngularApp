@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { SingleChoiceComponent } from '../questions/single-choice/single-choice.component';
-import { MultipleChoiceComponent } from '../questions/multiple-choice/multiple-choice.component';
+import { SingleChoiceComponent } from './questions/single-choice/single-choice.component';
+import { MultipleChoiceComponent } from './questions/multiple-choice/multiple-choice.component';
 import { AddQuestionComponent } from '../dialogs/add-question/add-question.component';
 import { DialogCancelComponent } from '../dialogs/cancel/cancel.component';
 

@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './modules/material/material.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { DialogsModule } from './modules/dialogs/dialogs.module';
-import { QuestionsModule } from './modules/questions/questions.module';
+import { PollEditorModule } from './modules/poll-editor/poll-editor.module';
 
 // Guards
 import { AuthGuard } from './auth.guard';
@@ -64,7 +64,7 @@ import { SnackBarService } from './services/snackbar.service';
       loader: HttpClient
     }),
     DialogsModule,
-    QuestionsModule
+    PollEditorModule
   ],
   providers: [
     ApiService,
