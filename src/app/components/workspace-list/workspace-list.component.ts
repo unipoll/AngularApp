@@ -73,13 +73,10 @@ export class WorkspaceListComponent implements OnInit {
 
   getWorkspace(workspace: WorkspaceModel) {
     this.workspaceService.setWorkspace(workspace);
-    this.router.navigate(['/workspace/'], {
-      queryParams: { id: workspace.id },
+    this.router.navigate(['/workspace'], {
       relativeTo: this.route,
       state: {
-        workspace_id: workspace.id,
-        workspace_name: workspace.name,
-        workspace_description: workspace.description,
+        workspace_id: workspace.id
       }
     });
   }

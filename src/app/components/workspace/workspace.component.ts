@@ -36,29 +36,26 @@ export class WorkspaceComponent {
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
     private authService: AuthService) {
+      this.workspace_id = this.router.getCurrentNavigation()?.extras.state?.['workspace_id'];
   }
 
   // Get workspace data on init
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.workspace_id = params['id'];
-    });
-
     this.getWorkspace();
   }
 
   // Get workspace data
   async getWorkspace(): Promise<void> {
-    // let workspace = this.workspaceService.getWorkspace();
+    if (this.workspace_id) {
+      this.workspace = await lastValueFrom(this.apiService.getWorkspace(this.workspace_id, true, true, true, true));
 
-    // if (!workspace)
-    // workspace = await lastValueFrom(this.apiService.getWorkspace(this.workspace_id, true, true, true));
-
-    this.workspace = await lastValueFrom(this.apiService.getWorkspace(this.workspace_id, true, true, true));
-
-    await lastValueFrom(this.apiService.getWorkspacePolicy(this.workspace.id)).then((response: any) => {
-      this.authService.setPermissions(response.permissions);
-    });
+      await lastValueFrom(this.apiService.getWorkspacePolicy(this.workspace.id)).then((response: any) => {
+        this.authService.setPermissions(response.permissions);
+      });
+    } 
+    else {
+      this.router.navigate(['/workspaces']);
+    }
   }
 
   isAllowed(permission: string): boolean {
