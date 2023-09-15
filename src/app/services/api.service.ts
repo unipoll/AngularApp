@@ -10,6 +10,7 @@ import { MemberListModel } from '../models/member.model';
 import { GroupListModel, GroupModel } from '../models/group.model';
 import { AccountListModel } from '../models/account.model';
 import { Permissions, PolicyListModel, PolicyModel } from '../models/policy.model';
+import { NewPollRequestBody, PollModel, PollListModel } from '../models/poll.model';
 
 // @ts-ignore
 const API_URL = environment.apiUrl;
@@ -48,18 +49,19 @@ export class ApiService {
   }
 
   // Get workspace by workspace_id
-  getWorkspace(workspace_id: string, policies = false, groups = false, members = false): Observable<WorkspaceModel> {
+  getWorkspace(workspace_id: string, policies = false, groups = false, members = false, polls = false): Observable<WorkspaceModel> {
     let params = new HttpParams();
 
     params.append("include", "none");
     
-    if (policies && groups && members) {
+    if (policies && groups && members && polls) {
       params = params.append("include", "all");
     }
     else {
       params = policies ? params.append("include", "policies") : params;
       params = groups ? params.append("include", "groups") : params;
       params = members ? params.append("include", "members") : params;
+      params = polls ? params.append("include", "polls") : params;
     }
 
     return this.http.get<WorkspaceModel>(API_URL + '/workspaces/' + workspace_id, { params: params });
@@ -192,4 +194,34 @@ export class ApiService {
   getAllAccounts(): Observable<AccountListModel> {
     return this.http.get<AccountListModel>(API_URL + '/accounts');
   }
+
+
+  // Polls
+
+  // Get list of polls in workspace
+  getAllPolls(workspace_id: string): Observable<PollListModel> {
+    return this.http.get<PollListModel>(API_URL + '/workspaces/' + workspace_id + '/polls');
+  }
+
+  // Create poll in workspace
+  createPoll(workspace_id: string, data: NewPollRequestBody): Observable<PollModel> {
+    return this.http.post<PollModel>(API_URL + '/workspaces/' + workspace_id + '/polls', data);
+  }
+
+  // Get poll by id
+  getPoll(poll_id: string, questions = false, policies = false): Observable<PollModel> {
+    let params = new HttpParams();
+
+    params.append("include", "none");
+    
+    if (policies && questions) {
+      params = params.append("include", "all");
+    }
+    else {
+      params = questions ? params.append("include", "members") : params;
+      params = policies ? params.append("include", "policies") : params;
+    }
+    return this.http.get<PollModel>(API_URL + '/polls/' + poll_id, { params: params });
+  }
+
 }
