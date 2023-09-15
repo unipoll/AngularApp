@@ -1,7 +1,7 @@
-import { GroupListModel, GroupModel } from "./group.model";
-import { MemberListModel, MemberModel } from "./member.model";
-import { PolicyListModel, PolicyModel } from "./policy.model";
-
+import { GroupModel } from "./group.model";
+import { MemberModel } from "./member.model";
+import { PolicyModel } from "./policy.model";
+import { PollModel } from "./poll.model";
 
 export interface WorkspaceModel {
   id: string;
@@ -10,6 +10,7 @@ export interface WorkspaceModel {
   members: MemberModel[];
   groups: GroupModel[];
   policies: PolicyModel[];
+  polls: PollModel[];
 }
 
 export interface WorkspaceListModel {
