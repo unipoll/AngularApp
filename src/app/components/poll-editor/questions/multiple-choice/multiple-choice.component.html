@@ -41,12 +41,12 @@
                     <h2>Correct Answers</h2>
                     <mat-form-field class="full-width">
                         <mat-label>Correct Answers</mat-label>
-                        <mat-select required formControlName="correct_options" multiple>
+                        <mat-select required formControlName="correct_answer" multiple>
                             <mat-option *ngFor="let option of options.controls; let i=index" [value]="i">
                                 Option {{ i + 1 }}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="questionForm.get('correct_options')?.hasError('required')">
+                        <mat-error *ngIf="questionForm.get('correct_answer')?.hasError('required')">
                             Please select at least one option
                         </mat-error>
                     </mat-form-field>

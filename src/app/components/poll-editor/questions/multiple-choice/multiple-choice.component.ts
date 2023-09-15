@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
+import { QuestionModel } from 'src/app/models/question.model';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -20,7 +21,7 @@ export class MultipleChoiceComponent {
       this.fb.control(''),
       this.fb.control('')
     ]),
-    correct_options: ['']
+    correct_answer: ['']
   });
 
   constructor(private fb: FormBuilder) {
@@ -43,7 +44,16 @@ export class MultipleChoiceComponent {
   }
 
   getQuestion() {
-    return this.questionForm.value;
+    
+    let qm: QuestionModel = {
+      id: this.question_number,
+      question_type: this.questionForm.value.question_type as string,
+      question: this.questionForm.value.question as string,
+      options: this.questionForm.value.options as string[],
+      correct_answer: [parseInt(this.questionForm.value.correct_answer as string)] as number[]
+    }
+
+    return qm;
   }
 
 }
