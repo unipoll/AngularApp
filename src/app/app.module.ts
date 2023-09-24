@@ -27,6 +27,7 @@ import { GroupListComponent } from './components/group-list/group-list.component
 import { PollListComponent } from './components/poll-list/poll-list.component';
 import { PollEditorComponent } from './components/poll-editor/poll-editor.component';
 import { PollComponent } from './components/poll/poll.component';
+import { QuestionComponent } from './components/poll/questions/question.component';
 
 // Services
 import { SidenavService } from './services/sidenav.service';
@@ -52,6 +53,7 @@ import { SnackBarService } from './services/snackbar.service';
     PollListComponent,
     PollEditorComponent,
     PollComponent,
+    QuestionComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,10 @@
-<mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="1">Option 1</mat-radio-button>
-    <mat-radio-button value="2">Option 2</mat-radio-button>
-</mat-radio-group> 
+<div *ngIf="poll">
+    <div class="page-title">
+        <h1>{{ poll.name }}</h1>
+    </div>
+    <div class="overview-tab">
+        <p>{{ poll.description }}</p>
+    </div>
+    <app-poll-question *ngFor="let question of poll.questions" [question]="question"></app-poll-question>
+</div>
+
