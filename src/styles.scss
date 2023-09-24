@@ -59,7 +59,7 @@ $my-typography: mat.define-typography-config();
 .add-button {
   display: flex;
   flex-direction: row-reverse;
-  padding: 2rem 0;
+  padding: 0 16px !important;
 }
 
 .content {
