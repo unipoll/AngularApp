@@ -28,6 +28,7 @@
 
 .workspace-card {
   margin: 2rem 0;
+  padding: 0 1rem;
 }
 
 .workspace-card:hover, tr.workspace-row:hover {
@@ -41,9 +42,6 @@ $yellow: #fff9d5;
 $red: #e0aaaa;
 $colors: $blue, $green, $yellow, $red;
 
-.workspace-card{
-  padding: 0 1rem;
-}
 
 .workspace-card-header {
   // border-top-left-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
