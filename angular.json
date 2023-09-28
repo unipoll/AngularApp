@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "PollingApp": {
+        "unipollApp": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -104,10 +104,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "PollingApp:build:production"
+                            "browserTarget": "unipollApp:build:production"
                         },
                         "development": {
-                            "browserTarget": "PollingApp:build:development"
+                            "browserTarget": "unipollApp:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -115,7 +115,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "PollingApp:build"
+                        "browserTarget": "unipollApp:build"
                     }
                 },
                 "test": {
