@@ -1,7 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild  } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Component, ChangeDetectorRef, ViewChild  } from '@angular/core';
 import { SidenavService } from '../../services/sidenav.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -14,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 

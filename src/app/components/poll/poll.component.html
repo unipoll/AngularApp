@@ -1,0 +1,10 @@
+<div *ngIf="poll">
+    <div class="page-title">
+        <h1>{{ poll.name }}</h1>
+    </div>
+    <div class="overview-tab">
+        <p>{{ poll.description }}</p>
+    </div>
+    <app-poll-question *ngFor="let question of poll.questions" [question]="question"></app-poll-question>
+</div>
+

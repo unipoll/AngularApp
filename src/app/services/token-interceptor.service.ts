@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TokenInterceptorService implements HttpInterceptor {
 
   constructor(private router: Router, private authService: AuthService ) { }

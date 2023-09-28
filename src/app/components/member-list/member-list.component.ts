@@ -3,9 +3,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, tap, timer } from 'rxjs';
-import { MemberListModel } from 'src/app/models/member-list.model';
-import { UserShortModel } from 'src/app/models/user-short.model';
-import { ApiService } from 'src/app/services/api.service';
+import { MemberModel, MemberListModel } from '../../models/member.model';
+import { ApiService } from '../../services/api.service';
+import { WorkspaceModel } from '../../models/workspace.model';
+import { GroupModel } from '../../models/group.model';
+import { MatDialog } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
+import { WorkspaceService } from 'src/app/services/workspace.service';
+import { DialogAddMemberComponent } from '../dialogs/dialog-add-member/dialog-add-member.component';
+import { AccountListModel, AccountModel } from '../../models/account.model'
+import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-member-list',
@@ -13,21 +21,31 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./member-list.component.scss']
 })
 export class MemberListComponent implements OnInit {
-  // @Input() memberList!: UserShortModel[];
-  @Input() workspace_id!: string;
+  @Input() workspace!: WorkspaceModel;
+  @Input() group!: GroupModel;
+  @Input() memberList!: MemberModel[];
 
+  // Table data
   displayedColumns!: string[];
   displayedColumnsWithOptions!: string[];
-  dataSource!: MatTableDataSource<UserShortModel>;
+  dataSource!: MatTableDataSource<MemberModel>;
 
+  // Table attributes
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Permissions
+  public can_add_members: boolean = false;
+
+  // Timer for loading content
   private loading = true;
   private timer = timer(3000);
   userFlow!: boolean;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService, 
+    private _dialog: MatDialog, 
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     if (window.innerWidth > 600) {
@@ -41,26 +59,45 @@ export class MemberListComponent implements OnInit {
       if (val == 0) {
         this.loading = false;
       }
-    });
+    });  
 
-    this.apiService.getWorkspaceMembers(this.workspace_id).pipe(
+    this.memberList ? this.makeTable(this.memberList) : this.updateMemberList();
+
+    if (this.group)
+      this.can_add_members = this.authService.isAllowed('add_group_members');
+    else if (this.workspace)
+      this.can_add_members = this.authService.isAllowed('add_workspace_members');
+  }
+
+  updateMemberList() {
+    let requst;
+    if (this.group)
+      requst = this.apiService.getGroupMembers(this.group.id);
+    else if (this.workspace)
+      requst = this.apiService.getWorkspaceMembers(this.workspace.id);
+    else
+      return;
+
+    requst.pipe(
       tap((data) => (
-        this.makeFullName(data.members),
-        this.dataSource = new MatTableDataSource(data.members),
-        this.dataSource.paginator = this.paginator,
-        this.dataSource.sort = this.sort
+        this.makeTable(data.members)
       ))
     ).subscribe();
   }
 
-  
-  
-
-  makeFullName(members: Array<UserShortModel>) {
+  makeFullName(members: Array<MemberModel>) {
     members.forEach(member => {
       member.full_name = member.first_name + ' ' + member.last_name;
     });
   }
+
+  makeTable(members: Array<MemberModel>) {
+    this.makeFullName(members),
+    this.dataSource = new MatTableDataSource(members),
+    this.dataSource.paginator = this.paginator,
+    this.dataSource.sort = this.sort
+  }
+  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -74,5 +111,99 @@ export class MemberListComponent implements OnInit {
   // Getter for loading
   get isLoading(): boolean {
     return this.loading;
+  }
+
+  // Add member
+  addMember() {
+    let dialogRef;
+    let resource: { type: string; id: string; };
+    if (this.workspace) {
+      resource = {
+        type: 'workspace',
+        id: this.workspace.id,
+      };
+      this.apiService.getAllAccounts().pipe(
+        tap((data) => (
+          dialogRef = this._dialog.open(DialogAddMemberComponent, {
+            data: {
+              accountList: data.accounts,
+              memberList: this.memberList,
+              resource: resource,
+            }
+          }),
+          dialogRef.afterClosed().subscribe({
+            next: (val: any) => {
+              if (val) {
+                this.updateMemberList();
+              }
+            },
+          })
+        ))
+      ).subscribe();
+    }
+    else if (this.group) {
+      resource = {
+        type: 'group',
+        id: this.group.id,
+      };
+
+      this.apiService.getWorkspaceMembers(this.group.workspace.id).pipe(
+        tap((data) => (
+          dialogRef = this._dialog.open(DialogAddMemberComponent, {
+            data: {
+              accountList: data.members,
+              memberList: this.memberList,
+              resource: resource,
+            }
+          }),
+          dialogRef.afterClosed().subscribe({
+            next: (val: any) => {
+              if (val) {
+                this.updateMemberList();
+              }
+            },
+          })
+        ))
+      ).subscribe();
+    }
+    
+  }
+
+  removeMember(member: MemberModel) {
+    let resource: { type: string; id: string; name: string; } | undefined;
+    if (this.workspace) {
+      resource = {
+        type: 'workspace',
+        id: this.workspace.id,
+        name: this.workspace.name,
+      };
+    }
+    if (this.group) {
+      resource = {
+        type: 'group',
+        id: this.group.id,
+        name: this.group.name,
+      };
+    }
+    if (resource) {
+      const dialogRef = this._dialog.open(DialogDeleteComponent, {
+        data: {
+          resourceType: 'member',
+          resourceID: member.id,
+          resourceName: member.first_name + ' ' + member.last_name,
+          parentResourceType: resource.type,
+          parentResourceID: resource.id,
+          parentResourceName: resource.name,
+        }
+      });
+
+      dialogRef.afterClosed().subscribe({
+        next: (val) => {
+          if (val) {
+            this.updateMemberList();
+          }
+        },
+      });
+    }
   }
 }

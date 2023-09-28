@@ -28,3 +28,117 @@ $my-typography: mat.define-typography-config();
 //   @include mat.all-component-colors($angular-dark-theme);
 // }
 
+.page-title {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem 0;
+
+  &h1 {
+    font-size: x-large;
+    font-weight: 50;
+    color: #ccc;
+  }
+}
+
+.tab-title {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+
+  &h1 {
+    font-size: x-large;
+    font-weight: 50;
+    color: #ccc;
+  }
+}
+
+.tab-title {
+  margin: 2rem 0;
+}
+
+.add-button {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0 16px !important;
+}
+
+.content {
+  width: 60rem;
+  max-width: 100%;
+  padding-top: 1rem;}
+
+.mat-drawer-content {
+  margin: 0 !important;
+  width: 100%;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.card-header {
+  padding: 0;
+}
+
+.table-header {
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.table-cell {
+  text-align: center;
+}
+
+tr.row:hover {
+  background: whitesmoke;
+}
+
+tr.row:active {
+  background: #efefef;
+}
+
+.paginator {
+  width: 100%;
+  border-top: #efefef 1px solid;
+  // position: absolute;
+  // bottom: 0;
+}
+
+.filter-field {
+  // font-size: 14px;
+  width: 100%;
+
+  >.mat-mdc-form-field-subscript-wrapper {
+    display: none;
+
+  }
+}
+
+.table-option-cell.mdc-data-table__cell {
+  text-align: right;
+}
+
+.error {
+  justify-content: center;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+
+.error.title {
+  font-size: 20px;
+}
+
+.overview-tab {
+  margin: 2rem;
+}
+
+markdown p {
+  margin: auto !important;
+}
