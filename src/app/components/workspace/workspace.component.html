@@ -1,13 +1,15 @@
-
 <div *ngIf="workspace">
   <div class="page-title">
     <h1>{{ workspace.name }}</h1>
   </div>
   <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Overview" *ngIf="workspace">
+    <!-- <mat-tab label="Overview" *ngIf="workspace">
       <div class="overview-tab">
         {{ workspace.description }}
       </div>
+    </mat-tab> -->
+    <mat-tab label="Polls">
+      <app-poll-list [workspace]="workspace" [pollList]="workspace.polls"></app-poll-list>
     </mat-tab>
     <mat-tab *ngIf="isAllowed('get_workspace_policies')" label="Policies">
       <app-policy-list [workspace]="workspace" [policyList]="workspace.policies"></app-policy-list>

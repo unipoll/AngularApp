@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { SnackBarService } from './snackbar.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();

@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+@import 'src/app/app.component.scss';
+
+.poll-card {
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+.poll-list {
+    margin: auto;
+    // margin-top: 56px;
+    width: 60rem;
+    max-width: 100%;
+  }
+
+.poll-card:hover,
+tr.poll-row:hover {
+    cursor: pointer;
+    background: whitesmoke;
+}
+
+.poll-card-header {
+    // border-top-left-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+    // border-top-right-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.poll-card-content {
+    border-top: 1px solid #ddd;
+    padding: 1rem !important;
+    color: #777;
+}
+
+.toggle-group {
+    height: 36px;
+
+    // ::ng-deep>.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    //     line-height: 36px !important;
+    // }
+}
+
+.mat-button-toggle-label-content {
+    line-height: 36px !important;
+}
+
+// .top-buttons {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 1rem;
+//   }
+
+.mat-button-toggle-checked {
+    background: mat.get-color-from-palette($my-palette, 500);
+    color: #fff;
+}
+
+.more-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

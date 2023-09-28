@@ -6,7 +6,7 @@
     min-width: 20em;
 }
 
-.form-field {
+.form-field, .form-select, .chip-list {
     width: 100%;
     // margin-bottom: 20px;
 }
@@ -19,8 +19,4 @@
 
 .button {
     width: 40%;
-}
-
-.chip-list {
-    width: 100%;
 }

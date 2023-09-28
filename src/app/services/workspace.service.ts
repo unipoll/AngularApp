@@ -6,7 +6,7 @@ import { GroupModel } from '../models/group.model';
 
 
 // Service to pass info to workspace page without http request
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WorkspaceService {
 
   // Stores workspace data as a WorkspaceModel

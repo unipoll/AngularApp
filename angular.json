@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "PollingApp": {
+        "unipollApp": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -30,10 +30,36 @@
                             "src/assets"
                         ],
                         "styles": [
-                          "@angular/material/prebuilt-themes/deeppurple-amber.css",
-                          "src/styles.scss"
+                            "@angular/material/prebuilt-themes/deeppurple-amber.css",
+                            "src/styles.scss",
+                            "node_modules/prismjs/themes/prism-okaidia.css",
+                            "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
+                            "node_modules/prismjs/plugins/command-line/prism-command-line.css",
+                            "node_modules/katex/dist/katex.min.css"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/marked/marked.min.js",
+                            "node_modules/prismjs/prism.js",
+                            "node_modules/prismjs/plugins/highlight-keywords/prism-highlight-keywords.min.js",
+                            "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
+                            "node_modules/prismjs/plugins/command-line/prism-command-line.js",
+                            "node_modules/prismjs/components/prism-css.min.js",
+                            "node_modules/prismjs/components/prism-bash.min.js", 
+                            "node_modules/prismjs/components/prism-c.min.js", 
+                            "node_modules/prismjs/components/prism-cpp.min.js", 
+                            "node_modules/prismjs/components/prism-diff.min.js", 
+                            "node_modules/prismjs/components/prism-javascript.min.js", 
+                            "node_modules/prismjs/components/prism-latex.min.js", 
+                            "node_modules/prismjs/components/prism-markup.min.js", 
+                            "node_modules/prismjs/components/prism-markdown.min.js", 
+                            "node_modules/prismjs/components/prism-python.min.js", 
+                            "node_modules/prismjs/components/prism-typescript.min.js",                           
+                            "node_modules/emoji-toolkit/lib/js/joypixels.min.js",
+                            "node_modules/katex/dist/katex.min.js",
+                            "node_modules/katex/dist/contrib/auto-render.min.js",
+                            "node_modules/mermaid/dist/mermaid.min.js",
+                            "node_modules/clipboard/dist/clipboard.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -78,10 +104,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "PollingApp:build:production"
+                            "browserTarget": "unipollApp:build:production"
                         },
                         "development": {
-                            "browserTarget": "PollingApp:build:development"
+                            "browserTarget": "unipollApp:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -89,7 +115,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "PollingApp:build"
+                        "browserTarget": "unipollApp:build"
                     }
                 },
                 "test": {
@@ -106,10 +132,38 @@
                             "src/assets"
                         ],
                         "styles": [
-                          "@angular/material/prebuilt-themes/deeppurple-amber.css",
-                          "src/styles.scss"
+                            "@angular/material/prebuilt-themes/deeppurple-amber.css",
+                            "src/styles.scss",
+                            "node_modules/prismjs/themes/prism-okaidia.css",
+                            "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
+                            "node_modules/prismjs/plugins/command-line/prism-command-line.css",
+                            "node_modules/katex/dist/katex.min.css"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/marked/marked.min.js",
+                            "node_modules/prismjs/prism.js",
+                            "node_modules/prismjs/plugins/highlight-keywords/prism-highlight-keywords.min.js",
+                            "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
+                            "node_modules/prismjs/plugins/command-line/prism-command-line.js",
+                            "node_modules/prismjs/plugins/autoloader/prism-autoloader.min.js",
+                            "node_modules/prismjs/components/prism-css.min.js",
+                            "node_modules/prismjs/components/prism-bash.min.js", 
+                            "node_modules/prismjs/components/prism-c.min.js", 
+                            "node_modules/prismjs/components/prism-cpp.min.js", 
+                            "node_modules/prismjs/components/prism-diff.min.js", 
+                            "node_modules/prismjs/components/prism-javascript.min.js", 
+                            "node_modules/prismjs/components/prism-latex.min.js", 
+                            "node_modules/prismjs/components/prism-markup.min.js", 
+                            "node_modules/prismjs/components/prism-markdown.min.js", 
+                            "node_modules/prismjs/components/prism-python.min.js", 
+                            "node_modules/prismjs/components/prism-typescript.min.js",                           
+                            "node_modules/emoji-toolkit/lib/js/joypixels.min.js",
+                            "node_modules/katex/dist/katex.min.js",
+                            "node_modules/katex/dist/contrib/auto-render.min.js",
+                            "node_modules/mermaid/dist/mermaid.min.js",
+                            "node_modules/clipboard/dist/clipboard.min.js"
+                        ],
+                        "karmaConfig": "karma.conf.js"
                     }
                 }
             }

@@ -10,7 +10,7 @@ import { map, Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Polling App';
+  title = 'unipollApp';
 
   private _hide_sidebar: boolean = false;
 
