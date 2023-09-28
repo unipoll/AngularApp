@@ -44,8 +44,8 @@ import { SnackBarService } from './services/snackbar.service';
     RegisterComponent,
     LoginComponent,
     WorkspaceListComponent,
-    SidebarComponent,
     HeaderComponent,
+    SidebarComponent,
     WorkspaceComponent,
     MemberListComponent,
     GroupListComponent,
@@ -69,6 +69,7 @@ import { SnackBarService } from './services/snackbar.service';
     PollEditorModule
   ],
   providers: [
+    HttpClient,
     ApiService,
     AuthService,
     AuthGuard,

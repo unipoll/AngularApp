@@ -16,7 +16,7 @@ export class MultipleChoiceComponent {
   // Create a form group 
   questionForm = this.fb.group({
     question_type: ['multiple-choice'],
-    question: [''],
+    question: this.fb.control(''),
     options: this.fb.array([
       this.fb.control(''),
       this.fb.control('')

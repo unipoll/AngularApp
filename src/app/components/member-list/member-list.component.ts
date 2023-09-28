@@ -44,10 +44,7 @@ export class MemberListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService, 
-    private router: Router,
-    private route: ActivatedRoute, 
     private _dialog: MatDialog, 
-    private workspaceService: WorkspaceService,
     private authService: AuthService) { }
 
   ngOnInit(): void {

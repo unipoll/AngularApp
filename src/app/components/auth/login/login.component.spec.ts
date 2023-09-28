@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/modules/material/material.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -8,6 +11,11 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+      ],
       declarations: [ LoginComponent ]
     })
     .compileComponents();

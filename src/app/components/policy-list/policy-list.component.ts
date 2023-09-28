@@ -45,11 +45,8 @@ export class PolicyListComponent {
 
   constructor(
     private apiService: ApiService, 
-    private router: Router,
-    private route: ActivatedRoute,
     private _dialog: MatDialog, 
-    private authService: AuthService,
-    private workspaceService: WorkspaceService) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     if (window.innerWidth > 600) {

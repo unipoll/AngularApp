@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MarkdownService } from 'ngx-markdown';
 import { QuestionModel } from 'src/app/models/question.model';
 
 @Component({
@@ -10,14 +9,4 @@ import { QuestionModel } from 'src/app/models/question.model';
 })
 export class SingleChoiceComponent {
   @Input() question!: QuestionModel;
-
-  constructor(private markdownService: MarkdownService) { }
-
-  setQuestion(question: string) {
-    this.question.question = question;
-  }
-
-  update() {
-    this.markdownService.reload();
-  }
 }

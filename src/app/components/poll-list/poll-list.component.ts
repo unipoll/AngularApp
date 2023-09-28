@@ -63,6 +63,9 @@ export class PollListComponent {
   }
 
   updatePollList() {
+    if (!this.workspace) {
+      return;
+    }
     this.apiService.getAllPolls(this.workspace.id).pipe(
       tap((data) => (
         this.dataSource = new MatTableDataSource(data.polls),

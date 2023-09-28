@@ -32,9 +32,8 @@ export class WorkspaceComponent {
   // Constructor
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private apiService: ApiService,
-    private workspaceService: WorkspaceService,
     private authService: AuthService) {
       this.workspace_id = this.router.getCurrentNavigation()?.extras.state?.['workspace_id'];
   }

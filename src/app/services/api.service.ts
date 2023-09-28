@@ -15,7 +15,7 @@ import { NewPollRequestBody, PollModel, PollListModel } from '../models/poll.mod
 // @ts-ignore
 const API_URL = environment.apiUrl;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(private http: HttpClient) {}
 

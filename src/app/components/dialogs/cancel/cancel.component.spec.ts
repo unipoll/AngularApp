@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogCancelComponent } from './cancel.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MaterialModule } from 'src/app/modules/material/material.module';
 
 describe('DialogCancelComponent', () => {
   let component: DialogCancelComponent;
@@ -8,7 +10,20 @@ describe('DialogCancelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogCancelComponent ]
+      imports: [
+        MaterialModule
+      ],
+      declarations: [ DialogCancelComponent ],
+      providers: [
+        { 
+          provide: MAT_DIALOG_DATA, 
+          useValue: {} 
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        },
+      ]
     })
     .compileComponents();
 

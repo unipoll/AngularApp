@@ -65,11 +65,13 @@ export class GroupListComponent {
   }
 
   updateGroupList() {
-    this.apiService.getWorkspaceGroups(this.workspace.id).pipe(
-      tap((data) => (
-        this.makeTable(data.groups)
-      ))
-    ).subscribe();
+    if (this.workspace) {
+      this.apiService.getWorkspaceGroups(this.workspace.id).pipe(
+        tap((data) => (
+          this.makeTable(data.groups)
+        ))
+      ).subscribe();
+    }
   }
 
   makeTable(groups: Array<GroupModel>) {
