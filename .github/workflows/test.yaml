@@ -16,11 +16,15 @@ jobs:
         node-version: [18.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+    - name: Install Chrome
+      uses: browser-actions/setup-chrome@v1
+    - run: chrome --version
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm test
+    - run: npm run test -- --watch=false --browsers=ChromeHeadlessNoSandbox
