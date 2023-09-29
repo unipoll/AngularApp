@@ -19,7 +19,9 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v3
     - name: Install Chrome
-      uses: browser-actions/setup-chrome@v1
+      run: |
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo apt install ./google-chrome-stable_current_amd64.deb
     - run: chrome --version
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
