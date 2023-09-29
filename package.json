@@ -1,6 +1,6 @@
 {
-  "name": "polling-app",
-  "version": "0.0.0",
+  "name": "unipoll-app",
+  "version": "0.8.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
