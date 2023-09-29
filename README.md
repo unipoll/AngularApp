@@ -1,6 +1,7 @@
-# PollingApp
+# University Polling App
+[![Test](https://github.com/unipoll/angular/actions/workflows/test.yaml/badge.svg)](https://github.com/unipoll/angular/actions/workflows/test.yaml)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16
 
 ## Development server
 
