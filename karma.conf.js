@@ -26,7 +26,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/polling-app'),
+      dir: require('path').join(__dirname, './coverage/unipoll-app'),
       subdir: '.',
       reporters: [
         { type: 'html' },
