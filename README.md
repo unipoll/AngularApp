@@ -1,6 +1,8 @@
 # University Polling App
 [![Test](https://github.com/unipoll/angular/actions/workflows/test.yaml/badge.svg)](https://github.com/unipoll/angular/actions/workflows/test.yaml)
 
+![GitHub release (with filter)](https://img.shields.io/github/v/release/unipoll/angular)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16
 
 ## Development server
