@@ -6,10 +6,6 @@ on:
 jobs:
   build:
     runs-on: arc-runner-k8s
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
     - uses: actions/checkout@v3
     - name: Semantic Release
