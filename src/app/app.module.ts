@@ -96,8 +96,10 @@ import { environment } from 'src/environments/environment';
             ).subscribe();
           } else {
             // Load settings for development
-            const settings = require('../config.json');
-            settingsService.apiUrl = settings.api_url;
+            // const settings = require('../config.json');
+            // settingsService.apiUrl = settings.api_url;
+            // @ts-ignore
+            settingsService.apiUrl = environment.apiUrl;
             resolve(true);
           }
         });

@@ -21,11 +21,6 @@ export class ApiService {
 
   constructor(private http: HttpClient, private settings: SettingsService) {
     this.API_URL = settings.apiUrl;
-    
-    if (this.API_URL === undefined) {
-      // @ts-ignore
-      this.API_URL = environment.apiUrl;
-    }
   }
 
 
