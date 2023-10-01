@@ -1,5 +1,5 @@
 // Modules
-import { NgModule, SecurityContext } from '@angular/core';
+import { APP_INITIALIZER, NgModule, SecurityContext, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -36,6 +36,9 @@ import { WorkspaceService } from './services/workspace.service';
 import { ApiService } from './services/api.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SnackBarService } from './services/snackbar.service';
+import { SettingsService } from './services/settings.service';
+import { of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -69,6 +72,38 @@ import { SnackBarService } from './services/snackbar.service';
     PollEditorModule
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => {
+        const settingsService = inject(SettingsService);
+        const httpClient = inject(HttpClient);
+        return () => new Promise<boolean>((resolve, reject) => {
+          if (environment.production) {
+            // Load settings for production
+            httpClient.get('./config.json').pipe(
+              tap({
+                next: (settings: any) => {
+                  console.log(settings);
+                  settingsService.apiUrl = settings.API_URL;
+                  resolve(true);
+                },
+                error: (err) => {
+                  settingsService.apiUrl = "http://localhost:8000/api";
+                  resolve(true);
+                  return of(null);
+                }
+              })
+            ).subscribe();
+          } else {
+            // Load settings for development
+            const settings = require('../config.json');
+            settingsService.apiUrl = settings.api_url;
+            resolve(true);
+          }
+        });
+      },
+      multi: true,
+    },
     HttpClient,
     ApiService,
     AuthService,
