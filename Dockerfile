@@ -13,4 +13,9 @@ FROM nginx:latest
 
 COPY --from=build /usr/local/app/dist/unipoll-app /usr/share/nginx/html
 
+RUN rm /usr/share/nginx/html/config.json
+
+COPY ["./docker_entrypoint.sh", "/docker-entrypoint.d/my-script.sh"]
+RUN chown nginx:nginx /docker-entrypoint.d/my-script.sh
+
 EXPOSE 80
