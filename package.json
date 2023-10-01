@@ -1,10 +1,10 @@
 {
-  "name": "polling-app",
-  "version": "0.0.0",
+  "name": "unipoll-app",
+  "version": "0.8.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -24,8 +24,9 @@
     "@angular/platform-browser-dynamic": "^16.2.3",
     "@angular/router": "^16.2.3",
     "@material/icon-button": "^14.0.0",
+    "@semantic-release/changelog": "^6.0.3",
     "clipboard": "^2.0.11",
-    "mermaid": "^9.4.3",
+        "mermaid": "^9.4.3",
     "ngx-markdown": "^16.0.0",
     "prismjs": "^1.29.0",
     "rxjs": "~7.8.0",
@@ -36,8 +37,10 @@
     "@angular-devkit/build-angular": "^16.2.1",
     "@angular/cli": "^16.2.1",
     "@angular/compiler-cli": "^16.2.3",
+        "@semantic-release/git": "^10.0.1",
     "@types/jasmine": "~4.3.0",
     "@types/marked": "^4.3.1",
+    "@types/node": "^20.8.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -46,6 +49,36 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "node-sass": "^8.0.0",
+    "semantic-release": "^22.0.5",
     "typescript": "~4.9.4"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/changelog",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            "dist/unipoll-app/*"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/git"
+    ],
+    "preset": "angular"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unipoll/angular"
   }
 }
