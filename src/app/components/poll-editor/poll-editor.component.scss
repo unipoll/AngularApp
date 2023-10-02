@@ -36,11 +36,10 @@
     align-items: center;
 }
 
-.add-question-container
-{
+.add-question-container {
     width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .content {
