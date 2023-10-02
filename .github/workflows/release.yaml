@@ -69,4 +69,4 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: unipoll/angular:${{ needs.release.outputs.version }}, unipoll/api:latest
+        tags: unipoll/web-app:${{ needs.release.outputs.version }}, unipoll/web-app:latest
