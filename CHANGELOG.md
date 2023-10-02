@@ -1,3 +1,11 @@
+## [0.9.2](https://github.com/unipoll/angular/compare/v0.9.1...v0.9.2) (2023-10-02)
+
+
+### Bug Fixes
+
+* Added nginx config ([8085525](https://github.com/unipoll/angular/commit/808552550e7ce5457174ffb37f9f3d31a357c906))
+* FIxed issue with api_url not populating ([174856d](https://github.com/unipoll/angular/commit/174856d6e327b958aeab026eeb317a49658b5978))
+
 ## [0.9.1](https://github.com/unipoll/angular/compare/v0.9.0...v0.9.1) (2023-10-02)
 
 
