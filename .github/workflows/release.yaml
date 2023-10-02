@@ -47,6 +47,10 @@ jobs:
     runs-on: arc-runner-k8s
     needs: release
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: main  
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Context for Buildx
@@ -68,5 +72,6 @@ jobs:
       if: needs.release.outputs.published == 'true'
       uses: docker/build-push-action@v5
       with:
+        context: .
         push: true
         tags: unipoll/web-app:${{ needs.release.outputs.version }}, unipoll/web-app:latest
