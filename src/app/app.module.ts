@@ -83,7 +83,6 @@ import { environment } from 'src/environments/environment';
             httpClient.get('./config.json').pipe(
               tap({
                 next: (settings: any) => {
-                  console.log(settings);
                   settingsService.apiUrl = settings.API_URL;
                   resolve(true);
                 },
