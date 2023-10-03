@@ -23,6 +23,11 @@ jobs:
       #     token: ${{ steps.generate_token.outputs.token }}
       #     repository: unipoll/gollum-test
       #     event-type: update_submodules
+      - name: Install curl
+        run: |
+          sudo apt update
+          sudo apt install curl -y
+          sudo apt install jq -y
       - name: Generate JWT and token
         id: generate-github-app-tokens
         uses: jamestrousdale/github-app-jwt-token@0.1.4
@@ -30,10 +35,6 @@ jobs:
           app-id: ${{ secrets.APP_ID}}
           app-installation-id: ${{ secrets.APP_INSTALLATION_ID }}
           private-key: ${{ secrets.APP_PEM }}
-      - name: Install curl
-        run: |
-          sudo apt update
-          sudo apt install curl -y
       - name: Trigger the action
         run: |
           curl -L \
