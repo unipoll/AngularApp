@@ -8,6 +8,7 @@ jobs:
   docs: 
     runs-on: arc-runner-k8s
     permissions:
+      actions: write
       contents: write
     steps:
       - name: Generate a token
