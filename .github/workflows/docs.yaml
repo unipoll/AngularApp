@@ -20,5 +20,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ steps.generate_token.outputs.token }}
-          repository: unipoll/gollum-test
+          repository: unipoll/docs
           event-type: update_submodules
