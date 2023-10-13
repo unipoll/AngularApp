@@ -61,7 +61,7 @@ export class GroupListComponent {
 
     this.groupList ? this.makeTable(this.groupList) : this.updateGroupList();
 
-    this.can_create_groups = this.authService.isAllowed('create_group');
+    this.can_create_groups = this.authService.isAllowed('add_groups');
   }
 
   updateGroupList() {

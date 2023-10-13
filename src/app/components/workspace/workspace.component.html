@@ -11,10 +11,10 @@
     <mat-tab label="Polls">
       <app-poll-list [workspace]="workspace" [pollList]="workspace.polls"></app-poll-list>
     </mat-tab>
-    <mat-tab *ngIf="isAllowed('get_workspace_policies')" label="Policies">
+    <mat-tab *ngIf="isAllowed('get_policies')" label="Policies">
       <app-policy-list [workspace]="workspace" [policyList]="workspace.policies"></app-policy-list>
     </mat-tab>
-    <mat-tab *ngIf="isAllowed('get_workspace_members')" label="Members">
+    <mat-tab *ngIf="isAllowed('get_members')" label="Members">
       <app-member-list [workspace]="workspace" [memberList]="workspace.members"></app-member-list>
     </mat-tab>
     <mat-tab *ngIf="isAllowed('get_groups')" label="Groups">

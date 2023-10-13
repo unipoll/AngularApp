@@ -63,10 +63,11 @@ export class MemberListComponent implements OnInit {
 
     this.memberList ? this.makeTable(this.memberList) : this.updateMemberList();
 
-    if (this.group)
-      this.can_add_members = this.authService.isAllowed('add_group_members');
-    else if (this.workspace)
-      this.can_add_members = this.authService.isAllowed('add_workspace_members');
+    // if (this.group)
+    //   this.can_add_members = this.authService.isAllowed('add_members');
+    // else if (this.workspace)
+    //   this.can_add_members = this.authService.isAllowed('add_members');
+    this.can_add_members = this.authService.isAllowed('add_members');
   }
 
   updateMemberList() {
