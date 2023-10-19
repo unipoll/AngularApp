@@ -1,3 +1,10 @@
+## [0.9.6](https://github.com/unipoll/angular/compare/v0.9.5...v0.9.6) (2023-10-19)
+
+
+### Bug Fixes
+
+* Fixed asset path for release ([0f87fad](https://github.com/unipoll/angular/commit/0f87fad4907388ceb1c66930213bd0a29e35afb1))
+
 ## [0.9.5](https://github.com/unipoll/angular/compare/v0.9.4...v0.9.5) (2023-10-19)
 
 
