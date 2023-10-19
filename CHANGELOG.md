@@ -1,3 +1,10 @@
+## [0.9.5](https://github.com/unipoll/angular/compare/v0.9.4...v0.9.5) (2023-10-19)
+
+
+### Bug Fixes
+
+* Added label to asset ([253254f](https://github.com/unipoll/angular/commit/253254fbef983cee44eaae655adf6f6ec43e79a3))
+
 ## [0.9.4](https://github.com/unipoll/angular/compare/v0.9.3...v0.9.4) (2023-10-19)
 
 
