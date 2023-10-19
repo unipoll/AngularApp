@@ -1,3 +1,15 @@
+## [0.9.3](https://github.com/unipoll/angular/compare/v0.9.2...v0.9.3) (2023-10-19)
+
+
+### Bug Fixes
+
+* Release package ([6341c4c](https://github.com/unipoll/angular/commit/6341c4c8a34e547db6d01b8c9804794feb2fb06d))
+
+
+### Reverts
+
+* The action does not work with App credentials ([a4209d2](https://github.com/unipoll/angular/commit/a4209d2962ae3f734e5bde6bf82e6fb22716f26d))
+
 ## [0.9.2](https://github.com/unipoll/angular/compare/v0.9.1...v0.9.2) (2023-10-02)
 
 
