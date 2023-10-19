@@ -65,7 +65,10 @@
         "@semantic-release/github",
         {
           "assets": [
-            "dist/unipoll-app.tar.gz"
+            {
+              "path": "dist",
+              "label": "unipoll-app-${nextRelease.gitTag}"
+            }
           ],
           "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }
