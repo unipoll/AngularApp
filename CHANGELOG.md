@@ -1,3 +1,10 @@
+## [0.9.4](https://github.com/unipoll/angular/compare/v0.9.3...v0.9.4) (2023-10-19)
+
+
+### Bug Fixes
+
+* Added step to build tarball for release ([ad508f5](https://github.com/unipoll/angular/commit/ad508f5bcf5e1c0cef7cdccb7e2162fda5345ac3))
+
 ## [0.9.3](https://github.com/unipoll/angular/compare/v0.9.2...v0.9.3) (2023-10-19)
 
 
