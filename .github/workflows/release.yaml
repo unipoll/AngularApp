@@ -38,10 +38,10 @@ jobs:
       run: |
         npm ci
         npm run build
-    - name: Build a tarball
-      run: tar -czf unipoll-app.tar.gz dist/unipoll-app
-    - name: Cleanup dist folder
-      run: rm -rf dist/unipoll-app
+    # - name: Build a tarball
+    #   run: tar -czf unipoll-app.tar.gz dist/unipoll-app
+    # - name: Cleanup dist folder
+    #   run: rm -rf dist/unipoll-app
     - name: Semantic Release
       id: semantic
       uses: cycjimmy/semantic-release-action@v4
