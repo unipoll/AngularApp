@@ -1,3 +1,10 @@
+## [0.9.7](https://github.com/unipoll/angular/compare/v0.9.6...v0.9.7) (2023-10-20)
+
+
+### Bug Fixes
+
+* Added -C flag to "build a tarball" step ([97c403c](https://github.com/unipoll/angular/commit/97c403cab7eb85325fde9629287f5900d7132bc6))
+
 ## [0.9.6](https://github.com/unipoll/angular/compare/v0.9.5...v0.9.6) (2023-10-19)
 
 
