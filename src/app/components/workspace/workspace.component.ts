@@ -48,8 +48,8 @@ export class WorkspaceComponent {
     if (this.workspace_id) {
       this.workspace = await lastValueFrom(this.apiService.getWorkspace(this.workspace_id, true, true, true, true));
 
-      await lastValueFrom(this.apiService.getWorkspacePolicy(this.workspace.id)).then((response: any) => {
-        this.authService.setPermissions(response.permissions);
+      await lastValueFrom(this.apiService.getWorkspacePolicies(this.workspace.id, this.authService.getAccount()?.id)).then((response: any) => {
+        this.authService.setPermissions(response.policies[0].permissions);
       });
     } 
     else {

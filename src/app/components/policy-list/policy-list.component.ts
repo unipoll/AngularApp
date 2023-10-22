@@ -76,7 +76,7 @@ export class PolicyListComponent {
     if (this.group)
       requst = this.apiService.getAllGroupsPolicies(this.group.id);
     else if (this.workspace)
-      requst = this.apiService.getAllWorkspacesPolicies(this.workspace.id);
+      requst = this.apiService.getWorkspacePolicies(this.workspace.id);
     else
       return;
 
