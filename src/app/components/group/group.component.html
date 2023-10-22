@@ -9,10 +9,10 @@
         </div>
       </mat-tab>
       <mat-tab label="Members">
-        <app-member-list *ngIf="isAllowed('get_group_members')" [group]="group" [memberList]="group.members"></app-member-list>
+        <app-member-list *ngIf="isAllowed('get_members')" [group]="group" [memberList]="group.members"></app-member-list>
       </mat-tab>
       <mat-tab label="Policies">
-        <app-policy-list *ngIf="isAllowed('get_group_policies')" [group]="group" [policyList]="group.policies"></app-policy-list>
+        <app-policy-list *ngIf="isAllowed('get_policies')" [group]="group" [policyList]="group.policies"></app-policy-list>
       </mat-tab>
       <mat-tab label="Setting">Permissions and other settings</mat-tab>
     </mat-tab-group>
