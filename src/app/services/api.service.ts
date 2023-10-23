@@ -116,15 +116,9 @@ export class ApiService {
     return this.http.get<PolicyListModel>(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policies', options);
   }
 
-  // Get workspace policy for specific account, or current user if account_id was not provided
-  // getWorkspacePolicy(workspace_id: string, account_id?: string): Observable<PolicyModel> {
-  //   const options = account_id ? { params: { account_id: account_id } } : {}; 
-  //   this.http.get<PolicyListModel>(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policies', options);
-  // }
-
   // Update workspace policy
-  setWorkspacePolicy(workspace_id: string, data: any) {
-    return this.http.put(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policy', data);
+  updateWorkspacePolicy(workspace_id: string, policy_id: string, data: any) {
+    return this.http.put(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policies/' + policy_id, data);
   }
 
   getWorkspacePermissions(): Observable<Permissions> {
@@ -185,19 +179,14 @@ export class ApiService {
     return this.http.delete(this.settings.apiUrl + '/groups/' + group_id + '/members/' + member_id);
   }
 
-  // Get all group policies
-  getAllGroupsPolicies(group_id: string): Observable<PolicyListModel> {
-    return this.http.get<PolicyListModel>(this.settings.apiUrl + '/groups/' + group_id + '/policies');
-  }
-
   // Get group policy for specific account, or current user if account_id was not provided
-  getGroupPolicy(group_id: string, account_id?: string): Observable<PolicyModel> {
+  getGroupPolicies(group_id: string, account_id?: string): Observable<PolicyListModel> {
     const options = account_id ? { params: { account_id: account_id } } : {}; 
-    return this.http.get<PolicyModel>(this.settings.apiUrl + '/groups/' + group_id + '/policies', options);
+    return this.http.get<PolicyListModel>(this.settings.apiUrl + '/groups/' + group_id + '/policies', options);
   }
 
-  setGroupPolicy(group_id: string, data: any) {
-    return this.http.put(this.settings.apiUrl + '/groups/' + group_id + '/policies', data);
+  updateGroupPolicy(group_id: string, policy_id: string, data: any) {
+    return this.http.put(this.settings.apiUrl + '/groups/' + group_id + '/policies/' + policy_id, data);
   }
 
   getGroupPermissions(): Observable<Permissions> {

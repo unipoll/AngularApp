@@ -60,16 +60,15 @@ export class DialogSetPolicyComponent {
     let request_method = null;
     
     let request_data = {
-      policy_id: this.policy.id,
       permissions: this.permissions
     };
 
     console.log("Resource Type", this.data.resource.type);
     if (this.data.resource.type == 'workspace') {
       console.log("request_data", request_data);
-      request_method = this._apiService.setWorkspacePolicy(this.data.resource.id, request_data);
+      request_method = this._apiService.updateWorkspacePolicy(this.data.resource.id, this.policy.id, request_data);
     } else if (this.data.resource.type == 'group') {
-      request_method = this._apiService.setGroupPolicy(this.data.resource.id, request_data);
+      request_method = this._apiService.updateGroupPolicy(this.policy.id, this.policy.id, request_data);
     }
 
 

@@ -64,23 +64,19 @@ export class PolicyListComponent {
 
     this.policyList ? this.makeTable(this.policyList) : this.updatePolicyList();
 
-    if (this.group)
-      this.can_set_policies = this.authService.isAllowed('set_group_policy');
-    else if (this.workspace)
-      this.can_set_policies = this.authService.isAllowed('set_workspace_policy');
-
+    this.can_set_policies = this.authService.isAllowed('update_policies');
   }
 
   updatePolicyList() {
-    let requst;
+    let request;
     if (this.group)
-      requst = this.apiService.getAllGroupsPolicies(this.group.id);
+      request = this.apiService.getGroupPolicies(this.group.id);
     else if (this.workspace)
-      requst = this.apiService.getWorkspacePolicies(this.workspace.id);
+      request = this.apiService.getWorkspacePolicies(this.workspace.id);
     else
       return;
 
-    requst.pipe(
+      request.pipe(
       tap((data) => (
         this.makeTable(data.policies)
       ))
@@ -89,10 +85,10 @@ export class PolicyListComponent {
 
   makeFullName(policies: Array<PolicyModel>) {
     policies.forEach(policy => {
-      if (policy.policy_holder_type == 'account') {
+      if (policy.policy_holder_type == 'Member') {
         let policy_holder = policy.policy_holder as MemberModel;
         policy.name = policy_holder.first_name + ' ' + policy_holder.last_name;
-      } else if (policy.policy_holder_type == 'group') {
+      } else if (policy.policy_holder_type == 'Group') {
         let policy_holder = policy.policy_holder as GroupModel;
         policy.name = policy_holder.name;
       }
