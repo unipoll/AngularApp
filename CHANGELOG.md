@@ -1,3 +1,17 @@
+# [0.10.0](https://github.com/unipoll/angular/compare/v0.9.7...v0.10.0) (2023-10-23)
+
+
+### Bug Fixes
+
+* Removed getPolicy request ([f076945](https://github.com/unipoll/angular/commit/f076945eccf6179fe1583aea1b1fc91167ecf136))
+* Specified node version in docker file ([44d2615](https://github.com/unipoll/angular/commit/44d26151b9a9d4dde144fd42c62f1d4f54e61fe8))
+* Updated policy requests ([de4be2f](https://github.com/unipoll/angular/commit/de4be2fb89bdd569eae8d74cf36c1fd8cc6f84f4))
+
+
+### Features
+
+* Added get user account functionality ([cb04e95](https://github.com/unipoll/angular/commit/cb04e95457e211011a0ca700c34ddeef340fe537))
+
 ## [0.9.7](https://github.com/unipoll/angular/compare/v0.9.6...v0.9.7) (2023-10-20)
 
 
