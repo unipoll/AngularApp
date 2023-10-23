@@ -8,7 +8,7 @@ import { WorkspaceModel } from '../models/workspace.model';
 import { WorkspaceListModel } from '../models/workspace.model';
 import { MemberListModel } from '../models/member.model';
 import { GroupListModel, GroupModel } from '../models/group.model';
-import { AccountListModel } from '../models/account.model';
+import { AccountListModel, AccountModel } from '../models/account.model';
 import { Permissions, PolicyListModel, PolicyModel } from '../models/policy.model';
 import { NewPollRequestBody, PollModel, PollListModel } from '../models/poll.model';
 import { SettingsService } from './settings.service';
@@ -39,6 +39,20 @@ export class ApiService {
       last_name: fd.get('last_name')?.value
     }, { observe: 'response' });
   }
+
+
+  // Accounts
+
+  // Get list of accounts
+  getAllAccounts(): Observable<AccountListModel> {
+    return this.http.get<AccountListModel>(this.settings.apiUrl + '/accounts');
+  }
+
+  // Get user account
+  getUserAccount(): Observable<AccountModel> {
+    return this.http.get<AccountModel>(this.settings.apiUrl + '/accounts/me');
+  }
+
 
   // Workspaces
 
@@ -97,19 +111,14 @@ export class ApiService {
   }
 
   // Get all policies
-  getAllWorkspacesPolicies(workspace_id: string): Observable<PolicyListModel> {
-    return this.http.get<PolicyListModel>(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policies');
-  }
-
-  // Get workspace policy for specific account, or current user if account_id was not provided
-  getWorkspacePolicy(workspace_id: string, account_id?: string): Observable<PolicyModel> {
-    const options = account_id ? { params: { account_id: account_id } } : {}; 
-    return this.http.get<PolicyModel>(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policy', options);
+  getWorkspacePolicies(workspace_id: string, account_id?: string): Observable<PolicyListModel> {
+    const options = account_id ? { params: { account_id: account_id } } : {};
+    return this.http.get<PolicyListModel>(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policies', options);
   }
 
   // Update workspace policy
-  setWorkspacePolicy(workspace_id: string, data: any) {
-    return this.http.put(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policy', data);
+  updateWorkspacePolicy(workspace_id: string, policy_id: string, data: any) {
+    return this.http.put(this.settings.apiUrl + '/workspaces/' + workspace_id + '/policies/' + policy_id, data);
   }
 
   getWorkspacePermissions(): Observable<Permissions> {
@@ -170,28 +179,18 @@ export class ApiService {
     return this.http.delete(this.settings.apiUrl + '/groups/' + group_id + '/members/' + member_id);
   }
 
-  // Get all group policies
-  getAllGroupsPolicies(group_id: string): Observable<PolicyListModel> {
-    return this.http.get<PolicyListModel>(this.settings.apiUrl + '/groups/' + group_id + '/policies');
-  }
-
   // Get group policy for specific account, or current user if account_id was not provided
-  getGroupPolicy(group_id: string, account_id?: string): Observable<PolicyModel> {
+  getGroupPolicies(group_id: string, account_id?: string): Observable<PolicyListModel> {
     const options = account_id ? { params: { account_id: account_id } } : {}; 
-    return this.http.get<PolicyModel>(this.settings.apiUrl + '/groups/' + group_id + '/policy', options);
+    return this.http.get<PolicyListModel>(this.settings.apiUrl + '/groups/' + group_id + '/policies', options);
   }
 
-  setGroupPolicy(group_id: string, data: any) {
-    return this.http.put(this.settings.apiUrl + '/groups/' + group_id + '/policy', data);
+  updateGroupPolicy(group_id: string, policy_id: string, data: any) {
+    return this.http.put(this.settings.apiUrl + '/groups/' + group_id + '/policies/' + policy_id, data);
   }
 
   getGroupPermissions(): Observable<Permissions> {
     return this.http.get<Permissions>(this.settings.apiUrl + '/groups/permissions');
-  }
-
-  // Accounts
-  getAllAccounts(): Observable<AccountListModel> {
-    return this.http.get<AccountListModel>(this.settings.apiUrl + '/accounts');
   }
 
 

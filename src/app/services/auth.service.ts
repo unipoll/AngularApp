@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { SnackBarService } from './snackbar.service';
+import { AccountModel } from '../models/account.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,9 +13,14 @@ export class AuthService {
   private _permissions$ = new BehaviorSubject<string[]>([]);
   permissions$ = this._permissions$.asObservable();
 
+  private _account$ = new BehaviorSubject<AccountModel | null>(null);
+  account$ = this._account$.asObservable();
+
   constructor(private apiService: ApiService, private snackBarService: SnackBarService) {
     const token = localStorage.getItem('access_token');
+    const account = localStorage.getItem('userAccount');
     this._isLoggedIn$.next(!!token);
+    this._account$.next(account ? JSON.parse(account) : null);
   }
 
   setPermissions(permissions: string[]) {
@@ -24,6 +30,10 @@ export class AuthService {
 
   getPermissions() {
     return this._permissions$.value;
+  }
+
+  getAccount() {
+    return this._account$.value;
   }
 
   isAllowed(permission: string) {
@@ -56,6 +66,11 @@ export class AuthService {
       tap((response: any) => {
         this._isLoggedIn$.next(true);
         localStorage.setItem('access_token', response.body.access_token);
+
+        this.apiService.getUserAccount().subscribe((account: AccountModel) => {
+          this._account$.next(account);
+          localStorage.setItem('userAccount', JSON.stringify(account));
+        });
       })
     );
   }

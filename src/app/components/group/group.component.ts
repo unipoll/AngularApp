@@ -50,8 +50,8 @@ export class GroupComponent {
     this.group = await lastValueFrom(this.apiService.getGroup(this.group_id, true, true));
     this.workspace = this.group.workspace;
 
-    await lastValueFrom(this.apiService.getGroupPolicy(this.group.id)).then((response: any) => {
-      this.authService.setPermissions(response.permissions);
+    await lastValueFrom(this.apiService.getGroupPolicies(this.group.id, this.authService.getAccount()?.id)).then((response: any) => {
+      this.authService.setPermissions(response.policies[0].permissions);
     })
   }
 
