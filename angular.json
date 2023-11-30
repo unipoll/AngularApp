@@ -105,10 +105,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "unipollApp:build:production"
+              "buildTarget": "unipollApp:build:production"
             },
             "development": {
-              "browserTarget": "unipollApp:build:development"
+              "buildTarget": "unipollApp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -116,7 +116,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "unipollApp:build"
+            "buildTarget": "unipollApp:build"
           }
         },
         "test": {
