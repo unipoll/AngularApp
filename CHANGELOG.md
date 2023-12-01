@@ -1,3 +1,15 @@
+# [0.11.0](https://github.com/unipoll/angular/compare/v0.10.0...v0.11.0) (2023-12-01)
+
+
+### Bug Fixes
+
+* Fixed error duing module build ([7948145](https://github.com/unipoll/angular/commit/794814510a89fb012e737326a4438e9d0f91ced4))
+
+
+### Features
+
+* Added control flow ([7ecbdcd](https://github.com/unipoll/angular/commit/7ecbdcd45397ac2f2723b6784d9ea59bc3d590f1))
+
 # [0.10.0](https://github.com/unipoll/angular/compare/v0.9.7...v0.10.0) (2023-10-23)
 
 
