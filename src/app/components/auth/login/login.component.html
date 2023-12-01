@@ -12,23 +12,33 @@
     <mat-form-field class="form-field field">
       <mat-label>Email</mat-label>
       <input matInput [errorStateMatcher]="matcher" type="email" placeholder="email@example.com" formControlName="email">
-      <mat-error *ngIf="form.hasError('wrongCredentials') && !email?.hasError('required') && !email?.hasError('email')">
-        Wrong credentials
-      </mat-error>
-      <mat-error *ngIf="email?.hasError('email') && !email?.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="email?.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
+      @if (form.hasError('wrongCredentials') && !email?.hasError('required') && !email?.hasError('email')) {
+        <mat-error>
+          Wrong credentials
+        </mat-error>
+      }
+      @if (email?.hasError('email') && !email?.hasError('required')) {
+        <mat-error>
+          Please enter a valid email address
+        </mat-error>
+      }
+      @if (email?.hasError('required')) {
+        <mat-error>
+          Email is <strong>required</strong>
+        </mat-error>
+      }
     </mat-form-field>
     <mat-form-field class="form-field field">
-      <mat-error *ngIf="form.hasError('wrongCredentials') && !form.hasError('required')">
-        Wrong credentials
-      </mat-error>
-      <mat-error *ngIf="password?.hasError('required')">
-        Password is <strong>required</strong>
-      </mat-error>
+      @if (form.hasError('wrongCredentials') && !form.hasError('required')) {
+        <mat-error>
+          Wrong credentials
+        </mat-error>
+      }
+      @if (password?.hasError('required')) {
+        <mat-error>
+          Password is <strong>required</strong>
+        </mat-error>
+      }
       <input matInput [errorStateMatcher]="matcher" placeholder="Password" formControlName="password" type="password" />
     </mat-form-field>
     <div class="button-container">

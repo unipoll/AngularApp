@@ -12,8 +12,12 @@
     </svg>
     <span class="spacer"></span>
     <button mat-icon-button class="flex-stretch" (click)="toggleTheme()">
-      <mat-icon *ngIf="currentTheme == 'light'" class="mr-8">brightness_5</mat-icon>
-      <mat-icon *ngIf="currentTheme == 'dark'" >bedtime</mat-icon>
+      @if (currentTheme == 'light') {
+        <mat-icon class="mr-8">brightness_5</mat-icon>
+      }
+      @if (currentTheme == 'dark') {
+        <mat-icon >bedtime</mat-icon>
+      }
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

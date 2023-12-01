@@ -1,8 +1,12 @@
 <div>
-  <div *ngIf="(this.hideSidebar == false)">
-    <app-sidebar></app-sidebar>
-  </div>
-  <div *ngIf="(this.hideSidebar == true)">
-    <router-outlet></router-outlet>
-  </div>
+  @if ((this.hideSidebar == false)) {
+    <div>
+      <app-sidebar></app-sidebar>
+    </div>
+  }
+  @if ((this.hideSidebar == true)) {
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  }
 </div>
