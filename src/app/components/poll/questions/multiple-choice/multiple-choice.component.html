@@ -1,7 +1,9 @@
 <markdown emoji katex [data]="question.question"></markdown>
 <mat-selection-list [multiple]="true" color="primary">
-    <mat-list-option *ngFor="let option of question.options" [value]="option"
-        togglePosition="before" class="option">
-        <markdown emoji katex [data]="option"></markdown>
+  @for (option of question.options; track option) {
+    <mat-list-option [value]="option"
+      togglePosition="before" class="option">
+      <markdown emoji katex [data]="option"></markdown>
     </mat-list-option>
+  }
 </mat-selection-list>

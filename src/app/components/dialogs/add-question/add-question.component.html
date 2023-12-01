@@ -1,26 +1,29 @@
 <div mat-dialog-title class="title">
-    <h1 class="mat-h1">Set Policy</h1>
+  <h1 class="mat-h1">Set Policy</h1>
 </div>
-    <div mat-dialog-content class="content">
-        <mat-form-field class="form-select">
-            <mat-label>Question Type</mat-label>
-            <mat-select [formControl]="questionTypeControl">
-                <mat-option *ngFor="let type of question_types" [value]="type">
-                    {{ type.name }}
-                </mat-option>
-            </mat-select>
-            <mat-error *ngIf="questionTypeControl.hasError('required')">Please choose the question type</mat-error>
-            <!-- <mat-hint>{{ questionTypeControl.value?.name }}</mat-hint> -->
-            
-        </mat-form-field>
-        <p>
-            {{ questionTypeControl.value?.description }}
-        </p>
-    </div>
-    <!-- Submit Button -->
-    <div mat-dialog-actions class="action">
-        <button mat-flat-button [mat-dialog-close] class="button">Cancel</button>
-        <button mat-flat-button color="primary" [mat-dialog-close]="questionTypeControl.value?.returnValue" class="button">
-            Update
-        </button>
-    </div>
+<div mat-dialog-content class="content">
+  <mat-form-field class="form-select">
+    <mat-label>Question Type</mat-label>
+    <mat-select [formControl]="questionTypeControl">
+      @for (type of question_types; track type) {
+        <mat-option [value]="type">
+          {{ type.name }}
+        </mat-option>
+      }
+    </mat-select>
+    @if (questionTypeControl.hasError('required')) {
+      <mat-error>Please choose the question type</mat-error>
+    }
+    <!-- <mat-hint>{{ questionTypeControl.value?.name }}</mat-hint> -->
+  </mat-form-field>
+  <p>
+    {{ questionTypeControl.value?.description }}
+  </p>
+</div>
+<!-- Submit Button -->
+<div mat-dialog-actions class="action">
+  <button mat-flat-button [mat-dialog-close] class="button">Cancel</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="questionTypeControl.value?.returnValue" class="button">
+    Update
+  </button>
+</div>
