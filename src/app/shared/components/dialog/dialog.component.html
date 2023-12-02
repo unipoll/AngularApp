@@ -1,0 +1,12 @@
+<div mat-dialog-title class="title">
+	<h1 class="mat-h1">{{ dialogTitle }}</h1>
+</div>
+<p>{{ dialogMessage }}</p>
+<div mat-dialog-content class="content">
+    <ng-content></ng-content>
+</div>
+<div mat-dialog-actions class="action">
+    @for (button of dialogButtons; track $index) {
+        <button mat-flat-button type="button" class="button" color={{button.color}} (click)="button.action()">{{ button.text }}</button>
+    }
+</div>
