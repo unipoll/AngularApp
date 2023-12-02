@@ -1,0 +1,16 @@
+@import 'src/app/app.component.scss';
+
+.field {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+
+.button {
+  padding: 1.5rem 2rem;
+}

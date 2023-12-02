@@ -1,0 +1,47 @@
+<div id="login-page">
+    <form layout-align='center center' id='login-form' [formGroup]="form" (ngSubmit)="submitForm()">
+        <auth-header subtitle="Sign In"></auth-header>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            <mat-label>Email</mat-label>
+            <input matInput [errorStateMatcher]="matcher" type="email" placeholder="email@example.com"
+                formControlName="email">
+            @if (form.hasError('wrongCredentials') && !email?.hasError('required') && !email?.hasError('email')) {
+            <mat-error>
+                Wrong credentials
+            </mat-error>
+            }
+            @if (email?.hasError('email') && !email?.hasError('required')) {
+            <mat-error>
+                Please enter a valid email address
+            </mat-error>
+            }
+            @if (email?.hasError('required')) {
+            <mat-error>
+                Email is <strong>required</strong>
+            </mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            @if (form.hasError('wrongCredentials') && !form.hasError('required')) {
+            <mat-error>
+                Wrong credentials
+            </mat-error>
+            }
+            @if (password?.hasError('required')) {
+            <mat-error>
+                Password is <strong>required</strong>
+            </mat-error>
+            }
+            <input matInput [errorStateMatcher]="matcher" placeholder="Password" formControlName="password"
+                type="password" />
+        </mat-form-field>
+        <div class="button-container">
+            <button mat-flat-button type="submit" color="primary" class="button" [disabled]="!form.valid">
+                Sign In
+            </button>
+            <button mat-button color="primary" class="button" (click)="goToSignUp()">
+                Sign Up
+            </button>
+        </div>
+    </form>
+</div>

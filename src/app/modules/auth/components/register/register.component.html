@@ -1,0 +1,56 @@
+<div id="register-page">
+    <form layout-align='center center' [formGroup]="form" id="register-form" (ngSubmit)="submitForm()">
+        <auth-header subtitle="Sign Up"></auth-header>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="first_name" placeholder="First Name">
+        </mat-form-field>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="last_name" placeholder="Last Name">
+        </mat-form-field>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" name="email" formControlName="email" placeholder="Email">
+            @if (email.hasError('required')) {
+            <mat-error class="field-message">Email is required</mat-error>
+            }
+            @if (email.hasError('email')) {
+            <mat-error class="field-message">Please enter a valid email</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" formControlName="password" placeholder="Password">
+            @if (password.hasError('required')) {
+            <mat-error class="field-message">Password is required</mat-error>
+            }
+            @if (password.hasError('minlength') && !password.hasError('passwordStrength')) {
+            <mat-error class="field-message">Password must have at least 8
+                characters</mat-error>
+            }
+            @if (password.hasError('passwordStrength')) {
+            <mat-error class="field-message">Password must have at least 1
+                uppercase, 1 lowercase, 1 number and 1 special character</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="form-field field" [appearance]="field_appearance">
+            <mat-label>Password</mat-label>
+            <input matInput [errorStateMatcher]="matcher" type="password" name="confirm_password"
+                formControlName="confirm_password" placeholder="Confirm Password">
+            @if (form.hasError('nomatch')) {
+            <mat-error class="field-message"> The passwords do not match</mat-error>
+            }
+            @if (confirm_password.hasError('required')) {
+            <mat-error class="field-message">This field is
+                required</mat-error>
+            }
+        </mat-form-field>
+        <div class="button-container">
+            <button mat-flat-button type="submit" class="button" color="primary" [disabled]="!form.valid">
+                Sign Up
+            </button>
+        </div>
+        <p class="login-link">Already have an account? <a routerLink="/login">Login</a></p>
+    </form>
+</div>
