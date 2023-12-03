@@ -1,33 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/auth/register/register.component';
-import { WorkspaceListComponent } from './components/workspace-list/workspace-list.component';
-import { WorkspaceComponent } from './components/workspace/workspace.component';
-import { AuthGuard } from './auth.guard';
-import { GroupListComponent } from './components/group-list/group-list.component';
-import { GroupComponent } from './components/group/group.component';
-import { PollEditorComponent } from './components/poll-editor/poll-editor.component';
-import { PollComponent } from './components/poll/poll.component';
+import { requireAccount } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'workspaces', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'workspaces', component: WorkspaceListComponent, canActivate: [AuthGuard] },
-  { 
-    path: 'workspace', 
-    component: WorkspaceComponent, 
-    canActivate: [AuthGuard],
-  },
-  { path: 'workspace/new-poll', component: PollEditorComponent, canActivate: [AuthGuard] },
-  { path: 'group', component: GroupComponent, canActivate: [AuthGuard]},
-  { path: 'poll', component: PollComponent, canActivate: [AuthGuard] }
+
+    // { path: '**', redirectTo: '', pathMatch: 'full' }
+
+    {
+        path: '',
+        redirectTo: 'workspaces',
+        pathMatch: 'full'
+    },
+    {
+        path: 'workspaces',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/workspace-list/workspace-list.module').then(m => m.WorkspaceListModule),
+        canActivate: [requireAccount],
+    },
+    {
+        path: 'workspaces/:id',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/workspace/workspace.module').then(m => m.WorkspaceModule),
+        canActivate: [requireAccount]
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }
