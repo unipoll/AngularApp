@@ -7,24 +7,27 @@ import { AuthService } from '../../modules/auth/services/auth.service';
 @Injectable({ providedIn: 'root' })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  constructor(private router: Router, private authService: AuthService ) { }
+    constructor(private router: Router, private authService: AuthService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const request = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-      }
-    });
-    return next.handle(request).pipe(
-      tap(event => {},err => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
-            this.authService.logout();
-            console.log('Unauthorized');
-            this.router.navigate(['/login']);
-          }
-        }
-      })
-    );
-  }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const request = req.clone({
+            setHeaders: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        });
+        return next.handle(request).pipe(
+            tap({
+                // next: (event) => { }, 
+                error: (error) => {
+                    if (error instanceof HttpErrorResponse) {
+                        if (error.status === 401) {
+                            this.authService.logout();
+                            // console.log('Unauthorized');
+                            this.router.navigate(['/login']);
+                        }
+                    }
+                }
+            })
+        );
+    }
 }
