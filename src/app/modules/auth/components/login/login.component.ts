@@ -12,26 +12,12 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent{
     matcher = new MyErrorStateMatcher();
     form: FormGroup = new FormGroup({});
     field_appearance = 'outline' as MatFormFieldAppearance;
 
-    constructor(private authService: AuthService, private router: Router, private snackBarService: SnackBarService) { }
-
-    get email() {
-        return this.form.get('email');
-    }
-
-    get password() {
-        return this.form.get('password');
-    }
-
-    ngOnInit(): void {
-        if (this.authService.isLoggedIn) {
-            this.router.navigate(['/']);
-            return;
-        }
+    constructor(private authService: AuthService, private router: Router, private snackBarService: SnackBarService) {
         this.form = new FormGroup({
             email: new FormControl(null, [
                 Validators.required,
@@ -41,6 +27,14 @@ export class LoginComponent implements OnInit {
                 Validators.required
             ])
         });
+    }
+
+    get email() {
+        return this.form.get('email');
+    }
+
+    get password() {
+        return this.form.get('password');
     }
 
     submitForm() {
@@ -57,18 +51,18 @@ export class LoginComponent implements OnInit {
                     this.snackBarService.openSnackBar('Logged in successfully');
                     this.router.navigate(['/']);
                 }
-            }, 
+            },
             error: (error) => {
-                if(error.status == 400) {
-                this.form.setErrors({ wrongCredentials: true });
+                if (error.status == 400) {
+                    this.form.setErrors({ wrongCredentials: true });
+                }
             }
-        }
-    });
-}
+        });
+    }
 
-goToSignUp() {
-    this.router.navigate(['/register']);
-}
+    goToSignUp() {
+        this.router.navigate(['/register']);
+    }
 }
 
 
