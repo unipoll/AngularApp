@@ -1,0 +1,44 @@
+.top-buttons {
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+
+.list {
+    margin: auto;
+    // margin-top: 56px;
+    width: 60rem;
+    max-width: 100%;
+}
+
+.card {
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+.card:hover,
+tr.row:hover {
+    cursor: pointer;
+    background: whitesmoke;
+}
+
+.card-header {
+    // border-top-left-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+    // border-top-right-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.card-content {
+    border-top: 1px solid #ddd;
+    padding: 1rem;
+    color: #777;
+}
+
+.more-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
