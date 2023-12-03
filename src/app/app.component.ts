@@ -3,7 +3,6 @@ import { Event as NavigationEvent, NavigationStart, Router } from '@angular/rout
 import { map, Observable } from 'rxjs';
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
