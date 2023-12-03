@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32.534985mm"
+   height="27.753754mm"
+   viewBox="0 0 32.534985 27.753754"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/mpisman/Downloads/logo.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="7.2407734"
+     inkscape:cx="92.600605"
+     inkscape:cy="56.623785"
+     inkscape:window-width="3800"
+     inkscape:window-height="2070"
+     inkscape:window-x="7700"
+     inkscape:window-y="70"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:object-paths="true"
+     showguides="false" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect4382"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect4382"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
+    <rect
+       x="226.23083"
+       y="69.706604"
+       width="364.99609"
+       height="144.09979"
+       id="rect89537" />
+    <rect
+       x="509.36627"
+       y="171.29657"
+       width="274.15497"
+       height="73.918701"
+       id="rect86471" />
+    <rect
+       x="223.60027"
+       y="31.22537"
+       width="687.81183"
+       height="122.56673"
+       id="rect12968" />
+    <filter
+       inkscape:label="Fast Crop"
+       inkscape:auto-region="false"
+       inkscape:menu="Fill and Transparency"
+       inkscape:menu-tooltip="Does not filter but adds a filter region"
+       style="color-interpolation-filters:sRGB"
+       id="filter3204">
+      <feColorMatrix
+         type="saturate"
+         values="1"
+         id="feColorMatrix3202"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix3228" />
+      <feColorMatrix
+         id="feColorMatrix3230"
+         type="saturate"
+         values="1"
+         in="fbSourceGraphic" />
+    </filter>
+    <filter
+       inkscape:label="Fast Crop"
+       inkscape:auto-region="false"
+       inkscape:menu="Fill and Transparency"
+       inkscape:menu-tooltip="Does not filter but adds a filter region"
+       style="color-interpolation-filters:sRGB"
+       id="filter3226">
+      <feColorMatrix
+         type="saturate"
+         values="1"
+         id="feColorMatrix3224" />
+    </filter>
+    <filter
+       id="mask-powermask-path-effect4382_inverse"
+       inkscape:label="filtermask-powermask-path-effect4382"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect4382_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect4382_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <inkscape:path-effect
+       effect="fill_between_many"
+       method="originald"
+       linkedpaths="#path2019,0,1"
+       id="path-effect2101" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-0.28560008,-2.9510483)">
+    <circle
+       id="path963"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583"
+       cx="-24.86635"
+       cy="49.04491"
+       r="0.024920028" />
+    <circle
+       id="path965"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583"
+       cx="-24.86635"
+       cy="49.04491"
+       r="0.024920028" />
+    <path
+       id="rect4209"
+       mask="none"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 16.420443,3.313362 0.72238285,13.775885 16.336871,24.168454 31.965202,13.673218 Z m 0.800335,2.8902916 c 0.193221,0 0.386698,0.049288 0.534753,0.147962 l 2.132861,1.4212404 c 0.296112,0.1973484 0.296112,0.5152847 0,0.7126333 L 8.1499677,16.308351 c -0.2961119,0.197348 -0.772882,0.197348 -1.068994,0 L 4.9481131,14.88711 c -0.296112,-0.197348 -0.2961117,-0.515285 0,-0.712633 L 16.686537,6.3516156 c 0.148056,-0.098674 0.34102,-0.147962 0.534241,-0.147962 z m -3.201342,7.3512954 c 0.08453,0 0.16902,0.02175 0.233795,0.06492 l 2.733753,1.822348 c 0.129548,0.08634 0.129548,0.225186 0,0.311526 l -5.135273,3.422753 c -0.129549,0.08634 -0.33804,0.08634 -0.467588,0 L 8.6498567,17.35415 c -0.1295488,-0.08634 -0.1295485,-0.225186 0,-0.311526 l 5.1352723,-3.422753 c 0.06478,-0.04317 0.149773,-0.06492 0.234307,-0.06492 z m 6.403197,1.106192 c 0.120763,0 0.24175,0.03093 0.334284,0.0926 l 2.533798,1.688478 c 0.185069,0.123342 0.18507,0.322053 0,0.445396 l -7.336323,4.889288 c -0.18507,0.123343 -0.4835,0.123342 -0.66857,0 l -2.533285,-1.688478 c -0.185069,-0.123342 -0.18507,-0.322053 0,-0.445396 l 7.336323,-4.889288 c 0.09253,-0.06167 0.213009,-0.0926 0.333773,-0.0926 z m 5.612602,3.94364 -9.681444,6.408667 -9.5296835,-6.379477 v 5.129349 a 9.6053434,6.4016384 0 0 0 -0.00872,0.177151 9.6053434,6.4016384 0 0 0 0.00872,0.177152 v 0.101661 h 0.00564 a 9.6053434,6.4016384 0 0 0 9.5906955,6.123311 9.6053434,6.4016384 0 0 0 9.591207,-6.123311 h 0.02359 z" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#5a2ca0;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect8505"
+       width="0.64121205"
+       height="8.5918455"
+       x="31.32399"
+       y="13.673218"
+       inkscape:export-filename="/home/mpisman/Downloads/UniPollLogo.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="path8847"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 31.65407,21.691893 c -0.576847,0.01173 -1.152512,1.081355 -1.158617,3.177751 a 1.1631629,0.85210928 0 0 0 -0.0017,0.03482 1.1631629,0.85210928 0 0 0 1.163127,0.852568 1.1631629,0.85210928 0 0 0 1.162565,-0.83352 h 0.0011 c 0,-2.176439 -0.583934,-3.243463 -1.166509,-3.231611 z" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text86469"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect86471);fill:#000000;fill-opacity:1;stroke:none" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text89535"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect89537);fill:#000000;fill-opacity:1;stroke:none" />
+    <path
+       inkscape:original-d="M 0,0"
+       inkscape:path-effect="#path-effect2101"
+       d="M 0,0"
+       id="path2103" />
+  </g>
+</svg>
