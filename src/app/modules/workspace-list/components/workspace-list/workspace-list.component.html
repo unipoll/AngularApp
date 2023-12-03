@@ -1,0 +1,31 @@
+<div class="page-title">
+    <!-- Title -->
+    <h1>Workspaces</h1>
+</div>
+<div class="top-buttons">
+    <!-- Button Toggle between Table/Grid -->
+    <mat-button-toggle-group class="toggle-group" value="grid" #viewToggle="matButtonToggleGroup">
+        <mat-button-toggle value="table">
+            <mat-icon>view_list</mat-icon>Table
+        </mat-button-toggle>
+        <mat-button-toggle value="grid">
+            <mat-icon>view_module</mat-icon>Grid
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+    <!-- Create Workspace Button -->
+    <button mat-flat-button color="primary" (click)="createWorkspace()">Create Workspace</button>
+</div>
+@if (workspaceList) {
+    <app-grid-or-table-view
+        [filterPlaceholder]="'Filter workspace'"
+        [viewMode]="viewToggle.value"
+        [list]="workspaceList"
+        [optionsMenu]="optionsMenu"
+        [cardClickAction]="getWorkspace.bind(this)"
+        [rowClickAction]="getWorkspace.bind(this)"
+        [displayedColumns]="displayedColumns"
+    >
+    </app-grid-or-table-view>
+} @else {
+    <mat-spinner class="loading-spinner"></mat-spinner>
+}
