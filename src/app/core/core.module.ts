@@ -11,30 +11,26 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { MaterialModule } from '../modules/material/material.module';
 import { RouterModule } from '@angular/router';
 
-// Guards
-import { AuthGuard } from './guards/auth.guard';
-
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidebarComponent
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule
-  ],
-  exports: [
-    HeaderComponent,
-    SidebarComponent
-  ],
-  providers: [
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
-      multi: true
-    },
-  ]
+    declarations: [
+        HeaderComponent,
+        SidebarComponent
+    ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule
+    ],
+    exports: [
+        HeaderComponent,
+        SidebarComponent
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptorService,
+            multi: true
+        },
+    ]
 })
 export class CoreModule { }
