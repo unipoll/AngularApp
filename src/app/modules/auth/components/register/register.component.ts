@@ -12,7 +12,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   form: FormGroup = new FormGroup({});
   matcher = new MyErrorStateMatcher();
 
@@ -56,13 +56,6 @@ export class RegisterComponent implements OnInit {
 
 
   };
-
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn) {
-      this.router.navigate(['/workspaces']);
-      return;
-    }
-  }
 
   get email() {
     return this.form.controls['email'];
