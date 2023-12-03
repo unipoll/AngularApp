@@ -2,9 +2,9 @@
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 @include mat.core();
@@ -28,116 +28,146 @@ $my-typography: mat.define-typography-config();
 // }
 
 .page-title {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 2rem 0;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 2rem 0;
 
-  &h1 {
-    font-size: x-large;
-    font-weight: 50;
-    color: #ccc;
-  }
+    &h1 {
+        font-size: x-large;
+        font-weight: 50;
+        color: #ccc;
+    }
 }
 
 .tab-title {
-  display: flex;
-  justify-content: space-between;
-  margin: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0;
 
-  &h1 {
-    font-size: x-large;
-    font-weight: 50;
-    color: #ccc;
-  }
+    &h1 {
+        font-size: x-large;
+        font-weight: 50;
+        color: #ccc;
+    }
 }
 
 .tab-title {
-  margin: 2rem 0;
+    margin: 2rem 0;
 }
 
 .add-button {
-  display: flex;
-  flex-direction: row-reverse;
-  padding: 0 16px !important;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0 16px !important;
 }
 
 .content {
-  width: 60rem;
-  max-width: 100%;
-  padding-top: 1rem;}
+    width: 60rem;
+    max-width: 100%;
+    padding-top: 1rem;
+}
 
 .mat-drawer-content {
-  margin: 0 !important;
-  width: 100%;
-  display: flex !important;
-  flex-direction: row;
-  justify-content: center;
+    margin: 0 !important;
+    width: 100%;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
 
 }
 
 
 .table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .card-header {
-  padding: 0;
+    padding: 0;
 }
 
 .table-header {
-  text-transform: capitalize;
-  text-align: center;
+    text-transform: capitalize;
+    text-align: center;
 }
 
 .table-cell {
-  text-align: center;
+    text-align: center;
 }
 
 tr.row:hover {
-  background: whitesmoke;
+    background: whitesmoke;
 }
 
 tr.row:active {
-  background: #efefef;
+    background: #efefef;
 }
 
 .paginator {
-  width: 100%;
-  border-top: #efefef 1px solid;
-  // position: absolute;
-  // bottom: 0;
+    width: 100%;
+    border-top: #efefef 1px solid;
+    // position: absolute;
+    // bottom: 0;
 }
 
 .filter-field {
-  // font-size: 14px;
-  width: 100%;
+    // font-size: 14px;
+    width: 100%;
 
-  >.mat-mdc-form-field-subscript-wrapper {
-    display: none;
+    >.mat-mdc-form-field-subscript-wrapper {
+        display: none;
 
-  }
+    }
 }
 
 .table-option-cell.mdc-data-table__cell {
-  text-align: right;
+    text-align: right;
 }
 
 .error {
-  justify-content: center;
-  display: flex;
-  height: 100vh;
-  align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100vh;
+    align-items: center;
 }
 
 .error.title {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 .overview-tab {
-  margin: 2rem;
+    margin: 2rem;
 }
 
 markdown p {
-  margin: auto !important;
+    margin: auto !important;
+}
+
+.mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+
+    &.app-notification-error {
+        --mdc-snackbar-container-color: #f23a2f;
+        --mdc-snackbar-action-color: #ffffff;
+
+        & .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+            color: #ffffff;
+        }
+    }
+
+    &.app-notification-success {
+        --mdc-snackbar-container-color: #27b62a;
+
+        & .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+            color: #ffffff;
+        }
+    }
+}
+
+.loading-spinner {
+    position: fixed;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    // margin: auto;
 }
