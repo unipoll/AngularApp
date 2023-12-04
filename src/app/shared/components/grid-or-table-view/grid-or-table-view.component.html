@@ -14,7 +14,7 @@
         <mat-card class="card" (click)="cardClickAction(item)">
             <mat-card-header class="card-header">
                 <mat-card-title>
-                    <span>{{ item.name }}</span>
+                    <ng-container *ngTemplateOutlet="cardTitleTemplate, context: { $implicit: item }"></ng-container>
                     @if (optionsMenu.length > 0) {
                         <!-- Menu Button -->
                         <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu"
@@ -31,7 +31,7 @@
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content class="card-content">
-                <div>{{item.description}}</div>
+                <ng-container *ngTemplateOutlet="cardContentTemplate, context: { $implicit: item }"></ng-container>
             </mat-card-content>
         </mat-card>
         }
@@ -43,13 +43,15 @@
 
     <!-- Table View -->
     <table class="table" mat-table [dataSource]="dataSource" matSort>
-        @for (column of displayedColumns; track column) {
+        @for (column of displayedColumns; track column) {    
         <ng-container matColumnDef="{{column}}">
             <th class="table-header" mat-header-cell *matHeaderCellDef>{{column}}</th>
-            <td mat-cell class="table-cell" *matCellDef="let row">{{row[column]}}</td>
+            <td mat-cell class="table-cell" *matCellDef="let row">
+                <ng-template *ngTemplateOutlet="tableColumnsTemplate; context: {row: row, column: column, cell: row[column]}"></ng-template>
+            </td>
         </ng-container>
         }
-        <ng-container matColumnDef="options">
+               <ng-container matColumnDef="options">
             <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
             <td class="table-cell table-option-cell" mat-cell *matCellDef="let row">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu"
@@ -62,17 +64,17 @@
                     }
                 </mat-menu>
             </td>
-        </ng-container>
-        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsWithOptions"></tr> -->
+        </ng-container> 
+                <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsWithOptions"></tr> -->
         <tr mat-row *matRowDef="let row; columns: displayedColumnsWithOptions;" class="workspace-row"
             (click)="rowClickAction(row);">
         </tr>
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="2">No data matching the filter "{{input.value}}"</td>
+            <td class="mat-cell" colspan="displayedColumnsWithOptions.length">No data matching the filter "{{input.value}}"</td>
         </tr>
     </table>
     }
-    
+
     <!-- Paginator -->
     
     <mat-paginator class="paginator" 

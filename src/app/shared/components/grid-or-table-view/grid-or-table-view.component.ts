@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ContentChild, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/modules/material/material.module';
@@ -29,7 +29,7 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
     @Input() cardClickAction: Function = () => { };
     @Input() rowClickAction: Function = () => { };
     @Input() optionsMenu: MenuItem[] = [];
-    @Input() displayedColumns: string[] = [];
+    @Input() displayedColumns!: string[];
 
     public displayedColumnsWithOptions: string[] = [];
     public dataSource!: MatTableDataSource<any>;
@@ -39,9 +39,11 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
-    constructor() {
+    @ContentChild('cardTitle') cardTitleTemplate!: TemplateRef<any>;
+    @ContentChild('cardContent') cardContentTemplate!: TemplateRef<any>;
+    @ContentChild('tableColumns') tableColumnsTemplate!: TemplateRef<any>;
 
-    }
+    constructor() {}
 
     applyFilter(event: Event) {
 		const filterValue = (event.target as HTMLInputElement).value;
