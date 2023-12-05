@@ -30,6 +30,7 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
     @Input() rowClickAction: Function = () => { };
     @Input() optionsMenu: MenuItem[] = [];
     @Input() displayedColumns!: string[];
+    @Input() showTableHeader: boolean = true;
 
     public displayedColumnsWithOptions: string[] = [];
     public dataSource!: MatTableDataSource<any>;
