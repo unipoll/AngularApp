@@ -1,32 +1,49 @@
 <div class="tab-title">
     <h1>Policies</h1>
-    <!-- <button class="add-button" *ngIf="can_add_members" mat-flat-button color="primary" (click)="addMember()">Add Member</button> -->
+    <!-- Button Toggle between Table/Grid -->
+    <mat-button-toggle-group class="view-toggle-group" value="table" #viewToggle="matButtonToggleGroup">
+        <mat-button-toggle value="table">
+            <mat-icon>view_list</mat-icon>Table
+        </mat-button-toggle>
+        <mat-button-toggle value="grid">
+            <mat-icon>view_module</mat-icon>Grid
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+    <!-- <button class="add-button" *ngIf="can_add_policies" mat-flat-button color="primary" (click)="addPolicy()">Add Member</button> -->
 </div>
+
+
+
 @if (policyList) {
 <app-grid-or-table-view 
-    [filterPlaceholder]="'Filter workspace'" 
-    [viewMode]="'table'" 
+    [filterPlaceholder]="'Filter Policies'" 
+    [viewMode]="viewToggle.value" 
     [list]="policyList"
     [optionsMenu]="optionsMenu" 
     [displayedColumns]="displayedColumns">
 
     <!-- Card Title -->
-    <!-- <ng-template #cardTitle let-item>
-        {{item.name}}
-    </ng-template> -->
+    <ng-template #cardTitle let-item>
+        Policy of {{item.name}}
+    </ng-template>
 
     <!-- Card Content -->
-    <!-- <ng-template #cardContent let-item>
-        {{item.description}}
-    </ng-template> -->
+    <ng-template #cardContent let-item>
+        <!-- {{item.description}} -->
+        <mat-chip-listbox>
+            @for (permission of item.permissions; track permission) {
+            <mat-chip highlighted>{{ permission.replaceAll("_", " ") | titlecase }}</mat-chip>
+            }
+        </mat-chip-listbox>
+    </ng-template>
 
     <!-- Table Columns -->
     <ng-template #tableColumns let-column="column" let-row="row" let-cell="cell">
         @switch (column){
             @case ('permissions') {
                 <mat-chip-listbox>
-                    @for (i of cell; track i) {
-                    <mat-chip-option>{{ i.replaceAll("_", " ") | titlecase }}</mat-chip-option>
+                    @for (permission of cell; track permission) {
+                    <mat-chip highlighted>{{ permission.replaceAll("_", " ") | titlecase }}</mat-chip>
                     }
                 </mat-chip-listbox>
             }
