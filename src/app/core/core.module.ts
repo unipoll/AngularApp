@@ -11,6 +11,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { MaterialModule } from '../modules/material/material.module';
 import { RouterModule } from '@angular/router';
 
+import { AccountService } from './services/account.service';
+import { AuthorizationService } from './services/authorization.service';
+
 @NgModule({
     declarations: [
         HeaderComponent,
@@ -26,6 +29,8 @@ import { RouterModule } from '@angular/router';
         SidebarComponent
     ],
     providers: [
+        AuthorizationService,
+        AccountService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptorService,
