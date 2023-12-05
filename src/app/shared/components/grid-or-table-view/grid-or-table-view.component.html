@@ -11,32 +11,32 @@
     @if (viewMode == 'grid') {
     <div class="grid-view">
         @for (item of cardList | async; track item) {
-        <mat-card class="card" (click)="cardClickAction(item)">
-            <mat-card-header class="card-header">
-                <mat-card-title>
-                    <ng-container *ngTemplateOutlet="cardTitleTemplate, context: { $implicit: item }"></ng-container>
-                    @if (optionsMenu.length > 0) {
-                        <!-- Menu Button -->
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu"
-                            (click)="$event.stopPropagation();">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <!-- Menu and items -->
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            @for (action of optionsMenu; track action) {
-                            <button mat-menu-item (click)="action.action(item);">{{action.label}}</button>
-                            }
-                        </mat-menu>
-                    }
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content class="card-content">
-                <ng-container *ngTemplateOutlet="cardContentTemplate, context: { $implicit: item }"></ng-container>
-            </mat-card-content>
-        </mat-card>
+            <mat-card class="card" (click)="cardClickAction(item)">
+                <mat-card-header class="card-header">
+                    <mat-card-title>
+                        <ng-container *ngTemplateOutlet="cardTitleTemplate, context: { $implicit: item }"></ng-container>
+                        @if (optionsMenu.length > 0) {
+                            <!-- Menu Button -->
+                            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu"
+                                (click)="$event.stopPropagation();">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <!-- Menu and items -->
+                            <mat-menu #menu="matMenu" xPosition="before">
+                                @for (action of optionsMenu; track action) {
+                                <button mat-menu-item (click)="action.action(item);">{{action.label}}</button>
+                                }
+                            </mat-menu>
+                        }
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="card-content">
+                    <ng-container *ngTemplateOutlet="cardContentTemplate, context: { $implicit: item }"></ng-container>
+                </mat-card-content>
+            </mat-card>
         }
         @if ((this.list).length == 0) {
-        <h1 class="mat-h1">No data matching the filter "{{input.value}}"</h1>
+            <h1 class="mat-h1">No data matching the filter "{{input.value}}"</h1>
         }
     </div>
     } @else {
@@ -44,14 +44,14 @@
     <!-- Table View -->
     <table class="table" mat-table [dataSource]="dataSource" matSort>
         @for (column of displayedColumns; track column) {    
-        <ng-container matColumnDef="{{column}}">
-            <th class="table-header" mat-header-cell *matHeaderCellDef>{{column}}</th>
-            <td mat-cell class="table-cell" *matCellDef="let row">
-                <ng-template *ngTemplateOutlet="tableColumnsTemplate; context: {row: row, column: column, cell: row[column]}"></ng-template>
-            </td>
-        </ng-container>
+            <ng-container matColumnDef="{{column}}">
+                <th class="table-header" mat-header-cell *matHeaderCellDef>{{column.replaceAll('_', ' ')}}</th>
+                <td mat-cell class="table-cell" *matCellDef="let row">
+                    <ng-template *ngTemplateOutlet="tableColumnsTemplate; context: {row: row, column: column, cell: row[column]}"></ng-template>
+                </td>
+            </ng-container>
         }
-               <ng-container matColumnDef="options">
+        <ng-container matColumnDef="options">
             <th class="table-header" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
             <td class="table-cell table-option-cell" mat-cell *matCellDef="let row">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu"
@@ -65,8 +65,10 @@
                 </mat-menu>
             </td>
         </ng-container> 
-                <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsWithOptions"></tr> -->
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsWithOptions;" class="workspace-row"
+        @if (showTableHeader) {
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsWithOptions"></tr>
+        }
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsWithOptions;" class="row"
             (click)="rowClickAction(row);">
         </tr>
         <tr class="mat-row" *matNoDataRow>
