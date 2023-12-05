@@ -14,7 +14,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 // import { DialogDeleteComponent } from '../dialogs/dialog-delete/dialog-delete.component';
 import { PolicyListModel, PolicyModel, SetPolicyRequest, Permissions } from 'src/app/models/policy.model';
 // import { DialogSetPolicyComponent } from '../dialogs/dialog-set-policy/dialog-set-policy.component';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 
 @Component({
     selector: 'workspace-policy-list',
@@ -52,7 +52,7 @@ export class WorkspacePolicyListComponent {
     constructor(
         private apiService: ApiService,
         private _dialog: MatDialog,
-        private authService: AuthService) { }
+        private authService: AuthorizationService) { }
 
     ngOnInit(): void {
         this.timer.subscribe(val => {
@@ -62,7 +62,6 @@ export class WorkspacePolicyListComponent {
         });
 
         this.policyList ? this.makeFullName(this.policyList) : this.updatePolicyList();
-
         this.can_set_policies = this.authService.isAllowed('update_policies');
     }
 
