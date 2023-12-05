@@ -1,11 +1,12 @@
+import { BehaviorSubject, Observable, lastValueFrom, tap } from 'rxjs';
 import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
-import { ApiService } from 'src/app/core/services/api.service';
-import { WorkspaceService } from '../../services/workspace.service';
 import { MemberModel } from 'src/app/models/member.model';
-import { BehaviorSubject, Observable, lastValueFrom, tap } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { ApiService } from 'src/app/core/services/api.service';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { WorkspaceService } from '../../services/workspace.service';
+import { AccountService } from 'src/app/core/services/account.service';
 
 @Component({
     selector: 'app-workspace',
@@ -35,7 +36,8 @@ export class WorkspaceComponent {
     constructor(
         private route: ActivatedRoute,
         private apiService: ApiService,
-        private authService: AuthService) {
+        private authService: AuthorizationService,
+        private accountService: AccountService) {
         
         // this.workspace_id = this.route.snapshot.paramMap.get('id') || '';
     }
@@ -49,7 +51,7 @@ export class WorkspaceComponent {
     async getWorkspace(): Promise<void> {
         this.workspace = await lastValueFrom(this.apiService.getWorkspace(this.id, true, true, true, true));
 
-        await lastValueFrom(this.apiService.getWorkspacePolicies(this.workspace.id, this.authService.getAccount()?.id)).then((response: any) => {
+        await lastValueFrom(this.apiService.getWorkspacePolicies(this.workspace.id, this.accountService.getAccount()?.id)).then((response: any) => {
             this.authService.setPermissions(response.policies[0].permissions);
         });
     }
