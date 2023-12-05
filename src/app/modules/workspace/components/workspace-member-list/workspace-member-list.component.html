@@ -1,0 +1,54 @@
+<div class="tab-title">
+    <h1>Members</h1>
+    <!-- Button Toggle between Table/Grid -->
+    <!-- <mat-button-toggle-group class="view-toggle-group" value="table" #viewToggle="matButtonToggleGroup">
+        <mat-button-toggle value="table">
+            <mat-icon>view_list</mat-icon>Table
+        </mat-button-toggle>
+        <mat-button-toggle value="grid">
+            <mat-icon>view_module</mat-icon>Grid
+        </mat-button-toggle>
+    </mat-button-toggle-group> -->
+    <button class="add-button" *ngIf="can_add_members" mat-flat-button color="primary" (click)="addMember()">Add Member</button>
+</div>
+@if (memberList) {
+    <app-grid-or-table-view [filterPlaceholder]="'Filter Policies'" 
+                            [viewMode]="'table'" 
+                            [list]="memberList"
+                            [optionsMenu]="optionsMenu" 
+                            [displayedColumns]="displayedColumns">
+
+        <!-- Card Template    
+        <ng-template #cardTitle let-item>
+            {{item.full_name}}
+        </ng-template>
+
+        <ng-template #cardContent let-item>
+            <mat-chip-listbox>
+                @for (permission of item.permissions; track permission) {
+                <mat-chip highlighted>{{ permission.replaceAll("_", " ") | titlecase }}</mat-chip>
+                }
+            </mat-chip-listbox>
+        </ng-template> 
+        -->
+
+        <!-- Table Template -->
+        <ng-template #tableColumns let-column="column" let-row="row" let-cell="cell">
+            @switch (column){
+                @default {
+                    {{cell}}
+                }
+            }
+        </ng-template>
+
+    </app-grid-or-table-view>
+} @else {
+    @if (isLoading) {
+        <mat-spinner class="page-loading"></mat-spinner>
+    } @else {
+        <div class="error">
+            <h1 class="title">Error</h1>
+            <h2>Error loading workspaces</h2>
+        </div>
+    }
+}
