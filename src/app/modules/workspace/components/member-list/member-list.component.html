@@ -43,12 +43,5 @@
 
     </app-grid-or-table-view>
 } @else {
-    @if (isLoading) {
-        <mat-spinner class="page-loading"></mat-spinner>
-    } @else {
-        <div class="error">
-            <h1 class="title">Error</h1>
-            <h2>Error loading workspaces</h2>
-        </div>
-    }
+    <app-page-loading-spinner [error_message]="'Could not load policies'" [loading_message]="'Loading policies'"></app-page-loading-spinner> 
 }

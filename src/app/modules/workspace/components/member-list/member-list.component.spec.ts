@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkspaceMemberListComponent } from './workspace-member-list.component';
+import { MemberListComponent } from './member-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/modules/material/material.module';
 
-describe('WorkspaceMemberListComponent', () => {
-  let component: WorkspaceMemberListComponent;
-  let fixture: ComponentFixture<WorkspaceMemberListComponent>;
+describe('MemberListComponent', () => {
+  let component: MemberListComponent;
+  let fixture: ComponentFixture<MemberListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,11 +16,11 @@ describe('WorkspaceMemberListComponent', () => {
         MaterialModule,
         BrowserAnimationsModule
       ],
-      declarations: [ WorkspaceMemberListComponent ]
+      declarations: [ MemberListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WorkspaceMemberListComponent);
+    fixture = TestBed.createComponent(MemberListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
