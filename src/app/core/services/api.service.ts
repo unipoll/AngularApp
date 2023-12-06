@@ -122,7 +122,7 @@ export class ApiService {
     }
 
     getWorkspacePermissions(): Observable<Permissions> {
-        return this.http.get<Permissions>(this.settings.apiUrl + '/v1/workspaces/permissions');
+        return this.http.get<Permissions>(this.settings.apiUrl + '/v2/permissions/workspaces');
     }
 
     // Get list of groups in workspace
