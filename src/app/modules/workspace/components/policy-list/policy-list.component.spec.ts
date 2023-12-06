@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkspacePolicyListComponent } from './workspace-policy-list.component';
+import { PolicyListComponent } from './policy-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from 'src/app/modules/material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('WorkspacePolicyListComponent', () => {
-  let component: WorkspacePolicyListComponent;
-  let fixture: ComponentFixture<WorkspacePolicyListComponent>;
+describe('PolicyListComponent', () => {
+  let component: PolicyListComponent;
+  let fixture: ComponentFixture<PolicyListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,9 +16,9 @@ describe('WorkspacePolicyListComponent', () => {
         MaterialModule,
         BrowserAnimationsModule
       ],
-      declarations: [WorkspacePolicyListComponent]
+      declarations: [PolicyListComponent]
     });
-    fixture = TestBed.createComponent(WorkspacePolicyListComponent);
+    fixture = TestBed.createComponent(PolicyListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
