@@ -46,5 +46,5 @@
 
 </app-grid-or-table-view>
 } @else {
-<mat-spinner class="page-loading"></mat-spinner>
+    <app-page-loading-spinner [error_message]="'Could not load workspace list'" [loading_message]="'Loading workspace list'" ></app-page-loading-spinner>
 }

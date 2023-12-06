@@ -12,6 +12,7 @@ import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-tabl
 import { DialogCreateWorkspaceComponent } from './components/dialog-create-workspace/dialog-create-workspace.component';
 import { DialogUpdateWorkspaceComponent } from './components/dialog-update-workspace/dialog-update-workspace.component';
 import { DialogDeleteWorkspaceComponent } from './components/dialog-delete-workspace/dialog-delete-workspace.component';
+import { PageLoadingSpinnerComponent } from 'src/app/shared/components/page-loading-spinner/page-loading-spinner.component';
 
 
 
@@ -28,13 +29,11 @@ import { DialogDeleteWorkspaceComponent } from './components/dialog-delete-works
         MaterialModule,
         DialogComponent,
         GridOrTableViewComponent,
-        WorkspaceListRoutingModule
+        WorkspaceListRoutingModule,
+        PageLoadingSpinnerComponent
     ],
     exports: [
-        WorkspaceListComponent,
-        DialogCreateWorkspaceComponent,
-        DialogUpdateWorkspaceComponent,
-        DialogDeleteWorkspaceComponent
+        WorkspaceListComponent
     ]
 })
 export class WorkspaceListModule { }
