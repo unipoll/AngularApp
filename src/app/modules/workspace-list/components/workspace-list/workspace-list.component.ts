@@ -1,14 +1,10 @@
-import { Component, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { ApiService } from 'src/app/core/services/api.service';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 import { WorkspaceModel } from 'src/app/models/workspace.model';
 import { DialogUpdateModel } from 'src/app/models/dialog.model';
@@ -68,11 +64,8 @@ export class WorkspaceListComponent implements OnInit {
 
 	getWorkspace(workspace: WorkspaceModel) {
 		console.log('workspace/', workspace.id);
-		this.router.navigate(['workspaces', workspace.id], {
-			// relativeTo: this.route,
-			// state: {
-			// 	workspace_id: workspace.id
-			// }
+		this.router.navigate([workspace.id], {
+			relativeTo: this.route
 		});
 	}
 
