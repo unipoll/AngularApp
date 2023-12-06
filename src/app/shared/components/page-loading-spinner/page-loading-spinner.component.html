@@ -1,0 +1,13 @@
+@if (isLoading) {
+    <mat-spinner class="page-loading"></mat-spinner>
+    <div class="loading-message">
+        <h1>{{ loading_message }}</h1>
+    </div>
+} @else {
+    <div class="error">
+        <p class="error-icon">
+            <mat-icon>error</mat-icon>
+        </p>
+        <h1 class="title">{{ error_message }}</h1>
+    </div>
+}
