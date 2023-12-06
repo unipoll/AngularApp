@@ -7,23 +7,35 @@ import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { MaterialModule } from '../material/material.module';
 import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
 
-import { WorkspacePolicyListComponent } from './components/workspace-policy-list/workspace-policy-list.component';
+import { MemberListComponent } from './components/member-list/member-list.component';
+import { PolicyListComponent } from './components/policy-list/policy-list.component';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 
+import { DialogAddMemberComponent } from './components/dialog-add-member/dialog-add-member.component';
+import { DialogRemoveMemberComponent } from './components/dialog-remove-member/dialog-remove-member.component';
+import { DialogEditPolicyComponent } from './components/dialog-edit-policy/dialog-edit-policy.component';
+
+import { PageLoadingSpinnerComponent } from 'src/app/shared/components/page-loading-spinner/page-loading-spinner.component';
 
 @NgModule({
     declarations: [
         WorkspaceComponent,
-        WorkspacePolicyListComponent,
+        MemberListComponent,
+        PolicyListComponent,
+        DialogAddMemberComponent,
+        DialogRemoveMemberComponent,
+        DialogEditPolicyComponent
     ],
     imports: [
         CommonModule,
         WorkspaceRoutingModule,
         MaterialModule,
-        GridOrTableViewComponent
+        GridOrTableViewComponent,
+        DialogComponent,
+        PageLoadingSpinnerComponent
     ],
     exports: [
-        WorkspaceComponent,
-        WorkspacePolicyListComponent
+        WorkspaceComponent
     ]
 })
 export class WorkspaceModule { }
