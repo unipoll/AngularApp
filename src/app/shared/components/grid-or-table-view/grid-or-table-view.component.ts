@@ -37,6 +37,8 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
     // public cardList!: Observable<any[]>
     public cardList!: BehaviorSubject<any[]>;
 
+    selectedColumns: string[] = [];
+
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
@@ -58,7 +60,8 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.dataSource = new MatTableDataSource(this.list);
         this.cardList = this.dataSource.connect();
-        this.displayedColumnsWithOptions = this.displayedColumns.concat('options');
+        this.selectedColumns = this.displayedColumns;
+        this.displayedColumnsWithOptions = this.selectedColumns.concat('options');
     }
 
     ngAfterViewInit() {
@@ -85,6 +88,21 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
         console.log("Delete Item Data", item);
         this.dataSource.data = this.dataSource.data.filter((i: any) => i !== item);
 
+    }
+
+    updateColumnSelection(event: any) {
+        this.selectedColumns = event.value;
+        this.displayedColumnsWithOptions = this.selectedColumns.concat('options');
+    }
+
+    prettifyColumns(columns: string[]) {
+        return columns.map((c: string) => {
+            return this.prettifyColumn(c);
+        });
+    }
+
+    prettifyColumn(column: string) {
+        return column.split('_').map((s: string) => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
     }
 
 }

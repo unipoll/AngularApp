@@ -1,5 +1,20 @@
 <!-- <div [ngClass]="{'mat-elevation-z1': viewToggle.value == 'table'}"> -->
     
+    @if (viewMode == 'table') {
+    <mat-form-field>
+        <mat-label>Columns</mat-label>
+        <mat-select [(value)]="selectedColumns" (selectionChange)="updateColumnSelection($event)" multiple>
+            <mat-select-trigger>
+                {{ prettifyColumns(selectedColumns) }}
+            </mat-select-trigger>
+            @for (column of displayedColumns; track column) {
+            <mat-option [value]="column">{{prettifyColumn(column)}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    }
+
+    
     <!-- Search Field -->  
     <mat-form-field class="filter-field" appearance="fill">
         <mat-label>Filter</mat-label>
@@ -43,7 +58,7 @@
 
     <!-- Table View -->
     <table class="table" mat-table [dataSource]="dataSource" matSort>
-        @for (column of displayedColumns; track column) {    
+        @for (column of selectedColumns; track column) {    
             <ng-container matColumnDef="{{column}}">
                 <th class="table-header" mat-header-cell *matHeaderCellDef>{{column.replaceAll('_', ' ')}}</th>
                 <td mat-cell class="table-cell" *matCellDef="let row">
