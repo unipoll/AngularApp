@@ -16,6 +16,17 @@
 .card {
     margin: 2rem 0;
     padding: 0 1rem;
+    box-shadow: none;
+    border: 1px solid #ddd;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    border-bottom: 1px solid transparent;
 }
 
 .card:hover,
