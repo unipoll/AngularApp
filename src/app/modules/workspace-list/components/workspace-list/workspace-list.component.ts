@@ -70,11 +70,7 @@ export class WorkspaceListComponent implements OnInit {
 	}
 
 	createWorkspace() {
-		const dialogRef = this.dialog.open(DialogCreateWorkspaceComponent, {
-			data: {
-				resource_type: 'workspace',
-			},
-		});
+		const dialogRef = this.dialog.open(DialogCreateWorkspaceComponent);
 
 		dialogRef.afterClosed().subscribe({
 			next: (val) => {
@@ -88,14 +84,11 @@ export class WorkspaceListComponent implements OnInit {
 	}
 
 	editWorkspace(workspace: WorkspaceModel) {
-		const data: DialogUpdateModel = {
-			workspace_id: workspace.id,
-			id: workspace.id,
-			name: workspace.name,
-			description: workspace.description,
-			resource_type: 'workspace',
-		};
-		const dialogRef = this.dialog.open(DialogUpdateWorkspaceComponent, { data });
+		const dialogRef = this.dialog.open(DialogUpdateWorkspaceComponent, { 
+			data: {
+				workspace: workspace
+			}
+		});
 		dialogRef.afterClosed().subscribe({
 			next: (val) => {
 				if (val) {
@@ -114,8 +107,7 @@ export class WorkspaceListComponent implements OnInit {
 	deleteWorkspace(workspace: WorkspaceModel): void {
 		const dialogRef = this.dialog.open(DialogDeleteWorkspaceComponent, {
 			data: {
-				workspaceID: workspace.id,
-				workspaceName: workspace.name,
+				workspace: workspace
 			}
 		});
 
