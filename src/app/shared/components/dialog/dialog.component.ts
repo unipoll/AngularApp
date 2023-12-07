@@ -27,15 +27,12 @@ export class DialogComponent {
 		{
 			text: "Ok",
 			action: () => {
-				console.log("Ok");
+				this.dialogRef.close();
 			},
 			color: "primary"
 		},
 	];
 
-	constructor(public dialogRef: MatDialogRef<DialogComponent>, 
-				@Inject(MAT_DIALOG_DATA) private data: any,
-				private _snackBarService: SnackBarService){
-		// this.dialogMessage = data.dialogMessage;
+	constructor(public dialogRef: MatDialogRef<DialogComponent>){
 	}
 }
