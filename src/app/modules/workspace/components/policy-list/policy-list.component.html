@@ -12,14 +12,13 @@
     <!-- <button class="add-button" *ngIf="can_add_policies" mat-flat-button color="primary" (click)="addPolicy()">Add Member</button> -->
 </div>
 
-
-
 @if (policyList) {
 <app-grid-or-table-view 
     [filterPlaceholder]="'Filter Policies'" 
     [viewMode]="viewToggle.value" 
     [list]="policyList"
-    [optionsMenu]="optionsMenu" 
+    [optionsMenu]="optionsMenu"
+    [rowClickAction]="viewPolicy.bind(this)"
     [displayedColumns]="displayedColumns">
 
     <!-- Card Title -->
@@ -51,14 +50,14 @@
                 <!-- @for (permission of cell; track permission) {
                     {{permission.replaceAll("_", " ")}}
                 } -->
-                {{ cell.join(", ").replaceAll("_", " ") | titlecase }}
+                <!-- {{ cell.join(", ").replaceAll("_", " ") | titlecase }} -->
+                {{ cell.length }} permissions
             }
             @default {
                 {{cell}}
             }
         }
     </ng-template>
-
 </app-grid-or-table-view>
 } @else {
     <app-page-loading-spinner [error_message]="'Could not load policies'" [loading_message]="'Loading policies'"></app-page-loading-spinner> 
