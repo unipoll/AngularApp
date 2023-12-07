@@ -1,0 +1,44 @@
+<div class="tab-title">
+  <h1>Groups</h1>
+  <!-- Button Toggle between Table/Grid -->
+  <mat-button-toggle-group class="view-toggle-group" value="table" #viewToggle="matButtonToggleGroup">
+      <mat-button-toggle value="table">
+          <mat-icon>view_list</mat-icon>Table
+      </mat-button-toggle>
+      <mat-button-toggle value="grid">
+          <mat-icon>view_module</mat-icon>Grid
+      </mat-button-toggle>
+  </mat-button-toggle-group>
+  <button class="add-button" *ngIf="can_create_groups" mat-flat-button color="primary" (click)="createGroup()">Create Group</button>
+</div>
+@if (groupList) {
+  <app-grid-or-table-view [filterPlaceholder]="'Filter Policies'" 
+                          [viewMode]="viewToggle.value" 
+                          [list]="groupList"
+                          [cardClickAction]="viewGroup"
+                          [optionsMenu]="optionsMenu" 
+                          [displayedColumns]="displayedColumns">
+
+      <!-- Card Template -->
+      <ng-template #cardTitle let-item>
+          {{item.name}}
+      </ng-template>
+
+      <ng-template #cardContent let-item>
+          {{item.description}}
+      </ng-template> 
+     
+
+      <!-- Table Template -->
+      <ng-template #tableColumns let-column="column" let-row="row" let-cell="cell">
+          @switch (column){
+              @default {
+                  {{cell}}
+              }
+          }
+      </ng-template>
+
+  </app-grid-or-table-view>
+} @else {
+  <app-page-loading-spinner [error_message]="'Could not load groups'" [loading_message]="'Loading groups'"></app-page-loading-spinner> 
+}

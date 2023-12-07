@@ -1,0 +1,11 @@
+.view-toggle-group {
+    height: 36px;
+
+    ::ng-deep>.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+        line-height: 36px !important;
+    }
+
+    mat-button-toggle {
+        width: 6em;
+    }
+}
