@@ -1,12 +1,14 @@
-import { BehaviorSubject, Observable, lastValueFrom, tap } from 'rxjs';
+import { concatMap, lastValueFrom, switchMap, tap } from 'rxjs';
 import { Component, Input, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
-import { MemberModel } from 'src/app/models/member.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
-import { WorkspaceService } from '../../services/workspace.service';
 import { AccountService } from 'src/app/core/services/account.service';
+import { PolicyListComponent } from '../policy-list/policy-list.component';
+import { MemberListComponent } from '../member-list/member-list.component';
+import { GroupListComponent } from '../group-list/group-list.component';
+import { PolicyListModel } from 'src/app/models/policy.model';
+import { MemberModel } from 'src/app/models/member.model';
 
 @Component({
     selector: 'app-workspace',
@@ -15,9 +17,8 @@ import { AccountService } from 'src/app/core/services/account.service';
 })
 export class WorkspaceComponent {
     // Workspace data
-    public workspace!: WorkspaceModel;
-    public workspace_id!: string;
-    // public memberListData!: MemberModel[];
+    workspace!: WorkspaceModel;
+    member!: MemberModel;
     // public permissions!: string[];
 
     // TODO: Make permissions an observable
@@ -31,16 +32,16 @@ export class WorkspaceComponent {
     */
 
     @Input() id!: string;
+    
+    @ViewChild(GroupListComponent) groupList!: GroupListComponent;
+    @ViewChild(MemberListComponent) memberList!: MemberListComponent;
+    @ViewChild(PolicyListComponent) policyList!: PolicyListComponent;
 
     // Constructor
     constructor(
-        private route: ActivatedRoute,
         private apiService: ApiService,
         private authService: AuthorizationService,
-        private accountService: AccountService) {
-        
-        // this.workspace_id = this.route.snapshot.paramMap.get('id') || '';
-    }
+        private accountService: AccountService) { }
 
     // Get workspace data on init
     ngOnInit(): void {
@@ -52,11 +53,39 @@ export class WorkspaceComponent {
         this.workspace = await lastValueFrom(this.apiService.getWorkspace(this.id, true, true, true, true));
 
         await lastValueFrom(this.apiService.getWorkspacePolicies(this.workspace.id, this.accountService.getAccount()?.id)).then((response: any) => {
-            this.authService.setPermissions(response.policies[0].permissions);
+                this.authService.setPermissions(response.policies[0].permissions);
         });
     }
 
     isAllowed(permission: string): boolean {
         return this.authService.isAllowed(permission);
+    }
+
+
+    // Handle Events
+    eventHandler(event: any): void {
+        console.log('Received event: ', event);
+        switch (event) {
+            // case 'updateGroupList':
+            //     this.updateGroupList();
+            //     break;
+            // case 'updateMemberList':
+            //     this.updateMemberList();
+            //     break;
+            case 'groupCreated':
+                this.updatePolicyList();
+                break;
+            case 'groupDeleted':
+                this.updatePolicyList();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    // Update Policy List
+    updatePolicyList(): void {
+        this.policyList.updatePolicyList();
     }
 }
