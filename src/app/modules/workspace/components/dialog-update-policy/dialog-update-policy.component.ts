@@ -8,15 +8,23 @@ import { Observable, startWith, map } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { PolicyModel } from 'src/app/models/policy.model';
+import { WorkspaceModel } from 'src/app/models/workspace.model';
+
+interface DialogData {
+    workspace: WorkspaceModel;
+    policy: PolicyModel;
+    allPermissions: string[];
+}
 
 @Component({
-    selector: 'app-dialog-edit-policy',
-    templateUrl: './dialog-edit-policy.component.html',
-    styleUrl: './dialog-edit-policy.component.scss'
+    selector: 'app-dialog-update-policy',
+    templateUrl: './dialog-update-policy.component.html',
+    styleUrl: './dialog-update-policy.component.scss'
 })
-export class DialogEditPolicyComponent {
+export class DialogUpdatePolicyComponent {
     
     // Dialog Data Input
+    workspace!: WorkspaceModel;
     permissions: string[] = [];  // Current permissions
     allPermissions: string[]; // All permissions available
     policy: PolicyModel;
@@ -41,20 +49,18 @@ export class DialogEditPolicyComponent {
         {
             text: "Save",
             color: "primary",
-            action: this.onFormSubmit.bind(this)
+            action: this.updatePolicy.bind(this)
         }
     ];
 
     // ?
     announcer = inject(LiveAnnouncer);
 
-    constructor(
-        private apiService: ApiService,
-        private dialog: MatDialogRef<DialogEditPolicyComponent>,
-        private snackBarService: SnackBarService,
-        @Inject(MAT_DIALOG_DATA) private data: any
-    ) {
-        console.log("All Permissions", this.data);
+    constructor(private apiService: ApiService,
+                private dialog: MatDialogRef<DialogUpdatePolicyComponent>,
+                private snackBarService: SnackBarService,
+                @Inject(MAT_DIALOG_DATA) private data: DialogData) {
+        this.workspace = this.data.workspace;
         this.policy = this.data.policy;
         this.permissions = this.data.policy.permissions.map((permission: string) => permission);
         this.allPermissions = this.data.allPermissions;
@@ -73,34 +79,20 @@ export class DialogEditPolicyComponent {
         // });
     }
 
-    onFormSubmit() {
-        let request_method = null;
-
-        let request_data = {
+    updatePolicy() {
+        const request_data = {
             permissions: this.permissions
         };
 
-        console.log("Resource Type", this.data.resource.type);
-        if (this.data.resource.type == 'workspace') {
-            console.log("request_data", request_data);
-            request_method = this.apiService.updateWorkspacePolicy(this.data.resource.id, this.policy.id, request_data);
-        } else if (this.data.resource.type == 'group') {
-            request_method = this.apiService.updateGroupPolicy(this.policy.id, this.policy.id, request_data);
-        }
-
-
-        if (request_method) {
-            console.log("Request: ", request_data);
-            request_method.subscribe({
-                next: (val: any) => {
-                    this.snackBarService.openSnackBar('Workspace updated successfully');
-                    this.dialog.close(true);
-                },
-                error: (err: any) => {
-                    console.error(err);
-                },
-            });
-        }
+        this.apiService.updateWorkspacePolicy(this.workspace.id, this.policy.id, request_data).subscribe({
+            next: (permissionsList: any) => {
+                this.snackBarService.openSnackBar('Workspace updated successfully');
+                this.dialog.close(permissionsList);
+            },
+            error: (err: any) => {
+                console.error(err);
+            },
+        });
         this.dialog.close(true);
     }
 
@@ -125,7 +117,6 @@ export class DialogEditPolicyComponent {
         this.permissions.push(event.option.value);
         let index = this.allPermissions.indexOf(event.option.value);
         this.allPermissions.splice(index, 1);  // Remove from autocomplete list
-        console.log("Permission Input", this.permissionInput);
         this.permissionInput.nativeElement.value = '';
         this.permissionCtrl.setValue(null);
     }
