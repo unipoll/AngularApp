@@ -9,7 +9,7 @@ import { WorkspaceListModel } from '../../models/workspace.model';
 import { MemberListModel } from '../../models/member.model';
 import { GroupListModel, GroupModel } from '../../models/group.model';
 import { AccountListModel, AccountModel } from '../../models/account.model';
-import { Permissions, PolicyListModel, PolicyModel } from '../../models/policy.model';
+import { MemberPermissions, Permissions, PolicyListModel, PolicyModel } from '../../models/policy.model';
 import { NewPollRequestBody, PollModel, PollListModel } from '../../models/poll.model';
 import { SettingsService } from './settings.service';
 
@@ -52,7 +52,6 @@ export class ApiService {
     getUserAccount(): Observable<AccountModel> {
         return this.http.get<AccountModel>(this.settings.apiUrl + '/accounts/me');
     }
-
 
     // Workspaces
 
@@ -222,4 +221,10 @@ export class ApiService {
         return this.http.get<PollModel>(this.settings.apiUrl + '/polls/' + poll_id, { params: params });
     }
 
+
+    // Permissions
+
+    getPermissions(member_id: string, workspace_id: string): Observable<MemberPermissions> {
+        return this.http.get<MemberPermissions>(this.settings.apiUrl + '/v2/permissions/members/' + member_id, { params: {'workspace_id': workspace_id}});
+    }
 }
