@@ -8,6 +8,7 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
 import { DialogRemoveMemberComponent } from '../dialog-remove-member/dialog-remove-member.component';
 import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
+import { AccountModel } from 'src/app/models/account.model';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class MemberListComponent implements OnInit {
     @Input() workspace!: WorkspaceModel;
     @Input() memberList!: MemberModel[];
 
-    private accountList!: MemberModel[];
+    private accountList!: AccountModel[];
 
     displayedColumns = ['full_name', 'email'];
     optionsMenu = [
