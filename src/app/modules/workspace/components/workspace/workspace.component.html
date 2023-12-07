@@ -9,27 +9,29 @@
         {{ workspace.description }}
       </div>
     </mat-tab> -->
+        <!-- @if (isAllowed('get_policies')) { -->
         <mat-tab label="Polls">
-            <!-- <app-poll-list [workspace]="workspace" [pollList]="workspace.polls"></app-poll-list> -->
+            <poll-list [workspace]="workspace" [pollList]="workspace.polls"></poll-list>
         </mat-tab>
+        <!-- } -->
         @if (isAllowed('get_policies')) {
         <mat-tab label="Policies">
-            <workspace-policy-list [workspace]="workspace" [policyList]="workspace.policies"></workspace-policy-list>
+            <policy-list [workspace]="workspace" [policyList]="workspace.policies"></policy-list>
         </mat-tab>
         }
         @if (isAllowed('get_members')) {
         <mat-tab label="Members">
-            <!-- <app-member-list [workspace]="workspace" [memberList]="workspace.members"></app-member-list> -->
+            <member-list [workspace]="workspace" [memberList]="workspace.members"></member-list>
         </mat-tab>
         }
         @if (isAllowed('get_groups')) {
         <mat-tab label="Groups">
-            <!-- <app-group-list [workspace]="workspace" [groupList]="workspace.groups"></app-group-list> -->
+            <group-list [workspace]="workspace" [groupList]="workspace.groups" (groupEvent)="eventHandler($event)"></group-list>
         </mat-tab>
         }
         <!-- <mat-tab label="Setting">Permissions and other settings</mat-tab> -->
     </mat-tab-group>
 </div>
 } @else {
-    <mat-spinner class="page-loading"></mat-spinner>
+    <app-page-loading-spinner [loading_message]="'Loading Workspace'" [error_message]="'Could not load the workspace'"></app-page-loading-spinner>
 }
