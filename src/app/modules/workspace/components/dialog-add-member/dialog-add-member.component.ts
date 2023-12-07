@@ -41,7 +41,7 @@ export class DialogAddMemberComponent {
     workspace!: WorkspaceModel;
     separatorKeysCodes: number[] = [ENTER, COMMA];
     accountCtrl = new FormControl<string | MemberModel>('');
-    filteredAccounts: Observable<MemberModel[]>;
+    filteredAccounts: Observable<AccountModel[]>;
     accounts: MemberModel[] = [];
     allAccounts: AccountModel[] = [];
 
@@ -99,10 +99,10 @@ export class DialogAddMemberComponent {
     }
 
     // Filter the autocomplete list
-    filter(value: string): MemberModel[] {
+    filter(value: string): AccountModel[] {
         // console.log("Filter Value", value);
         const filterValue = value.toLowerCase();
-        return this.allAccounts.filter((account: MemberModel) => (
+        return this.allAccounts.filter((account: AccountModel) => (
             account.first_name.toLowerCase().includes(filterValue) ||
             account.last_name.toLowerCase().includes(filterValue) ||
             account.email.toLowerCase().includes(filterValue)));
