@@ -1,0 +1,9 @@
+<app-dialog [dialogTitle]="title">
+        <mat-chip-set aria-label="Permissions">
+            @for (permission of policy.permissions; track permission) {
+            <mat-chip highlighted>
+                {{ permission.replaceAll('_', ' ') | titlecase }}
+            </mat-chip>
+            }
+        </mat-chip-set>
+</app-dialog>
