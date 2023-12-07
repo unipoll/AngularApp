@@ -1,0 +1,19 @@
+<app-dialog [dialogTitle]="title" [dialogButtons]="buttons">
+	<form [formGroup]="form">
+		<div mat-dialog-content class="content">
+			<div class="row">
+				<mat-form-field appearance="outline" class="form-field">
+					<mat-label>Group name</mat-label>
+					<input matInput type="text" placeholder="My Group" formControlName="name">
+				</mat-form-field>
+			</div>
+			<div class="row">
+				<mat-form-field appearance="outline" class="form-field">
+					<mat-label>Group Description</mat-label>
+					<textarea matInput type="text" placeholder="Briefly describe this Group"
+						formControlName="description"></textarea>
+				</mat-form-field>
+			</div>
+		</div>
+	</form>
+</app-dialog>
