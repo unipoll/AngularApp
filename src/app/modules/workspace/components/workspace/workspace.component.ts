@@ -49,11 +49,17 @@ export class WorkspaceComponent {
     }
 
     // Get workspace data
-    async getWorkspace(): Promise<void> {
-        this.workspace = await lastValueFrom(this.apiService.getWorkspace(this.id, true, true, true, true));
-
-        await lastValueFrom(this.apiService.getWorkspacePolicies(this.workspace.id, this.accountService.getAccount()?.id)).then((response: any) => {
-                this.authService.setPermissions(response.policies[0].permissions);
+    getWorkspace(): void {
+        this.apiService.getWorkspace(this.id, true, true, true, true).subscribe(workspace => {
+            workspace.members.forEach((member: MemberModel) => {
+                if (member.account_id == this.accountService.getAccount().id) {
+                    this.member = member;
+                }
+            });
+            this.apiService.getPermissions(this.member.id, workspace.id).subscribe(permissions => {
+                this.authService.setPermissions(permissions.permissions.workspace.permissions);
+                this.workspace = workspace;  // Declare workspace after permissions are set
+            });
         });
     }
 
