@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogUpdateModel } from 'src/app/models/dialog.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
+import { WorkspaceModel } from 'src/app/models/workspace.model';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class DialogUpdateWorkspaceComponent implements OnInit {
         description: new FormControl("", Validators.required),
     });
 
-    private workspaceID!: string;
+    private workspace!: WorkspaceModel;
 
     title = "Update Workspace";
     buttons = [
@@ -39,21 +40,24 @@ export class DialogUpdateWorkspaceComponent implements OnInit {
         private apiService: ApiService,
         private dialog: MatDialogRef<DialogUpdateWorkspaceComponent>,
         private snackBarService: SnackBarService,
-        @Inject(MAT_DIALOG_DATA) public data: DialogUpdateModel) {
-        this.workspaceID = data.id;
+        @Inject(MAT_DIALOG_DATA) public data: {workspace: WorkspaceModel}) {
+        this.workspace = data.workspace;
     }
 
     ngOnInit(): void {
-        this.form.patchValue(this.data);
+        this.form.patchValue({
+            name: this.workspace.name, 
+            description: this.workspace.description
+        });
     }
 
     submitForm() {
         this.form.markAllAsTouched();
         if (this.form.valid) {
-			this.apiService.updateWorkspace(this.workspaceID, this.form.value).subscribe({
-                next: (val: any) => {
+			this.apiService.updateWorkspace(this.workspace.id, this.form.value).subscribe({
+                next: (workspace: any) => {
                     this.snackBarService.openSnackBar('Workspace updated successfully');
-                    this.dialog.close(val);
+                    this.dialog.close(workspace);
                 },
                 error: (err: any) => {
                     console.error(err);

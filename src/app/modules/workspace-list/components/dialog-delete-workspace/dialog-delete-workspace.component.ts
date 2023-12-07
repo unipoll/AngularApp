@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
+import { WorkspaceModel } from 'src/app/models/workspace.model';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { SnackBarService } from 'src/app/core/services/snackbar.service';
 export class DialogDeleteWorkspaceComponent {
 
 	public dialogTitle = "Delete workspace";
-	public workspaceID!: string;
+	public workspace!: WorkspaceModel;
 
 	public buttons = [
 		{
@@ -25,23 +26,23 @@ export class DialogDeleteWorkspaceComponent {
 		{
 			text: "Delete",
 			color: "warn",
-			action: this.delete.bind(this)
+			action: this.deleteWorkspace.bind(this)
 		}
 	];
 
-	constructor(@Inject(MAT_DIALOG_DATA) private data: any, 
+	constructor(@Inject(MAT_DIALOG_DATA) private data: { workspace: WorkspaceModel}, 
 				private apiService: ApiService,
 				private dialog: MatDialogRef<DialogDeleteWorkspaceComponent>,
 				private snackBarService: SnackBarService){
-		this.workspaceID = data.workspaceID;
-		this.dialogTitle = `Are you sure you want to delete the workspace "${ data.workspaceName }"?`;
+		this.workspace = data.workspace;
+		this.dialogTitle = `Are you sure you want to delete the workspace "${ data.workspace.name }"?`;
 	}
 
-	delete(): void {
-		this.apiService.deleteWorkspace(this.workspaceID).subscribe({
+	deleteWorkspace(): void {
+		this.apiService.deleteWorkspace(this.workspace.id).subscribe({
 			next: (response: any) => {
 				this.snackBarService.openSnackBar("Workspace deleted successfully");
-				this.dialog.close(this.workspaceID);
+				this.dialog.close(this.workspace.id);
 			},
 			error: (err: any) => {
 				this.snackBarService.openSnackBar("Workspace deleted successfully", "ok", "error");
