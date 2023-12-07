@@ -61,7 +61,7 @@ export class GridOrTableViewComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(this.list);
         this.cardList = this.dataSource.connect();
         this.selectedColumns = this.displayedColumns;
-        this.displayedColumnsWithOptions = this.selectedColumns.concat('options');
+        this.displayedColumnsWithOptions = (this.optionsMenu.length > 0) ? this.selectedColumns.concat('options') : this.selectedColumns;
     }
 
     ngAfterViewInit() {
