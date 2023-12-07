@@ -23,3 +23,16 @@ export interface SetPolicyRequest{
 export interface Permissions {
     permissions: string[];
 }
+
+export interface MemberPermissions {
+    permissions: {
+        workspace: {
+            id: string,
+            permissions: string[]
+        },
+        groups: {
+            id: string,
+            permissions: string[]
+        }[]
+    }
+}
