@@ -37,8 +37,7 @@ export class DialogCreateWorkspaceComponent {
 	constructor(
 		private apiService: ApiService,
 		private dialog: MatDialogRef<DialogCreateWorkspaceComponent>,
-		private snackBarService: SnackBarService,
-		@Inject(MAT_DIALOG_DATA) public data: DialogUpdateModel
+		private snackBarService: SnackBarService
 	) { }
 
 	submitForm() {
