@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,85 +10,108 @@ import { MemberModel } from 'src/app/models/member.model';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { PolicyListModel, PolicyModel, SetPolicyRequest, Permissions } from 'src/app/models/policy.model';
-import { DialogEditPolicyComponent } from '../dialog-edit-policy/dialog-edit-policy.component';
+import { DialogUpdatePolicyComponent } from '../dialog-update-policy/dialog-update-policy.component';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
+import { DialogViewPolicyComponent } from '../dialog-view-policy/dialog-view-policy.component';
 
 @Component({
     selector: 'policy-list',
     templateUrl: './policy-list.component.html',
     styleUrls: ['./policy-list.component.scss']
 })
-export class PolicyListComponent {
+export class PolicyListComponent implements OnInit {
     @Input() workspace!: WorkspaceModel;
     @Input() policyList!: PolicyModel[];
 
-    displayedColumns = ['name', 'permissions'];
-    optionsMenu = [
-		// {
-		// 	label: 'View',
-		// 	action: (workspace: WorkspaceModel) => this.getWorkspace(workspace)
-		// },
+    @ViewChild(GridOrTableViewComponent) gridOrTableViewComponent!: GridOrTableViewComponent;
+
+    // Permissions
+    can_update_policies: boolean = false;
+
+    // Template data
+    displayedColumns = ['name', 'permissions', 'policy_holder_type'];
+    optionsMenu: {label: string, action: (policy: PolicyModel) => void}[] = [
 		{
-			label: 'Edit',
-			action: (policy: PolicyModel) => this.editPolicy(policy)
-		},
+			label: 'View',
+			action: (policy: PolicyModel) => this.viewPolicy(policy)
+		}
 		// {
 		// 	label: 'Delete',
 		// 	action: (workspace: WorkspaceModel) => this.deleteWorkspace(workspace)
 		// }
-	]
-
-    // Permissions
-    public can_set_policies: boolean = false;
+	];  
 
     constructor(
         private apiService: ApiService,
-        private _dialog: MatDialog,
+        private dialog: MatDialog,
         private authService: AuthorizationService) { }
 
-    ngOnInit(): void {this.policyList ? this.makeFullName(this.policyList) : this.updatePolicyList();
-        this.can_set_policies = this.authService.isAllowed('update_policies');
+    ngOnInit(): void {
+        this.policyList ? this.formatList(this.policyList) : this.updatePolicyList();
+        this.can_update_policies = this.authService.isAllowed('update_policies');
+        
+        if (this.can_update_policies) {
+            this.optionsMenu.push({
+                label: 'Edit Policy',
+                action: (policy: PolicyModel) => this.editPolicy(policy)
+            })
+        }
     }
 
     updatePolicyList() {
         this.apiService.getWorkspacePolicies(this.workspace.id).pipe(
-            tap((data: PolicyListModel) => (
-                this.policyList = this.makeFullName(data.policies)
-            ))
-        ).subscribe();
+            tap({
+                next: (data: PolicyListModel) => {
+                    console.log("Updating policy list...");
+                    this.policyList = this.formatList(data.policies);
+                    this.gridOrTableViewComponent.updateList(this.policyList);
+                },
+                error: (err) => console.log(err)
+
+        })).subscribe();
     }
 
-    makeFullName(policies: Array<PolicyModel>) {
-        policies.forEach(policy => {
-            if (policy.policy_holder_type == 'Member') {
-                let policy_holder = policy.policy_holder as MemberModel;
-                policy.name = policy_holder.first_name + ' ' + policy_holder.last_name;
-            } else if (policy.policy_holder_type == 'Group') {
-                let policy_holder = policy.policy_holder as GroupModel;
-                policy.name = policy_holder.name;
-            }
-        });
+    formatList(policies: PolicyModel[]) {
+        policies.forEach(policy => this.makeFullName(policy));
         return policies;
     }
 
-    // Getter for loading
-    // get isLoading(): boolean {
-    //     return this.loading;
-    // }
+    makeFullName(policy: PolicyModel) {
+        if (policy.policy_holder_type == 'Member') {
+            let policy_holder = policy.policy_holder as MemberModel;
+            policy.name = policy_holder.first_name + ' ' + policy_holder.last_name;
+        } else if (policy.policy_holder_type == 'Group') {
+            let policy_holder = policy.policy_holder as GroupModel;
+            policy.name = policy_holder.name;
+        }
+        return policy;
+    }
+
+    viewPolicy(policy: PolicyModel) {
+        this.dialog.open(DialogViewPolicyComponent, {
+            data: {
+                policy: policy
+            },
+        });
+    }
 
     editPolicy(policyData: PolicyModel) {
         this.apiService.getWorkspacePermissions().pipe(
             tap((allPermissions: Permissions) => (
-                this._dialog.open(DialogEditPolicyComponent, {
+                this.dialog.open(DialogUpdatePolicyComponent, {
                     data: {
-                        resource: {'workspace': this.workspace.id},
+                        workspace: this.workspace,
                         allPermissions: allPermissions.permissions,
                         policy: policyData
                     },
                 }).afterClosed().subscribe({
-                    next: (val) => {
-                        if (val) {
-                            this.updatePolicyList();
+                    next: (permissionsList) => {
+                        if (permissionsList) {
+                            this.policyList[this.policyList.indexOf(policyData)].permissions = permissionsList.permissions;
+                            this.gridOrTableViewComponent.updateList(this.policyList);
+                            // this.updatePolicyList();
+
                         }
                     },
                 })
