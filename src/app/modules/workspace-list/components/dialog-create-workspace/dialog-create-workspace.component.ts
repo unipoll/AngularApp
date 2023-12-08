@@ -15,7 +15,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogCreateWorkspaceComponent {
 	form = new FormGroup({
 		name: new FormControl("", Validators.required),
-		description: new FormControl("", Validators.required),
+		description: new FormControl(""),
 	});
 
 	title = "Create new workspace";

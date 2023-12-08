@@ -15,7 +15,7 @@ import { WorkspaceModel } from 'src/app/models/workspace.model';
 export class DialogUpdateWorkspaceComponent implements OnInit {
     form = new FormGroup({
         name: new FormControl("", Validators.required),
-        description: new FormControl("", Validators.required),
+        description: new FormControl(""),
     });
 
     private workspace!: WorkspaceModel;

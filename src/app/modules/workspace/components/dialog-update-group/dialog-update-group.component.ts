@@ -14,7 +14,7 @@ import { DialogCreateWorkspaceComponent } from 'src/app/modules/workspace-list/c
 export class DialogUpdateGroupComponent implements OnInit {
     form = new FormGroup({
         name: new FormControl("", Validators.required),
-        description: new FormControl("", Validators.required),
+        description: new FormControl(""),
     });
 
     title = "Create new group";
