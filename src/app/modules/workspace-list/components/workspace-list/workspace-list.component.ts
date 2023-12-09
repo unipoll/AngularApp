@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 
 import { WorkspaceModel } from 'src/app/models/workspace.model';
-import { DialogUpdateModel } from 'src/app/models/dialog.model';
 
 import { DialogCreateWorkspaceComponent } from '../dialog-create-workspace/dialog-create-workspace.component';
 import { DialogUpdateWorkspaceComponent } from '../dialog-update-workspace/dialog-update-workspace.component';
@@ -63,7 +62,6 @@ export class WorkspaceListComponent implements OnInit {
 	}
 
 	getWorkspace(workspace: WorkspaceModel) {
-		console.log('workspace/', workspace.id);
 		this.router.navigate([workspace.id], {
 			relativeTo: this.route
 		});
