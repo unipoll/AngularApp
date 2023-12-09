@@ -215,7 +215,7 @@ export class ApiService {
             params = params.append("include", "all");
         }
         else {
-            params = questions ? params.append("include", "members") : params;
+            params = questions ? params.append("include", "questions") : params;
             params = policies ? params.append("include", "policies") : params;
         }
         return this.http.get<PollModel>(this.settings.apiUrl + '/polls/' + poll_id, { params: params });
@@ -223,7 +223,6 @@ export class ApiService {
 
 
     // Permissions
-
     getPermissions(member_id: string, workspace_id: string): Observable<MemberPermissions> {
         return this.http.get<MemberPermissions>(this.settings.apiUrl + '/v2/permissions/members/' + member_id, { params: {'workspace_id': workspace_id}});
     }
