@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { startWith, map, Observable } from 'rxjs';
+import { startWith, map, Observable, tap } from 'rxjs';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ENTER, COMMA, O } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { AccountModel } from 'src/app/models/account.model';
 import { MemberModel } from 'src/app/models/member.model';
@@ -57,10 +57,15 @@ export class DialogAddMemberComponent {
         @Inject(MAT_DIALOG_DATA) private data: any
     ) {
         this.workspace = this.data.workspace;
+        
+        this.apiService.getAllAccounts().pipe(
+            tap((data) => (
+                this.allAccounts = data.accounts.filter(
+                    ({ id: account_id }: { id: string }) => (!this.data.memberList.some(({ account_id: member_account_id }: { account_id: string }) => member_account_id === account_id))
+                )
+            ))
+        ).subscribe();
 
-        this.allAccounts = this.data.accountList.filter(
-            ({ id: account_id }: { id: string }) => (!this.data.memberList.some(({ account_id: member_account_id }: { account_id: string }) => member_account_id === account_id))
-        );
         this.filteredAccounts = this.accountCtrl.valueChanges.pipe(
             startWith(''),
             map(value => {
