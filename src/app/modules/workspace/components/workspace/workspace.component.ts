@@ -64,7 +64,7 @@ export class WorkspaceComponent implements OnInit {
                     this.member = member;
                 }
             });
-            this.apiService.getPermissions(this.member.id, workspace.id).subscribe(permissions => {
+            this.apiService.getPermissions(this.member.id).subscribe(permissions => {
                 this.authService.setPermissions(permissions.permissions.workspace.permissions);
                 this.workspace = workspace;  // Declare workspace after permissions are set
             });
