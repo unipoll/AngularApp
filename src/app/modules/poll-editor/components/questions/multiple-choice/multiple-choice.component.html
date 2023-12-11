@@ -1,0 +1,83 @@
+<mat-card class="question-card">
+    <div class="question-header">
+        <h1 class="question-number">{{ question_number }}</h1>
+        <h1>Multiple Choice Question</h1>
+        <button class="delete-question-button" mat-flat-button color="warn" (click)="this.deleteQuestion()">
+            Delete <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab label="Markdown">
+            <div class="question-form">
+                <form [formGroup]="questionForm" class="question-form">
+                    <h2>Question</h2>
+                    <mat-form-field appearance="fill" color="primary" fxFlex.gt-sm="calc(50% - 8px)" class="full-width">
+                        <mat-label>Question</mat-label>
+                        <textarea required matInput formControlName="question"></textarea>
+                        @if (questionForm.get('question')?.hasError('required')) {
+                        <mat-error>
+                            Question cannot be empty
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                    <div formArrayName="options">
+                        <h2>Options</h2>
+                        @for (option of options.controls; track option; let i = $index) {
+                        <div class="option-container">
+                            <mat-form-field appearance="fill" color="primary" class="option-input">
+                                <mat-label>Option {{ i + 1 }}</mat-label>
+                                <textarea required matInput id="option-{{ i }}" type="text"
+                                    [formControlName]="i"></textarea>
+                                @if (options.controls[i].hasError('required')) {
+                                <mat-error>
+                                    Option cannot be empty
+                                </mat-error>
+                                }
+                            </mat-form-field>
+                            @if (options.controls.length > 2) {
+                            <button mat-icon-button="button" (click)="removeOption(i)">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            }
+                        </div>
+                        }
+                        <div class="add-option-button-container">
+                            <button class="add-option-button" color="primary" mat-flat-button type="button"
+                                (click)="addOption()">
+                                Add option
+                            </button>
+                        </div>
+                    </div>
+                    <h2>Correct Answers</h2>
+                    <mat-form-field class="full-width">
+                        <mat-label>Correct Answers</mat-label>
+                        <mat-select required formControlName="correct_answer" multiple>
+                            @for (option of options.controls; track option; let i = $index) {
+                            <mat-option [value]="i">
+                                Option {{ i + 1 }}
+                            </mat-option>
+                            }
+                        </mat-select>
+                        @if (questionForm.get('correct_answer')?.hasError('required')) {
+                        <mat-error>
+                            Please select at least one option
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-tab>
+        <mat-tab label="Preview">
+            <div class="question-preview">
+                <markdown emoji katex [data]="questionForm.get('question')?.value"></markdown>
+                <mat-selection-list color="primary" disabled>
+                    @for (option of questionForm.get('options')?.value; track option) {
+                    <mat-list-option selected [value]="option" togglePosition="before" class="option-preview-list-item">
+                        <markdown emoji katex [data]="option"></markdown>
+                    </mat-list-option>
+                    }
+                </mat-selection-list>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

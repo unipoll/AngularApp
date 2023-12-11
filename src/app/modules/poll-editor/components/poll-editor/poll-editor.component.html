@@ -1,0 +1,54 @@
+<div class="page-title">
+  <h1>Create New Poll</h1>
+</div>
+<div class="content">
+  <div class="editor">
+    <form [formGroup]="newPollForm" class="poll-form">
+      <mat-form-field class="poll-form-field">
+        <mat-label>Poll Title</mat-label>
+        <input required matInput placeholder="Poll Title" formControlName="name">
+        @if (newPollForm.controls['name'].hasError('required')) {
+          <mat-error>
+            Poll title is <strong>required</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="poll-form-field">
+        <mat-label>Poll Description</mat-label>
+        <textarea matInput placeholder="Poll Description" formControlName="description"></textarea>
+      </mat-form-field>
+    </form>
+    <div class="add-question-container">
+      <button mat-flat-button color="primary" (click)="addQuestionDialog()">
+        Add Question
+      </button>
+    </div>
+    <ng-container #pollsContainer></ng-container>
+    <div class="add-question-button">
+      <!-- <button mat-raised-button color="primary" (click)="addQuestion()">Add Question</button> -->
+      @if (polls.length > 0) {
+        <button mat-fab color="primary" (click)="addQuestionDialog()" matTooltip="Add question">
+          <mat-icon>add</mat-icon>
+        </button>
+      }
+    </div>
+  </div>
+  <div class="side-menu">
+    <mat-card class="side-menu-content">
+      <h1>Settings</h1>
+      <form [formGroup]="newPollForm" class="side-menu-form">
+        <mat-slide-toggle formControlName="public" color="primary">
+          Public
+        </mat-slide-toggle>
+        <mat-slide-toggle formControlName="published" color="primary">
+          Publish
+        </mat-slide-toggle>
+      </form>
+    </mat-card>
+  </div>
+</div>
+<!-- <mat-divider class="divider"></mat-divider> -->
+<div class="form-submit">
+  <button mat-button color="primary" class="submit-button" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="savePoll()" class="submit-button" [disabled]="polls.length == 0">Save</button>
+</div>
