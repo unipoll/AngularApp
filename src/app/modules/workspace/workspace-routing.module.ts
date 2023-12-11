@@ -24,14 +24,14 @@ const routes: Routes = [
         path: 'members',
         component: WorkspaceComponent,
         data: {
-            tab: 'polls'
+            tab: 'members'
         }
     },
     {
         path: 'groups',
         component: WorkspaceComponent,
         data: {
-            tab: 'polls'
+            tab: 'groups'
         }
     },
     {
