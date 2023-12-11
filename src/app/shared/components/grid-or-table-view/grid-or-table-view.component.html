@@ -27,24 +27,25 @@
     <div class="grid-view">
         @for (item of cardList | async; track item) {
             <mat-card class="card" (click)="cardClickAction(item)">
-                <mat-card-header class="card-header">
-                    <mat-card-title>
+                <div class="card-header">
+                    <mat-card-title class="card-title">
                         <ng-container *ngTemplateOutlet="cardTitleTemplate, context: { $implicit: item }"></ng-container>
-                        @if (optionsMenu.length > 0) {
-                            <!-- Menu Button -->
-                            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu"
-                                (click)="$event.stopPropagation();">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <!-- Menu and items -->
-                            <mat-menu #menu="matMenu" xPosition="before">
-                                @for (action of optionsMenu; track action) {
-                                <button mat-menu-item (click)="action.action(item);">{{action.label}}</button>
-                                }
-                            </mat-menu>
-                        }
+                        
                     </mat-card-title>
-                </mat-card-header>
+                    @if (optionsMenu.length > 0) {
+                        <!-- Menu Button -->
+                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu"
+                            (click)="$event.stopPropagation();">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <!-- Menu and items -->
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            @for (action of optionsMenu; track action) {
+                            <button mat-menu-item (click)="action.action(item);">{{action.label}}</button>
+                            }
+                        </mat-menu>
+                    }
+                </div>
                 <mat-card-content class="card-content">
                     <ng-container *ngTemplateOutlet="cardContentTemplate, context: { $implicit: item }"></ng-container>
                 </mat-card-content>
@@ -85,7 +86,7 @@
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
                     @for (action of optionsMenu; track action) {
-                    <button mat-menu-item (click)="$event.stopPropagation(); action.action(row);">{{action.label}}</button>
+                    <button mat-menu-item (click)="action.action(row);">{{action.label}}</button>
                     }
                 </mat-menu>
             </td>
