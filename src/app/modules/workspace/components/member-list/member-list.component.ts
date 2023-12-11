@@ -20,8 +20,6 @@ export class MemberListComponent implements OnInit {
     @Input() workspace!: WorkspaceModel;
     @Input() memberList!: MemberModel[];
 
-    private accountList!: AccountModel[];
-
     displayedColumns = ['full_name', 'email'];
     optionsMenu = [
         {
@@ -41,12 +39,6 @@ export class MemberListComponent implements OnInit {
         private authService: AuthorizationService) { }
 
     ngOnInit(): void {
-        this.apiService.getAllAccounts().pipe(
-            tap((data) => (
-                this.accountList = data.accounts
-            ))
-        ).subscribe();
-
         this.memberList ? this.makeFullName(this.memberList) : this.updateMemberList();
         this.can_add_members = this.authService.isAllowed('add_members');
     }
@@ -70,7 +62,6 @@ export class MemberListComponent implements OnInit {
     addMember() {
         this.dialog.open(DialogAddMemberComponent, {
             data: {
-                accountList: this.accountList,
                 memberList: this.memberList,
                 workspace: this.workspace
             }
