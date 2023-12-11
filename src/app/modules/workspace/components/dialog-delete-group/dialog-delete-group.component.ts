@@ -6,12 +6,12 @@ import { GroupModel } from 'src/app/models/group.model';
 import { DialogDeleteWorkspaceComponent } from 'src/app/modules/workspace-list/components/dialog-delete-workspace/dialog-delete-workspace.component';
 
 @Component({
-  selector: 'app-dialog-delete-group',
-  templateUrl: './dialog-delete-group.component.html',
-  styleUrl: './dialog-delete-group.component.scss'
+	selector: 'app-dialog-delete-group',
+	templateUrl: './dialog-delete-group.component.html',
+	styleUrl: './dialog-delete-group.component.scss'
 })
 export class DialogDeleteGroupComponent {
-  public dialogTitle = "Delete workspace";
+	public dialogTitle = "Delete workspace";
 	public group!: GroupModel;
 
 	public buttons = [
@@ -30,11 +30,11 @@ export class DialogDeleteGroupComponent {
 	];
 
 	constructor(private apiService: ApiService,
-              private dialog: MatDialogRef<DialogDeleteWorkspaceComponent>,
-				      private snackBarService: SnackBarService,
-              @Inject(MAT_DIALOG_DATA) data: { group: GroupModel}){
+		private dialog: MatDialogRef<DialogDeleteWorkspaceComponent>,
+		private snackBarService: SnackBarService,
+		@Inject(MAT_DIALOG_DATA) data: { group: GroupModel }) {
 		this.group = data.group;
-		this.dialogTitle = `Are you sure you want to delete the workspace "${ data.group.name }"?`;
+		this.dialogTitle = `Are you sure you want to delete the workspace "${data.group.name}"?`;
 	}
 
 	delete(): void {
