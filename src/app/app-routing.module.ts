@@ -1,27 +1,40 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, provideRouter, withComponentInputBinding } from '@angular/router';
-import { requireAccount } from './core/guards/auth.guard';
+import { requireAccount, requiresPermission } from './core/guards/auth.guard';
 
 const routes: Routes = [
 
     // { path: '**', redirectTo: '', pathMatch: 'full' }
 
     {
-        path: '',
-        redirectTo: 'workspaces',
-        pathMatch: 'full'
+        path: 'workspaces/:workspace_id/polls/:poll_id/edit',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/poll-editor/poll-editor.module').then(m => m.PollEditorModule),
+        canActivate: [requireAccount, requiresPermission('polls_')]
+    },
+    {
+        path: 'workspaces/:workspace_id/polls/:poll_id',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/poll/poll.module').then(m => m.PollModule),
+        canActivate: [requireAccount]
+    },
+    {
+        path: 'workspaces/:workspace_id',
+        // pathMatch: 'full',
+        pathMatch: 'prefix',
+        loadChildren: () => import('./modules/workspace/workspace.module').then(m => m.WorkspaceModule),
+        canActivate: [requireAccount]
     },
     {
         path: 'workspaces',
-        pathMatch: 'full',
+        // pathMatch: 'full',
         loadChildren: () => import('./modules/workspace-list/workspace-list.module').then(m => m.WorkspaceListModule),
         canActivate: [requireAccount],
     },
     {
-        path: 'workspaces/:id',
-        pathMatch: 'full',
-        loadChildren: () => import('./modules/workspace/workspace.module').then(m => m.WorkspaceModule),
-        canActivate: [requireAccount]
+        path: '',
+        redirectTo: 'workspaces',
+        pathMatch: 'full'
     }
 ];
 
