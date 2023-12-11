@@ -11,6 +11,8 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { PollListModel, PollModel } from 'src/app/models/poll.model';
 import { tap } from 'rxjs';
 import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
+import { DialogCreatePollComponent } from '../dialog-create-poll/dialog-create-poll.component';
+import { DialogDeletePollComponent } from '../dialog-delete-poll/dialog-delete-poll.component';
 
 @Component({
     selector: 'poll-list',
@@ -24,11 +26,11 @@ export class PollListComponent implements OnInit {
     @Input() pollList!: PollModel[];
 
     // Table data
-    displayedColumns: string[] = ["name", "description", "questions", "public", "published"];
+    displayedColumns: string[] = ["name", "description", "public", "published"];
     optionsMenu = [
         {
             label: "View",
-            action: (poll: PollModel) => this.getPoll(poll)
+            action: (poll: PollModel) => this.viewPoll(poll)
         },
         {
             label: "Edit",
@@ -55,7 +57,6 @@ export class PollListComponent implements OnInit {
     ngOnInit(): void {
         this.pollList ? this.pollList : this.updatePollList();
         this.can_add_polls = this.authService.isAllowed('create_polls');
-        console.log(this.authService.getPermissions());
     }
 
     updatePollList() {
@@ -72,61 +73,51 @@ export class PollListComponent implements OnInit {
         });
     }
 
+    viewPoll(poll: PollModel) {
+        this.router.navigate(['workspaces', this.workspace.id, 'polls', poll.id]);
+    }
+
     createPoll() {
-        // const dialogRef = this.dialog.open(DialogCreateComponent, {
-        //   data: { 
-        //     resource_type: 'poll',
-        //   },
-        // });
-
-        // dialogRef.afterClosed().subscribe({
-        //   next: (val) => {
-        //     if (val) {
-        //       this.updateWorkspaceList();
-        //     }
-        //   },
-        // });
-
-        // this.router.navigate(['/workspace', 'new-poll']);
-        this.router.navigate(['/new-poll'], {
-            relativeTo: this.route
+        if (!this.can_add_polls) {
+            return;
+        }
+        this.dialog.open(DialogCreatePollComponent, {
+            data: {
+                workspace: this.workspace,
+            },
+        }).afterClosed().subscribe({
+            next: (new_poll) => {
+                if (new_poll) {
+                    this.router.navigate(['workspaces', this.workspace.id, 'polls', new_poll.id, 'edit']);
+                }
+            },
         });
     }
 
     editPoll(poll: PollModel) {
-        // const data: DialogUpdateModel = {
-        //   workspace_id: workspace.id,
-        //   id: workspace.id,
-        //   name: workspace.name,
-        //   description: workspace.description,
-        //   resource_type: 'workspace',
-        // };
-        // const dialogRef = this.dialog.open(DialogUpdateComponent, { data });
-        // dialogRef.afterClosed().subscribe({
-        //   next: (val) => {
-        //     if (val) {
-        //       this.updateWorkspaceList();
-        //     }
-        //   },
-        // });
+        if (!this.authService.isAllowed('edit_polls')) {
+            // TODO: Check for individual poll permissions 
+            return;
+        }
+
+        this.router.navigate(['workspaces', this.workspace.id, 'polls', poll.id, 'edit']);
     }
 
     deletePoll(poll: PollModel): void {
-        // const dialogRef = this.dialog.open(DialogDeleteComponent, {
-        //   data: {
-        //     resourceType: 'poll',
-        //     resourceID: poll.id,
-        //     resourceName: poll.name,
-
-        //   }
-        // });
-        // dialogRef.afterClosed().subscribe({
-        //   next: (val) => {
-        //     if (val) {
-        //       this.updatePollList();
-        //     }
-        //   },
-        // });
+        const dialogRef = this.dialog.open(DialogDeletePollComponent, {
+            data: {
+                poll: poll,
+            }
+        });
+        dialogRef.afterClosed().subscribe({
+            next: (val) => {
+                if (val) {
+                    // this.updatePollList();
+                    this.pollList = this.pollList.filter((p) => p.id != poll.id);
+                    this.gridOrTableViewComponent.updateList(this.pollList);
+                }
+            },
+        });
     }
 
 }
