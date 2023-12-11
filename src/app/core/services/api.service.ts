@@ -218,7 +218,17 @@ export class ApiService {
             params = questions ? params.append("include", "questions") : params;
             params = policies ? params.append("include", "policies") : params;
         }
-        return this.http.get<PollModel>(this.settings.apiUrl + '/polls/' + poll_id, { params: params });
+        return this.http.get<PollModel>(`${this.settings.apiUrl}/v2/polls/${poll_id}`, { params: params });
+    }
+
+    // Update poll
+    updatePoll(poll_id: string, data: NewPollRequestBody) {
+        return this.http.patch<PollModel>(`${this.settings.apiUrl}/v2/polls/${poll_id}`, data);
+    }
+
+    // Delete poll
+    deletePoll(poll_id: string) {
+        return this.http.delete(`${this.settings.apiUrl}/v2/polls/${poll_id}`);
     }
 
 
