@@ -1,0 +1,13 @@
+@if (poll) {
+  <div>
+    <div class="page-title">
+      <h1>{{ poll.name }}</h1>
+    </div>
+    <div class="overview-tab">
+      <p>{{ poll.description }}</p>
+    </div>
+    @for (question of poll.questions; track question) {
+      <app-poll-question [question]="question"></app-poll-question>
+    }
+  </div>
+}
