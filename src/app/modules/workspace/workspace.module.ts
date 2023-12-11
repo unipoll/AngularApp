@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 
 import { WorkspaceRoutingModule } from './workspace-routing.module';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
@@ -25,6 +24,8 @@ import { DialogUpdatePolicyComponent } from './components/dialog-update-policy/d
 import { DialogCreateGroupComponent } from './components/dialog-create-group/dialog-create-group.component';
 import { DialogUpdateGroupComponent } from './components/dialog-update-group/dialog-update-group.component';
 import { DialogDeleteGroupComponent } from './components/dialog-delete-group/dialog-delete-group.component';
+import { DialogCreatePollComponent } from './components/dialog-create-poll/dialog-create-poll.component';
+import { DialogDeletePollComponent } from './components/dialog-delete-poll/dialog-delete-poll.component';
 
 
 @NgModule({
@@ -36,11 +37,13 @@ import { DialogDeleteGroupComponent } from './components/dialog-delete-group/dia
         PollListComponent,
         DialogAddMemberComponent,
         DialogRemoveMemberComponent,
+        DialogViewPolicyComponent,
         DialogUpdatePolicyComponent,
         DialogCreateGroupComponent,
         DialogUpdateGroupComponent,
         DialogDeleteGroupComponent,
-        DialogViewPolicyComponent,
+        DialogCreatePollComponent,
+        DialogDeletePollComponent
     ],
     imports: [
         CommonModule,
