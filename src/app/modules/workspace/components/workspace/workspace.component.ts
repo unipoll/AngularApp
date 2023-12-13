@@ -11,6 +11,7 @@ import { GroupListComponent } from '../group-list/group-list.component';
 import { PolicyListModel } from 'src/app/models/policy.model';
 import { MemberModel } from 'src/app/models/member.model';
 import { ActivatedRoute } from '@angular/router';
+import { PollListComponent } from '../poll-list/poll-list.component';
 
 @Component({
     selector: 'app-workspace',
@@ -65,14 +66,23 @@ export class WorkspaceComponent implements OnInit {
                 }
             });
             this.apiService.getPermissions(this.member.id).subscribe(permissions => {
-                this.authService.setPermissions(permissions.permissions.workspace.permissions);
+                this.authService.setPermissions(workspace.id, permissions.workspace.permissions);
+
+                for (let group of permissions.groups) {
+                    this.authService.setPermissions(group.id, group.permissions);
+                }
+
+                for (let poll of permissions.polls) {
+                    this.authService.setPermissions(poll.id, poll.permissions);
+                }
+
                 this.workspace = workspace;  // Declare workspace after permissions are set
             });
         });
     }
 
     isAllowed(permission: string): boolean {
-        return this.authService.isAllowed(permission);
+        return this.authService.isAllowed(this.workspace_id, permission);
     }
 
     // Handle Events
