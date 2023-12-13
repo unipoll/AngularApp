@@ -6,21 +6,24 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthorizationService {
 
-    private _permissions$ = new BehaviorSubject<string[]>([]);
-    permissions$ = this._permissions$.asObservable();
+    // private _permissions$ = new BehaviorSubject<Map<string, string[]>>(new Map<string, string[]>());
+    // permissions$ = this._permissions$.asObservable();
+    permissions = new Map<string, string[]>();
 
     constructor() { }
 
-    setPermissions(permissions: string[]) {
+    setPermissions(resource_id: string, permissions: string[]) {
         // this.permissions = permissions;
-        this._permissions$.next(permissions);
+        // this._permissions$.next(permissions);
+
+        this.permissions.set(resource_id, permissions);
     }
 
-    getPermissions() {
-        return this._permissions$.value;
+    getPermissions(resource_id: string) {
+        return this.permissions.get(resource_id) || [];
     }
 
-    isAllowed(permission: string) {
-        return this._permissions$.value.includes(permission);
+    isAllowed(resource_id: string, permission: string): boolean {
+        return this.permissions.get(resource_id)?.includes(permission) || false;
     }
 }
