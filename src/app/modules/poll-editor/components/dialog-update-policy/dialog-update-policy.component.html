@@ -1,0 +1,29 @@
+<app-dialog [dialogTitle]="title" [dialogButtons]="buttons">
+    <form>
+        <mat-form-field class="chip-list">
+            <mat-label>Allowed actions</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Permission selection">
+                @for (permission of permissions; track permission) {
+                <mat-chip-row (removed)="remove(permission)" highlighted>
+                    {{ permission.replaceAll('_', ' ') | titlecase }}
+                    <button matChipRemove [attr.aria-label]="'remove ' + permission">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+                }
+            </mat-chip-grid>
+            <input placeholder="Select Permission..." #permissionInput [formControl]="permissionCtrl"
+                [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
+            <!-- (matChipInputTokenEnd)="add($event)"/> -->
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                @for (permission of filteredPermissions | async; track permission) {
+                <mat-option [value]="permission">
+                    {{ permission.replaceAll('_', ' ') | titlecase }}
+                </mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </form>
+</app-dialog>
