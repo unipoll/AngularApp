@@ -1,3 +1,4 @@
+import { PolicyModel } from './policy.model';
 import { QuestionModel } from './question.model';
 import { WorkspaceModel } from './workspace.model';
 
@@ -9,6 +10,7 @@ export interface PollModel {
     published: boolean;
     public: boolean;
     questions: QuestionModel[];
+    policies: PolicyModel[];
 }
 
 
