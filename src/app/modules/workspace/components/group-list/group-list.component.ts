@@ -72,15 +72,7 @@ export class GroupListComponent {
     }
 
     viewGroup(group: GroupModel) {
-        this.router.navigate(['/group/', group.id], {
-            relativeTo: this.route,
-            // state: {
-            //     workspace_id: this.workspace.id,
-            //     group_id: group.id,
-            //     group_name: group.name,
-            //     group_description: group.description
-            // }
-        });
+        this.router.navigate(['workspaces', this.workspace.id, 'groups', group.id]);
     }
 
 
