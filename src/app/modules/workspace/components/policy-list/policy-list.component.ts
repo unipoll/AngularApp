@@ -49,7 +49,7 @@ export class PolicyListComponent implements OnInit {
 
     ngOnInit(): void {
         this.policyList ? this.formatList(this.policyList) : this.updatePolicyList();
-        this.can_update_policies = this.authService.isAllowed('update_policies');
+        this.can_update_policies = this.authService.isAllowed(this.workspace.id, 'update_policies');
         
         if (this.can_update_policies) {
             this.optionsMenu.push({

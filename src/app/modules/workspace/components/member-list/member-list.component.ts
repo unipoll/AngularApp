@@ -40,7 +40,7 @@ export class MemberListComponent implements OnInit {
 
     ngOnInit(): void {
         this.memberList ? this.makeFullName(this.memberList) : this.updateMemberList();
-        this.can_add_members = this.authService.isAllowed('add_members');
+        this.can_add_members = this.authService.isAllowed(this.workspace.id, 'add_members');
     }
 
     updateMemberList() {

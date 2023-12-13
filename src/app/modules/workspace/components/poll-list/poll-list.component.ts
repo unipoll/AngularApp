@@ -56,7 +56,7 @@ export class PollListComponent implements OnInit {
 
     ngOnInit(): void {
         this.pollList ? this.pollList : this.updatePollList();
-        this.can_add_polls = this.authService.isAllowed('create_polls');
+        this.can_add_polls = this.authService.isAllowed(this.workspace.id, 'create_polls');
     }
 
     updatePollList() {
@@ -95,11 +95,9 @@ export class PollListComponent implements OnInit {
     }
 
     editPoll(poll: PollModel) {
-        if (!this.authService.isAllowed('edit_polls')) {
-            // TODO: Check for individual poll permissions 
+        if (!this.authService.isAllowed(this.workspace.id, 'edit_polls') || !this.authService.isAllowed(poll.id, 'update_poll')) {
             return;
         }
-
         this.router.navigate(['workspaces', this.workspace.id, 'polls', poll.id, 'edit']);
     }
 
