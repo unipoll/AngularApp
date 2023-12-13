@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
 
 import { GroupModel, GroupListModel } from 'src/app/models/group.model';
@@ -58,7 +58,7 @@ export class GroupListComponent {
 
     ngOnInit(): void {
         this.groupList ? this.groupList : this.updateGroupList();
-        this.can_create_groups = this.authService.isAllowed('add_groups');
+        this.can_create_groups = this.authService.isAllowed(this.workspace.id, 'add_groups');
     }
 
     updateGroupList() {
