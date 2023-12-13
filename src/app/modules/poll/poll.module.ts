@@ -23,7 +23,6 @@ import { MarkdownModule } from 'ngx-markdown';
         MarkdownModule.forChild()
     ],
     exports: [
-        PollComponent
     ]
 })
 export class PollModule { }
