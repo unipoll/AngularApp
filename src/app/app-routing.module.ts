@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, provideRouter, withComponentInputBinding } from '@angular/router';
-import { requireAccount, requiresPermission } from './core/guards/auth.guard';
+import { requireAccount } from './core/guards/auth.guard';
 
 const routes: Routes = [
 
@@ -10,12 +10,18 @@ const routes: Routes = [
         path: 'workspaces/:workspace_id/polls/:poll_id/edit',
         pathMatch: 'full',
         loadChildren: () => import('./modules/poll-editor/poll-editor.module').then(m => m.PollEditorModule),
-        canActivate: [requireAccount, requiresPermission('polls_')]
+        canActivate: [requireAccount],
     },
     {
         path: 'workspaces/:workspace_id/polls/:poll_id',
         pathMatch: 'full',
         loadChildren: () => import('./modules/poll/poll.module').then(m => m.PollModule),
+        canActivate: [requireAccount]
+    },
+    {
+        path: 'workspaces/:workspace_id/groups/:group_id',
+        pathMatch: 'prefix',
+        loadChildren: () => import('./modules/group/group.module').then(m => m.GroupModule),
         canActivate: [requireAccount]
     },
     {
