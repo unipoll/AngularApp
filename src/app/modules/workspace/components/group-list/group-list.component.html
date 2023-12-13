@@ -15,7 +15,8 @@
   <app-grid-or-table-view [filterPlaceholder]="'Filter Policies'" 
                           [viewMode]="viewToggle.value" 
                           [list]="groupList"
-                          [cardClickAction]="viewGroup"
+                          [cardClickAction]="viewGroup.bind(this)"
+                          [rowClickAction]="viewGroup.bind(this)"
                           [optionsMenu]="optionsMenu" 
                           [displayedColumns]="displayedColumns">
 
