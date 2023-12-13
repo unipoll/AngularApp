@@ -1,0 +1,25 @@
+@if (group) {
+  <div>
+    <div class="page-title">
+      <h1>{{ group.name }}</h1>
+    </div>
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Overview">
+        <div class="overview-tab">
+          <p>{{ group.description }}</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Members">
+        <!-- @if (isAllowed('get_members')) { -->
+          <member-list [group]="group" [memberList]="group.members"></member-list>
+        <!-- } -->
+      </mat-tab>
+      <mat-tab label="Policies">
+        @if (isAllowed('get_policies')) {
+          <policy-list [group]="group" [policyList]="group.policies"></policy-list>
+        }
+      </mat-tab>
+      <mat-tab label="Setting">Permissions and other settings</mat-tab>
+    </mat-tab-group>
+  </div>
+}
