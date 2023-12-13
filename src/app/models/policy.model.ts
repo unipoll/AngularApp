@@ -25,7 +25,7 @@ export interface Permissions {
 }
 
 export interface MemberPermissions {
-    permissions: {
+    // permissions: {
         workspace: {
             id: string,
             permissions: string[]
@@ -33,6 +33,10 @@ export interface MemberPermissions {
         groups: {
             id: string,
             permissions: string[]
+        }[],
+        polls: {
+            id: string,
+            permissions: string[]
         }[]
-    }
+    // }
 }
