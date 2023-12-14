@@ -233,7 +233,24 @@ export class ApiService {
 
 
     // Permissions
+
+    // Get all member permissions in the workspace (including all groups and polls)
     getAllMemberPermissions(member_id: string): Observable<MemberPermissions> {
-        return this.http.get<MemberPermissions>(this.settings.apiUrl + '/v2/permissions/members/' + member_id);
+        return this.http.get<MemberPermissions>(`${this.settings.apiUrl}/v2/permissions/members/${member_id}`);
+    }
+
+    // Get member permissions in the workspace
+    getWorkspaceMemberPermissions(workspace_id: string): Observable<Permissions> {
+        return this.http.get<Permissions>(`${this.settings.apiUrl}/v1/workspaces/${workspace_id}/permissions`);
+    }
+
+    // Get member permissions in the group
+    getGroupMemberPermissions(workspace_id: string, group_id: string): Observable<Permissions> {
+        return this.http.get<Permissions>(`${this.settings.apiUrl}/v1/workspaces/${workspace_id}/groups/${group_id}/permissions`);
+    }
+
+    // Get member permissions in the poll
+    getPollMemberPermissions(workspace_id: string, poll_id: string): Observable<Permissions> {
+        return this.http.get<Permissions>(`${this.settings.apiUrl}/v1/workspaces/${workspace_id}/polls/${poll_id}/permissions`);
     }
 }
