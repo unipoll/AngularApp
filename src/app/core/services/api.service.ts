@@ -233,7 +233,7 @@ export class ApiService {
 
 
     // Permissions
-    getPermissions(member_id: string): Observable<MemberPermissions> {
+    getAllMemberPermissions(member_id: string): Observable<MemberPermissions> {
         return this.http.get<MemberPermissions>(this.settings.apiUrl + '/v2/permissions/members/' + member_id);
     }
 }
