@@ -37,6 +37,12 @@ export class WorkspaceComponent implements OnInit {
     @ViewChild(MemberListComponent) memberList!: MemberListComponent;
     @ViewChild(PolicyListComponent) policyList!: PolicyListComponent;
 
+
+    can_get_policies = false;
+    can_get_groups = false;
+    can_get_members = false;
+    can_get_polls = false;
+
     // Constructor
     constructor(
         private apiService: ApiService,
@@ -65,25 +71,30 @@ export class WorkspaceComponent implements OnInit {
                     this.member = member;
                 }
             });
-            this.apiService.getPermissions(this.member.id).subscribe(permissions => {
-                this.authService.setPermissions(workspace.id, permissions.workspace.permissions);
+            this.apiService.getAllMemberPermissions(this.member.id).subscribe(response => {
+                this.authService.setPermissions(workspace.id, response.workspace.permissions);
 
-                for (let group of permissions.groups) {
+                for (let group of response.groups) {
                     this.authService.setPermissions(group.id, group.permissions);
                 }
 
-                for (let poll of permissions.polls) {
+                for (let poll of response.polls) {
                     this.authService.setPermissions(poll.id, poll.permissions);
                 }
+
+                this.can_get_policies = response.workspace.permissions.includes('get_policies');
+                this.can_get_groups = response.workspace.permissions.includes('get_groups');
+                this.can_get_members = response.workspace.permissions.includes('get_members');
+                this.can_get_polls = response.workspace.permissions.includes('get_polls');
 
                 this.workspace = workspace;  // Declare workspace after permissions are set
             });
         });
     }
 
-    isAllowed(permission: string): boolean {
-        return this.authService.isAllowed(this.workspace_id, permission);
-    }
+    // isAllowed(permission: string): boolean {
+    //     return this.authService.isAllowed(this.workspace_id, permission);
+    // }
 
     // Handle Events
     eventHandler(event: any): void {
