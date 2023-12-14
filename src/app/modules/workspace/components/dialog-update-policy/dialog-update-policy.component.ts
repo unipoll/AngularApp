@@ -17,7 +17,7 @@ interface DialogData {
 }
 
 @Component({
-    selector: 'app-dialog-update-policy',
+    selector: 'dialog-update-workspace-policy',
     templateUrl: './dialog-update-policy.component.html',
     styleUrl: './dialog-update-policy.component.scss'
 })
