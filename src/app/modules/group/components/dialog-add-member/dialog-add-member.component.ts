@@ -12,7 +12,7 @@ import { MemberModel } from 'src/app/models/member.model';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
 
 @Component({
-    selector: 'dialog-add-member',
+    selector: 'dialog-add-group-member',
     templateUrl: './dialog-add-member.component.html',
     styleUrl: './dialog-add-member.component.scss'
 })

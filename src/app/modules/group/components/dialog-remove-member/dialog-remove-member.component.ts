@@ -7,7 +7,7 @@ import { WorkspaceModel } from 'src/app/models/workspace.model';
 
 
 @Component({
-    selector: 'app-dialog-remove-member',
+    selector: 'dialog-remove-group-member',
     templateUrl: './dialog-remove-member.component.html',
     styleUrl: './dialog-remove-member.component.scss'
 })

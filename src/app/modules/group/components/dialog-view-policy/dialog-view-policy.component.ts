@@ -5,7 +5,7 @@ import { MemberModel } from 'src/app/models/member.model';
 import { PolicyModel } from 'src/app/models/policy.model';
 
 @Component({
-    selector: 'app-dialog-view-policy',
+    selector: 'dialog-view-group-policy',
     templateUrl: './dialog-view-policy.component.html',
     styleUrl: './dialog-view-policy.component.scss'
 })
