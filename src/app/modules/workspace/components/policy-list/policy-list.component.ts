@@ -1,18 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
-import { timer, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { GroupModel } from 'src/app/models/group.model';
 import { MemberModel } from 'src/app/models/member.model';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
 import { ApiService } from 'src/app/core/services/api.service';
-import { PolicyListModel, PolicyModel, SetPolicyRequest, Permissions } from 'src/app/models/policy.model';
+import { PolicyListModel, PolicyModel, Permissions } from 'src/app/models/policy.model';
 import { DialogUpdatePolicyComponent } from '../dialog-update-policy/dialog-update-policy.component';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
-import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
+import { GridOrTableViewComponent, MenuItem } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
 import { DialogViewPolicyComponent } from '../dialog-view-policy/dialog-view-policy.component';
 
 @Component({
@@ -26,14 +22,16 @@ export class PolicyListComponent implements OnInit {
 
     @ViewChild(GridOrTableViewComponent) gridOrTableViewComponent!: GridOrTableViewComponent;
 
+    @Output() policyListEvent = new EventEmitter();
+
     // Permissions
     can_update_policies: boolean = false;
 
     // Template data
     displayedColumns = ['name', 'permissions', 'policy_holder_type'];
-    optionsMenu: {label: string, action: (policy: PolicyModel) => void}[] = [
+    optionsMenu: MenuItem[] = [
 		{
-			label: 'View',
+			label: 'View Policy',
 			action: (policy: PolicyModel) => this.viewPolicy(policy)
 		}
 		// {
@@ -110,8 +108,7 @@ export class PolicyListComponent implements OnInit {
                         if (permissionsList) {
                             this.policyList[this.policyList.indexOf(policyData)].permissions = permissionsList.permissions;
                             this.gridOrTableViewComponent.updateList(this.policyList);
-                            // this.updatePolicyList();
-
+                            this.policyListEvent.emit('policyUpdated');
                         }
                     },
                 })

@@ -32,14 +32,14 @@ export class PollListComponent implements OnInit {
             label: "View",
             action: (poll: PollModel) => this.viewPoll(poll)
         },
-        {
-            label: "Edit",
-            action: (poll: PollModel) => this.editPoll(poll)
-        },
-        {
-            label: "Delete",
-            action: (poll: PollModel) => this.deletePoll(poll)
-        },
+        // {
+        //     label: "Edit",
+        //     action: (poll: PollModel) => this.editPoll(poll)
+        // },
+        // {
+        //     label: "Delete",
+        //     action: (poll: PollModel) => this.deletePoll(poll)
+        // },
     ]
 
     @ViewChild(GridOrTableViewComponent) gridOrTableViewComponent!: GridOrTableViewComponent;
@@ -95,9 +95,6 @@ export class PollListComponent implements OnInit {
     }
 
     editPoll(poll: PollModel) {
-        if (!this.authService.isAllowed(this.workspace.id, 'edit_polls') || !this.authService.isAllowed(poll.id, 'update_poll')) {
-            return;
-        }
         this.router.navigate(['workspaces', this.workspace.id, 'polls', poll.id, 'edit']);
     }
 

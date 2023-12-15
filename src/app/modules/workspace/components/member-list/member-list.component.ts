@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
 import { DialogRemoveMemberComponent } from '../dialog-remove-member/dialog-remove-member.component';
-import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
+import { GridOrTableViewComponent, MenuItem } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
 import { AccountModel } from 'src/app/models/account.model';
 
 
@@ -21,12 +21,7 @@ export class MemberListComponent implements OnInit {
     @Input() memberList!: MemberModel[];
 
     displayedColumns = ['full_name', 'email'];
-    optionsMenu = [
-        {
-            label: 'Remove Member',
-            action: (member: MemberModel) => this.removeMember(member)
-        },
-    ]
+    optionsMenu: MenuItem[] = [];
 
     @ViewChild(GridOrTableViewComponent) gridOrTableViewComponent!: GridOrTableViewComponent;
 
@@ -41,6 +36,13 @@ export class MemberListComponent implements OnInit {
     ngOnInit(): void {
         this.memberList ? this.makeFullName(this.memberList) : this.updateMemberList();
         this.can_add_members = this.authService.isAllowed(this.workspace.id, 'add_members');
+
+        if (this.authService.isAllowed(this.workspace.id, 'remove_members')) {
+            this.optionsMenu.push({
+                label: 'Remove Member',
+                action: (member: MemberModel) => this.removeMember(member)
+            })
+        }
     }
 
     updateMemberList() {

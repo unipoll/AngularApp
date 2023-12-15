@@ -12,7 +12,7 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 import { DialogCreateGroupComponent } from '../dialog-create-group/dialog-create-group.component';
 import { DialogUpdateGroupComponent } from '../dialog-update-group/dialog-update-group.component';
 import { DialogDeleteGroupComponent } from '../dialog-delete-group/dialog-delete-group.component';
-import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
+import { GridOrTableViewComponent, MenuItem } from 'src/app/shared/components/grid-or-table-view/grid-or-table-view.component';
 
 
 @Component({
@@ -29,19 +29,19 @@ export class GroupListComponent {
 
     // Table data
     displayedColumns = ["name", "description"];
-    optionsMenu = [
+    optionsMenu: MenuItem[] = [
         {
             label: "View",
             action: (group: GroupModel) => this.viewGroup(group)
         },
-        {
-            label: "Edit",
-            action: (group: GroupModel) => this.editGroup(group)
-        },
-        {
-            label: "Delete",
-            action: (group: GroupModel) => this.deleteGroup(group)
-        },
+        // {
+        //     label: "Edit",
+        //     action: (group: GroupModel) => this.editGroup(group)
+        // },
+        // {
+        //     label: "Delete",
+        //     action: (group: GroupModel) => this.deleteGroup(group)
+        // },
     ]
 
     @ViewChild(GridOrTableViewComponent) gridOrTableViewComponent!: GridOrTableViewComponent;
@@ -59,6 +59,20 @@ export class GroupListComponent {
     ngOnInit(): void {
         this.groupList ? this.groupList : this.updateGroupList();
         this.can_create_groups = this.authService.isAllowed(this.workspace.id, 'add_groups');
+
+        if (this.authService.isAllowed(this.workspace.id, 'update_groups')) {
+            this.optionsMenu.push({
+                label: 'Edit Group',
+                action: (group: GroupModel) => this.editGroup(group)
+            })
+        }
+
+        if (this.authService.isAllowed(this.workspace.id, 'delete_groups')) {
+            this.optionsMenu.push({
+                label: "Delete Group",
+                action: (group: GroupModel) => this.deleteGroup(group)
+            })
+        }
     }
 
     updateGroupList() {
