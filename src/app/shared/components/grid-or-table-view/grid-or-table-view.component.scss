@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .top-buttons {
     display: flex;
     // justify-content: space-between;
@@ -17,8 +19,37 @@
     margin: 2rem 0;
     padding: 0 1rem;
     box-shadow: none;
-    border: 1px solid #ddd;
+    // border: 1px solid #ddd;
 }
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card-header {
+    padding: 0;
+}
+
+.table-header {
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.table-option-cell.mdc-data-table__cell {
+    text-align: right;
+}
+
+// .table-cell {
+//     text-align: center;
+// }
+
+// .more-button
+
+.card:hover, tr.row:hover {
+    cursor: pointer;
+}
+
 
 table {
     width: 100%;
@@ -29,18 +60,12 @@ td {
     border-bottom: 1px solid transparent;
 }
 
-.card:hover,
-tr.row:hover {
-    cursor: pointer;
-    background: whitesmoke;
-}
-
 .card-header {
     margin-right: 3rem;
     // border-top-left-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
     // border-top-right-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
     // margin-bottom: 1rem;
-    color: #555;
+    // color: #555;
     // display: flex;
     // justify-content: space-between;
 }
@@ -50,9 +75,9 @@ tr.row:hover {
 }
 
 .card-content {
-    border-top: 1px solid #ddd;
+    // border-top: 1px solid #ddd;
     padding: 1rem;
-    color: #777;
+    // color: #777;
 }
 
 .more-button {
@@ -61,4 +86,14 @@ tr.row:hover {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.filter-field {
+    // font-size: 14px;
+    width: 100%;
+
+    >.mat-mdc-form-field-subscript-wrapper {
+        display: none;
+
+    }
 }
