@@ -24,10 +24,10 @@
         <h1 class="app-name">Polling App</h1>
         <span class="spacer"></span>
         <button mat-icon-button class="flex-stretch" (click)="toggleTheme()">
-            @if (currentTheme == 'light') {
+            @if (activeTheme == 'light') {
             <mat-icon class="mr-8">brightness_5</mat-icon>
             }
-            @if (currentTheme == 'dark') {
+            @if (activeTheme == 'dark') {
             <mat-icon>bedtime</mat-icon>
             }
         </button>
