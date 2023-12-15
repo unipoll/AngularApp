@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ThemeService } from 'src/app/core/services/theme.service';
 
 
 @Component({
@@ -8,4 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AuthHeaderComponent {
     @Input() public subtitle!: string;
+
+    constructor(public themeService: ThemeService) {
+    }
 }
