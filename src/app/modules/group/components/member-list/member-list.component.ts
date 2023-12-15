@@ -12,14 +12,15 @@ import { GroupModel } from 'src/app/models/group.model';
 
 
 @Component({
-    selector: 'member-list',
+    selector: 'group-member-list',
     templateUrl: './member-list.component.html',
     styleUrls: ['./member-list.component.scss']
 })
 export class MemberListComponent implements OnInit {
-    @Input() workspace!: WorkspaceModel;
     @Input() group!: GroupModel;
     @Input() memberList!: MemberModel[];
+
+    workspace!: WorkspaceModel;
 
     displayedColumns = ['full_name', 'email'];
     optionsMenu = [
@@ -40,6 +41,7 @@ export class MemberListComponent implements OnInit {
         private authService: AuthorizationService) { }
 
     ngOnInit(): void {
+        this.workspace = this.group.workspace;
         this.memberList ? this.makeFullName(this.memberList) : this.updateMemberList();
         this.can_add_members = this.authService.isAllowed(this.group.id, 'add_members');
     }

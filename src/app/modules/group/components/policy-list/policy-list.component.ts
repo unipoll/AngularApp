@@ -16,14 +16,15 @@ import { GridOrTableViewComponent } from 'src/app/shared/components/grid-or-tabl
 import { DialogViewPolicyComponent } from '../dialog-view-policy/dialog-view-policy.component';
 
 @Component({
-    selector: 'policy-list',
+    selector: 'group-policy-list',
     templateUrl: './policy-list.component.html',
     styleUrls: ['./policy-list.component.scss']
 })
 export class PolicyListComponent implements OnInit {
-    @Input() workspace!: WorkspaceModel;
     @Input() group!: GroupModel;
     @Input() policyList!: PolicyModel[];
+
+    workspace!: WorkspaceModel;
 
     @ViewChild(GridOrTableViewComponent) gridOrTableViewComponent!: GridOrTableViewComponent;
 
@@ -49,6 +50,7 @@ export class PolicyListComponent implements OnInit {
         private authService: AuthorizationService) { }
 
     ngOnInit(): void {
+        this.workspace = this.group.workspace;
         this.policyList ? this.formatList(this.policyList) : this.updatePolicyList();
         this.can_update_policies = this.authService.isAllowed(this.group.id, 'update_policies');
         
