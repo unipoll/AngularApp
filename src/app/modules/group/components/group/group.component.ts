@@ -11,7 +11,7 @@ import { PolicyListComponent } from '../policy-list/policy-list.component';
 import { AccountService } from 'src/app/core/services/account.service';
 
 @Component({
-    selector: 'app-group',
+    selector: 'app-group-page',
     templateUrl: './group.component.html',
     styleUrls: ['./group.component.scss']
 })
@@ -54,8 +54,9 @@ export class GroupComponent {
     getGroup(): void {
         this.apiService.getGroup(this.group_id, true, true).subscribe(group => {
             this.group = group;
-            console.log('group: ', group);
-                        // workspace.members.forEach((member: MemberModel) => {
+            this.workspace = group.workspace;
+            // console.log('group members: ', group.members);
+            // group.members.forEach((member: MemberModel) => {
             //     if (member.account_id == this.accountService.getAccount().id) {
             //         this.member = member;
             //     }
@@ -69,7 +70,7 @@ export class GroupComponent {
             // });
             // this.authService.getPermissions()
 
-            this.apiService.getGroupMemberPermissions(this.workspace.id, this.member.id).subscribe(response => {
+            this.apiService.getGroupMemberPermissions(this.workspace.id, this.group.id).subscribe(response => {
                     this.authService.setPermissions(group.id, response.permissions);
             });
         });
