@@ -3,19 +3,25 @@
     <div class="page-title">
         <h1>{{ group.name }}</h1>
     </div>
-    <mat-tab-group animationDuration="0ms">
-        <mat-tab label="Overview">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabs[tab]" (selectedTabChange)="onTabChange($event)">
+        <!-- <mat-tab label="Overview" matTabContent>
             <div class="overview-tab">
                 <p>{{ group.description }}</p>
             </div>
+        </mat-tab> -->
+        <mat-tab label="Members">
+            <ng-template matTabContent>
+                <group-member-list [group]="group" [memberList]="group.members"></group-member-list>
+            </ng-template>
         </mat-tab>
-        <mat-tab label="Members" matTabContent>
-            <member-list [group]="group" [memberList]="group.members"></member-list>
+        <mat-tab label="Policies">
+            <ng-template matTabContent>
+                <group-policy-list [group]="group" [policyList]="group.policies"></group-policy-list>
+            </ng-template>
         </mat-tab>
-        <mat-tab label="Policies" matTabContent>
-            <policy-list [group]="group" [policyList]="group.policies"></policy-list>
-        </mat-tab>
-        <mat-tab label="Setting">Permissions and other settings</mat-tab>
+        <!-- <mat-tab label="Setting">Permissions and other settings</mat-tab> -->
     </mat-tab-group>
 </div>
+} @else {
+    <app-page-loading-spinner [loading_message]="'Loading Group'" [error_message]="'Could not load the group'"></app-page-loading-spinner>
 }
