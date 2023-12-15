@@ -9,60 +9,6 @@
   margin-bottom: 1rem;
 }
 
-.owner-icon {
-  font-size: 20px;
-  color: gold;
-}
-
-.workspace-list {
-  margin: auto;
-  // margin-top: 56px;
-  width: 60rem;
-  max-width: 100%;
-}
-
-.workspace-list-header {
-  // float: right;
-  // margin: 1rem 0;
-}
-
-.workspace-card {
-  margin: 2rem 0;
-  padding: 0 1rem;
-}
-
-.workspace-card:hover, tr.workspace-row:hover {
-  cursor: pointer;
-  background: whitesmoke;
-}
-
-$blue: #def5ff;
-$green: #f6ffdc;
-$yellow: #fff9d5;
-$red: #e0aaaa;
-$colors: $blue, $green, $yellow, $red;
-
-
-.workspace-card-header {
-  // border-top-left-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
-  // border-top-right-radius : var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-.workspace-card-content {
-  border-top: 1px solid #ddd;
-  padding: 1rem;
-  color: #777;
-}
-
-
-// @for $i from 1 through length($colors) {
-//   .workspace-card:nth-child(#{length($colors)}n+#{$i}) {
-//     background: nth($colors, $i);
-//   }
-// }
-
 .toggle-group {
   height: 36px;
   ::ng-deep >.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
@@ -70,26 +16,7 @@ $colors: $blue, $green, $yellow, $red;
   }
 }
 
-.mat-button-toggle-checked {
-  background: mat.get-color-from-palette($my-palette, 500);
-  color: #fff;
-}
-
-.create-workspace-button {
-  align-self: center;
-}
-
 .create_button {
   color: #fff;
   background-color: #4CAF50;
 }
-
-.create_button:hover {
-  background-color: #388E3C;
-}
-
-.more-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-} 
