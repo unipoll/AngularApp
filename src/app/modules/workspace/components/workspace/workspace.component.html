@@ -9,35 +9,26 @@
         {{ workspace.description }}
       </div>
     </mat-tab> -->
-        @if (can_get_polls) {
         <mat-tab label="Polls">
             <ng-template matTabContent>
                 <poll-list [workspace]="workspace" [pollList]="workspace.polls"></poll-list>
             </ng-template>
         </mat-tab>
-        }
-        @if (can_get_policies) {
         <mat-tab label="Policies">
             <ng-template matTabContent>
                 <policy-list [workspace]="workspace" [policyList]="workspace.policies"></policy-list>
             </ng-template>
         </mat-tab>
-        }
-        @if (can_get_members) {
         <mat-tab label="Members">
             <ng-template matTabContent>
                 <member-list [workspace]="workspace" [memberList]="workspace.members"></member-list>
             </ng-template>
         </mat-tab>
-        }
-        @if (can_get_groups) {
         <mat-tab label="Groups">
             <ng-template matTabContent>
                 <group-list [workspace]="workspace" [groupList]="workspace.groups" (groupEvent)="eventHandler($event)"></group-list>
             </ng-template>
         </mat-tab>
-        }
-        <!-- <mat-tab label="Setting">Permissions and other settings</mat-tab> -->
     </mat-tab-group>
 </div>
 } @else {

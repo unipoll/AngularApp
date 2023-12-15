@@ -33,15 +33,6 @@ export class GroupComponent {
     @ViewChild(MemberListComponent) memberList!: MemberListComponent;
     @ViewChild(PolicyListComponent) policyList!: PolicyListComponent;
 
-    // public permissions!: string[];
-
-    // Markers for permissions
-    // public can_get_members: boolean = false;
-    // public can_add_members: boolean = false;
-    // public can_get_policies: boolean = false;
-    // public can_set_policies: boolean = false;
-    // public can_delete_group: boolean = false;
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private location: Location,
@@ -64,7 +55,7 @@ export class GroupComponent {
         this.apiService.getGroup(this.group_id, true, true).subscribe(group => {
             this.group = group;
             console.log('group: ', group);
-            // workspace.members.forEach((member: MemberModel) => {
+                        // workspace.members.forEach((member: MemberModel) => {
             //     if (member.account_id == this.accountService.getAccount().id) {
             //         this.member = member;
             //     }
@@ -77,16 +68,15 @@ export class GroupComponent {
             //         this.group = group;
             // });
             // this.authService.getPermissions()
-        });
-    }
 
-    isAllowed(permission: string): boolean {
-        return this.authService.isAllowed(this.group.id, permission);
+            this.apiService.getGroupMemberPermissions(this.workspace.id, this.member.id).subscribe(response => {
+                    this.authService.setPermissions(group.id, response.permissions);
+            });
+        });
     }
 
     // Handle Events
     eventHandler(event: any): void {
-        console.log('Received event: ', event);
         switch (event) {
             // case 'updateGroupList':
             //     this.updateGroupList();

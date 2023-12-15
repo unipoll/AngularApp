@@ -37,12 +37,6 @@ export class WorkspaceComponent implements OnInit {
     @ViewChild(MemberListComponent) memberList!: MemberListComponent;
     @ViewChild(PolicyListComponent) policyList!: PolicyListComponent;
 
-
-    can_get_policies = false;
-    can_get_groups = false;
-    can_get_members = false;
-    can_get_polls = false;
-
     // Constructor
     constructor(
         private apiService: ApiService,
@@ -82,30 +76,15 @@ export class WorkspaceComponent implements OnInit {
                     this.authService.setPermissions(poll.id, poll.permissions);
                 }
 
-                this.can_get_policies = response.workspace.permissions.includes('get_policies');
-                this.can_get_groups = response.workspace.permissions.includes('get_groups');
-                this.can_get_members = response.workspace.permissions.includes('get_members');
-                this.can_get_polls = response.workspace.permissions.includes('get_polls');
-
                 this.workspace = workspace;  // Declare workspace after permissions are set
             });
         });
     }
 
-    // isAllowed(permission: string): boolean {
-    //     return this.authService.isAllowed(this.workspace_id, permission);
-    // }
-
     // Handle Events
     eventHandler(event: any): void {
         console.log('Received event: ', event);
         switch (event) {
-            // case 'updateGroupList':
-            //     this.updateGroupList();
-            //     break;
-            // case 'updateMemberList':
-            //     this.updateMemberList();
-            //     break;
             case 'groupCreated':
                 this.updatePolicyList();
                 break;
