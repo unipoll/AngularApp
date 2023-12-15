@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 
-interface MenuItem {
+export interface MenuItem {
     label: string;
     action: Function;
 }
