@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { CoreModule } from './core/core.module';
 import { MaterialModule } from './modules/material/material.module';
-import { AuthModule } from './modules/auth/auth.module';
+// import { AuthModule } from './modules/login/login.module';
 
 // Guards
 // import { AuthGuard } from './core/guards/auth.guard';
@@ -70,7 +70,6 @@ import { environment } from 'src/environments/environment';
             loader: HttpClient
         }),
         CoreModule,
-        AuthModule,
     ]
 })
 export class AppModule { }

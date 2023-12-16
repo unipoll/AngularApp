@@ -5,19 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../../modules/material/material.module';
 
 describe('TokenInterceptorService', () => {
-  let service: TokenInterceptorService;
+    let service: TokenInterceptorService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        MaterialModule
-      ],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule,
+                MaterialModule
+            ],
+        });
+        service = TestBed.inject(TokenInterceptorService);
     });
-    service = TestBed.inject(TokenInterceptorService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });

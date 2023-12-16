@@ -1,9 +1,10 @@
 import { Component, ChangeDetectorRef, ViewChild  } from '@angular/core';
-import { SidenavService } from '../../services/sidenav.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { Router } from '@angular/router';
+import { SidenavService } from '../../services/sidenav.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-sidebar',

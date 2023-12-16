@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
-import { AuthService } from '../../services/auth.service';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 @Component({
@@ -19,7 +17,7 @@ export class RegisterComponent {
   // field_appearance = 'fill' as MatFormFieldAppearance;
   field_appearance = 'outline' as MatFormFieldAppearance;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
     this.form = this.fb.group({
       first_name: ['', {
         validators: [

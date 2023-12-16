@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MaterialModule } from '../../material/material.module';
+import { MaterialModule } from '../../modules/material/material.module';
 
 
 describe('AuthService', () => {

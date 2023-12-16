@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService } from '../../modules/auth/services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class TokenInterceptorService implements HttpInterceptor {
@@ -19,7 +19,7 @@ export class TokenInterceptorService implements HttpInterceptor {
             tap({
                 // next: (event) => { }, 
                 error: (error) => {
-                    if (error instanceof HttpErrorResponse) {
+                                        if (error instanceof HttpErrorResponse) {
                         if (error.status === 401) {
                             this.authService.logout();
                             // console.log('Unauthorized');

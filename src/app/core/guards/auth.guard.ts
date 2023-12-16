@@ -1,6 +1,6 @@
 import { Injectable, inject, Input } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../../modules/auth/services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { AuthorizationService } from '../services/authorization.service';
 import { ApiService } from '../services/api.service';
 import { lastValueFrom } from 'rxjs';

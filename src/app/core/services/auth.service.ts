@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { ApiService } from '../../../core/services/api.service';
+import { ApiService } from './api.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { AccountService } from 'src/app/core/services/account.service';
 
