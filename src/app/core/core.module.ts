@@ -14,6 +14,9 @@ import { RouterModule } from '@angular/router';
 import { AccountService } from './services/account.service';
 import { AuthorizationService } from './services/authorization.service';
 
+import { RequestErrorHandlerService } from './services/request-error-handler.service';
+
+
 @NgModule({
     declarations: [
         HeaderComponent,
@@ -36,6 +39,11 @@ import { AuthorizationService } from './services/authorization.service';
             useClass: TokenInterceptorService,
             multi: true
         },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestErrorHandlerService,
+            multi: true
+        }
     ]
 })
 export class CoreModule { }
