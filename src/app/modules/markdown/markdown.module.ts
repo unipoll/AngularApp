@@ -32,4 +32,4 @@ export function markedOptionsFactory(): MarkedOptions {
   exports: [
   ]
 })
-export class MaterialModule { }
+export class MarkdownModule { }
