@@ -1,11 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, provideRouter, withComponentInputBinding } from '@angular/router';
-import { requireAccount, requirePermission } from './core/guards/auth.guard';
+import { requireAccount, requirePermission, guestOnly } from './core/guards/auth.guard';
+
+import { UnauthorizedComponent } from './core/components/errors/unauthorized/unauthorized.component';
+import { NotFoundComponent } from './core/components/errors/not-found/not-found.component';
 
 const routes: Routes = [
-
-    // { path: '**', redirectTo: '', pathMatch: 'full' }
-
+    {
+        path: 'login',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
+        canActivate: [guestOnly] 
+    },
+    {
+        path: 'register',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule),
+        canActivate: [guestOnly]
+    },
     {
         path: 'workspaces/:workspace_id/polls/:poll_id/edit',
         pathMatch: 'full',
@@ -33,13 +45,28 @@ const routes: Routes = [
     },
     {
         path: 'workspaces',
-        // pathMatch: 'full',
+        pathMatch: 'full',
         loadChildren: () => import('./modules/workspace-list/workspace-list.module').then(m => m.WorkspaceListModule),
         canActivate: [requireAccount],
     },
     {
         path: '',
         redirectTo: 'workspaces',
+        pathMatch: 'full'
+    },
+    {
+        path: 'unauthorized',
+        pathMatch: 'full',
+        component: UnauthorizedComponent
+    },
+    {
+        path: 'not-found',
+        pathMatch: 'full',
+        component: NotFoundComponent
+    },
+    {
+        path: '**',
+        redirectTo: 'not-found',
         pathMatch: 'full'
     }
 ];
