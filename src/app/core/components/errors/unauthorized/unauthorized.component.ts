@@ -9,5 +9,12 @@ import { Component } from '@angular/core';
 })
 export class UnauthorizedComponent {
 
-    
+    detail = "You are not authorized to access this page.";
+
+    constructor() {
+        let error = history.state.error;
+        if (error.detail) {
+            this.detail = error.detail;
+        }
+    } 
 }
