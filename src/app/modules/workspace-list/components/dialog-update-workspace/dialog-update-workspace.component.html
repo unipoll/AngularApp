@@ -6,6 +6,18 @@
                     <mat-label>Workspace name</mat-label>
                     <input matInput type="text" placeholder="My Workspace"
                         formControlName="name">
+                    @if (form.controls.name.hasError('nonUniqueName')) {
+                        <mat-error>A workspace with such name already exists. Please choose another name.</mat-error>
+                    }
+                    @if (form.controls.name.hasError('required')) {
+                        <mat-error>Workspace name is required.</mat-error>
+                    }
+                    @if (form.controls.name.hasError('minlength')) {
+                        <mat-error>Workspace name must be at least 3 characters long.</mat-error>
+                    }
+                    @if (form.controls.name.hasError('maxlength')) {
+                        <mat-error>Workspace name must be at most 50 characters long.</mat-error>
+                    }
                 </mat-form-field>
             </div>
             <div class="row">
@@ -13,6 +25,9 @@
                     <mat-label>Workspace Description</mat-label>
                     <textarea matInput type="text" placeholder="Briefly describe this Workspace"
                         formControlName="description"></textarea>
+                    @if (form.controls.description.hasError('maxlength')) {
+                        <mat-error>Workspace name must be at most 1000 characters long.</mat-error>
+                    }
                 </mat-form-field>
             </div>
         </div>

@@ -2,9 +2,17 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/core/services/api.service'
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
-import { DialogUpdateModel } from 'src/app/models/dialog.model';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { WorkspaceModel } from 'src/app/models/workspace.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
+
+// export function nonUniqueNameValidator() {
+//     if (this.form.controls['name'].hasError('notUnique')) {
+//         return { 'notUnique': true };
+//     }
+//     return null;
+// }
 
 
 @Component({
@@ -14,8 +22,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogCreateWorkspaceComponent {
 	form = new FormGroup({
-		name: new FormControl("", Validators.required),
-		description: new FormControl(""),
+		name: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+		description: new FormControl("", Validators.maxLength(1000)),
 	});
 
 	title = "Create new workspace";
@@ -44,12 +52,19 @@ export class DialogCreateWorkspaceComponent {
 		this.form.markAllAsTouched();
 		if (this.form.valid) {
 			this.apiService.createWorkspace(this.form.value).subscribe({
-				next: (val: any) => {
+				next: (new_workspace: WorkspaceModel) => {
 					this.snackBarService.openSnackBar('Workspace created successfully');
-					this.dialog.close(val);
+					this.dialog.close(new_workspace);
 				},
-				error: (err: any) => {
-					console.error(err);
+				error: (error: HttpErrorResponse) => {
+                    this.snackBarService.openSnackBar('There was an error while creating workspace', 'OK', 'error');
+					switch (error.status) {
+                        case 409:
+                            if (error.error.detail == `Workspace with name ${this.form.controls.name.value} already exists`) {    
+                                this.form.controls.name.setErrors({nonUniqueName: true});
+                            }
+                            break;
+                    }
 				},
 			});
 		}
