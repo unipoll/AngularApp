@@ -50,6 +50,11 @@ const routes: Routes = [
         canActivate: [requireAccount],
     },
     {
+        path: 'profile',
+        loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
+        canActivate: [requireAccount],
+    },
+    {
         path: '',
         redirectTo: 'workspaces',
         pathMatch: 'full'
