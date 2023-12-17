@@ -18,11 +18,11 @@ export class RequestErrorHandlerService implements HttpInterceptor {
                     if (error instanceof HttpErrorResponse) {
                         switch (error.status) {
                             case 403:
-                                this.router.navigate(['/unauthorized'], { state: { error: error.error} });
+                                this.router.navigate(['/unauthorized'], { state: { error: error.error}, skipLocationChange: true });
                                 break;
                             case 404:
                                 console.log("404 error");
-                                this.router.navigate(['/not-found'], { state: { error: error.error} });
+                                this.router.navigate(['/not-found'], { state: { error: error.error}, skipLocationChange: true });
                                 break;
                             case 422:
                                 console.log(error);
