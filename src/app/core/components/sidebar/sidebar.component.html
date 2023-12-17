@@ -2,20 +2,21 @@
 
 <!-- [style.marginTop.px]="mobileQuery.matches ? 56 : 0" -->
 <mat-sidenav-container autosize class="sidenav-container">
-  <mat-sidenav #sidebar [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
-    fixedTopGap="56">
-    <mat-nav-list class="sidenav-list">
-      <!-- <a mat-list-item routerLink="{{nav.link}}" *ngFor="let nav of fillerNav">{{nav.name}}</a> -->
-      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="/workspaces">Workspaces</a>
-      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="#">Profile</a>
-      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="#">Settings</a>
-      <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle();this.logout()">Logout</a>
-    </mat-nav-list>
-  </mat-sidenav>
+    <mat-sidenav #sidebar [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+        fixedTopGap="56">
+        <mat-nav-list class="sidenav-list">
+            <!-- <a mat-list-item routerLink="{{nav.link}}" *ngFor="let nav of fillerNav">{{nav.name}}</a> -->
+            <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()"
+                routerLink="/workspaces">Workspaces</a>
+            <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="/profile">Profile</a>
+            <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle()" routerLink="#">Settings</a>
+            <a mat-list-item class="sidenav-list-item" (click)="this.sidenav.toggle();this.logout()">Logout</a>
+        </mat-nav-list>
+    </mat-sidenav>
 
-  <mat-sidenav-content (click)="sidebar.close()">
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
+    <mat-sidenav-content (click)="sidebar.close()">
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
 </mat-sidenav-container>
