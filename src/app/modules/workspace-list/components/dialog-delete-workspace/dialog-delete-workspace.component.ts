@@ -45,8 +45,7 @@ export class DialogDeleteWorkspaceComponent {
 				this.dialog.close(this.workspace.id);
 			},
 			error: (err: any) => {
-				this.snackBarService.openSnackBar("Workspace deleted successfully", "ok", "error");
-				console.error(err);
+				this.snackBarService.openSnackBar("There was an error while deleing workspace", "ok", "error");
 			},
 		});
 	}
