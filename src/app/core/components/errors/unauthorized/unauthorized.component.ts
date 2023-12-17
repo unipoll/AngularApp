@@ -13,7 +13,7 @@ export class UnauthorizedComponent {
 
     constructor() {
         let error = history.state.error;
-        if (error.detail) {
+        if (error && error.detail) {
             this.detail = error.detail;
         }
     } 

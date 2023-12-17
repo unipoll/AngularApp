@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MaterialModule } from 'src/app/modules/material/material.module';
 
 @Component({
@@ -13,10 +13,12 @@ export class NotFoundComponent {
 
     detail = "Page not found";
 
-    constructor(activatedRoute: ActivatedRoute) {
+    constructor(router: Router) {
         let error = history.state.error;
-        if (error.detail) {
+        if (error && error.detail) {
             this.detail = error.detail;
+        } else {
+            this.detail = `Page ${router.url} not found`;
         }
     }
 }
