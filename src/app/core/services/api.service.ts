@@ -80,13 +80,13 @@ export class ApiService {
     }
 
     // Create workspace
-    createWorkspace(data: any) {
-        return this.http.post(this.settings.apiUrl + '/v1/workspaces', data);
+    createWorkspace(data: any): Observable<WorkspaceModel> {
+        return this.http.post<WorkspaceModel>(this.settings.apiUrl + '/v1/workspaces', data);
     }
 
     // Update workspace
-    updateWorkspace(workspace_id: string, data: any) {
-        return this.http.patch(this.settings.apiUrl + '/v1/workspaces/' + workspace_id, data);
+    updateWorkspace(workspace_id: string, data: any): Observable<WorkspaceModel> {
+        return this.http.patch<WorkspaceModel>(this.settings.apiUrl + '/v1/workspaces/' + workspace_id, data);
     }
 
     // Delete workspace
