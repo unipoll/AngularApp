@@ -4,6 +4,7 @@ export interface AccountModel{
   first_name: string;
   last_name: string;
   full_name: string;
+  image: string;
 }
 
 export interface AccountListModel {
