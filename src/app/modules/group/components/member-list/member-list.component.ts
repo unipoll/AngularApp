@@ -63,9 +63,10 @@ export class MemberListComponent implements OnInit {
 
     // Add member
     addMember() {
+        console.log("Group members", this.memberList);
         this.dialog.open(DialogAddMemberComponent, {
             data: {
-                memberList: this.workspace.members,
+                groupMembers: this.memberList,
                 group: this.group
             }
         }).afterClosed().subscribe({
