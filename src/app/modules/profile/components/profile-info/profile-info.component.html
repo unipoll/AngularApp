@@ -1,0 +1,9 @@
+<mat-card class="profile-card">
+    <mat-card-content class="profile-card-content">
+        <img [src]="account.image || defaultProfileImage" alt="avatar" class="profile-image" />
+        <div class="profile-info">
+            <h2>{{ account.first_name }} {{ account.last_name }}</h2>
+            <h2>{{ account.email }}</h2>
+        </div>
+    </mat-card-content>
+</mat-card>
