@@ -7,9 +7,9 @@ import { startWith, map, Observable, tap } from 'rxjs';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ENTER, COMMA, O } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { AccountModel } from 'src/app/models/account.model';
-import { MemberModel } from 'src/app/models/member.model';
+import { MemberListModel, MemberModel } from 'src/app/models/member.model';
 import { WorkspaceModel } from 'src/app/models/workspace.model';
+import { GroupModel } from 'src/app/models/group.model';
 
 @Component({
     selector: 'dialog-add-group-member',
@@ -38,15 +38,16 @@ export class DialogAddMemberComponent {
         }
     ];
 
-    workspace!: WorkspaceModel;
+    // workspace!: WorkspaceModel;
+    group!: GroupModel;
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    accountCtrl = new FormControl<string | MemberModel>('');
-    filteredAccounts: Observable<AccountModel[]>;
-    accounts: MemberModel[] = [];
-    allAccounts: AccountModel[] = [];
+    memberCtrl = new FormControl<string | MemberModel>('');
+    filteredMembers: Observable<MemberModel[]>;
+    members: MemberModel[] = [];
+    allMembers: MemberModel[] = [];
 
-    @ViewChild('accountInput')
-    accountInput!: ElementRef<HTMLInputElement>;
+    @ViewChild('memberInput')
+    memberInput!: ElementRef<HTMLInputElement>;
 
     announcer = inject(LiveAnnouncer);
 
@@ -54,72 +55,79 @@ export class DialogAddMemberComponent {
         private dialog: MatDialogRef<DialogAddMemberComponent>,
         private apiService: ApiService,
         private snackBarService: SnackBarService,
-        @Inject(MAT_DIALOG_DATA) private data: any
+        @Inject(MAT_DIALOG_DATA) data: {groupMembers: MemberModel[], group: GroupModel}
     ) {
-        this.workspace = this.data.workspace;
+        this.group = data.group;
         
-        this.apiService.getAllAccounts().pipe(
-            tap((data) => (
-                this.allAccounts = data.accounts.filter(
-                    ({ id: account_id }: { id: string }) => (!this.data.memberList.some(({ account_id: member_account_id }: { account_id: string }) => member_account_id === account_id))
-                )
-            ))
+        this.apiService.getWorkspaceMembers(data.group.workspace.id).pipe(
+            tap({
+                next: (response) => {
+                    console.log("Workspace Members", response);
+                    this.allMembers = response.members.filter(
+                        ({ id: id1 }: { id: string }) => (!data.groupMembers.some(({ id: id2 }: { id: string }) => id1 === id2))
+                    )
+                }
+            })
         ).subscribe();
 
-        this.filteredAccounts = this.accountCtrl.valueChanges.pipe(
+        // this.allMembers = data.workspaceMembers.filter(
+        //     ({ id: member_id }: { id: string }) => (!data.memberList.some(({ member_id: member_member_id }: { member_id: string }) => member_member_id === member_id))
+        // )
+
+        this.filteredMembers = this.memberCtrl.valueChanges.pipe(
             startWith(''),
             map(value => {
                 const name = typeof value === 'string' ? value : value?.first_name;
-                return name ? this.filter(name as string) : this.allAccounts.slice();
+                return name ? this.filter(name as string) : this.allMembers.slice();
             }),
-            // map((filter_field: string | null) => (filter_field ? this._filter(filter_field) : this.allAccounts))
+            // map((filter_field: string | null) => (filter_field ? this._filter(filter_field) : this.allMembers))
         );
     }
 
-    displayFn(account: MemberModel): string {
-        return account && account.first_name ? account.first_name : '';
+    displayFn(member: MemberModel): string {
+        return member && member.first_name ? member.first_name : '';
     }
 
     // When a chip is removed
     remove(member: MemberModel): void {
-        const index = this.accounts.indexOf(member);
+        const index = this.members.indexOf(member);
         // console.log("Index", index);
 
         if (index >= 0) {
-            this.accounts.splice(index, 1);   // Remove chip
-            this.allAccounts.push(member);    // Add back to the autocomplete list
-            this.accountCtrl.setValue(null);  // Clear the input value to reset the autocomplete
+            this.members.splice(index, 1);   // Remove chip
+            this.allMembers.push(member);    // Add back to the autocomplete list
+            this.memberCtrl.setValue(null);  // Clear the input value to reset the autocomplete
             this.announcer.announce(`Removed ${member}`);
         }
     }
 
     // When item is selected from the list
     selected(event: MatAutocompleteSelectedEvent): void {
-        this.accounts.push(event.option.value);
-        let index = this.allAccounts.indexOf(event.option.value);
-        this.allAccounts.splice(index, 1);  // Remove from autocomplete list
+        this.members.push(event.option.value);
+        let index = this.allMembers.indexOf(event.option.value);
+        this.allMembers.splice(index, 1);  // Remove from autocomplete list
 
-        this.accountInput.nativeElement.value = '';
-        this.accountCtrl.setValue(null);
+        this.memberInput.nativeElement.value = '';
+        this.memberCtrl.setValue(null);
     }
 
     // Filter the autocomplete list
-    filter(value: string): AccountModel[] {
+    filter(value: string): MemberModel[] {
         // console.log("Filter Value", value);
         const filterValue = value.toLowerCase();
-        return this.allAccounts.filter((account: AccountModel) => (
-            account.first_name.toLowerCase().includes(filterValue) ||
-            account.last_name.toLowerCase().includes(filterValue) ||
-            account.email.toLowerCase().includes(filterValue)));
+        return this.allMembers.filter((member: MemberModel) => (
+            member.first_name.toLowerCase().includes(filterValue) ||
+            member.last_name.toLowerCase().includes(filterValue) ||
+            member.email.toLowerCase().includes(filterValue)));
     }
 
     addMember() {
-        // Create array of account ids
-        let newMemberIDs = this.accounts.map((account: MemberModel) => account.id);
-        let req = { "accounts": newMemberIDs };
+        // Create array of member ids
+        let newMemberIDs = this.members.map((member: MemberModel) => member.id);
+        let req = { "members": newMemberIDs };
 
-        if (this.accounts.length > 0) {
-            this.apiService.addMemberToWorkspace(this.workspace.id, req).subscribe({
+        if (this.members.length > 0) {
+            this.apiService.addMemberToGroup(this.group.id, req).subscribe({
                 next: (val: any) => {
                     this.snackBarService.openSnackBar('Members added successfully');
                     this.dialog.close(val);

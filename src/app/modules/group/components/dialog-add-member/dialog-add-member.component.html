@@ -1,25 +1,25 @@
 <app-dialog [dialogTitle]="title" [dialogButtons]="buttons">
     <form>
         <mat-form-field class="chip-list">
-            <mat-label>Account to add</mat-label>
-            <mat-chip-grid #chipGrid aria-label="Account selection">
-                @for (account of accounts; track account) {
-                <mat-chip-row (removed)="remove(account)" highlighted>
-                    {{account.first_name}} {{account.last_name}} ({{account.email}})
-                    <button matChipRemove [attr.aria-label]="'remove ' + account">
+            <mat-label>member to add</mat-label>
+            <mat-chip-grid #chipGrid aria-label="member selection">
+                @for (member of members; track member) {
+                <mat-chip-row (removed)="remove(member)" highlighted>
+                    {{member.first_name}} {{member.last_name}} ({{member.email}})
+                    <button matChipRemove [attr.aria-label]="'remove ' + member">
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </mat-chip-row>
                 }
             </mat-chip-grid>
-            <input placeholder="Select Account..." #accountInput [formControl]="accountCtrl"
+            <input placeholder="Select member..." #memberInput [formControl]="memberCtrl"
                 [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
             <!-- (matChipInputTokenEnd)="add($event)"/> -->
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" [displayWith]="displayFn">
-                @for (account of filteredAccounts | async; track account) {
-                <mat-option [value]="account">
-                    {{account.first_name}} {{account.last_name}} ({{account.email}})
+                @for (member of filteredMembers | async; track member) {
+                <mat-option [value]="member">
+                    {{member.first_name}} {{member.last_name}} ({{member.email}})
                 </mat-option>
                 }
             </mat-autocomplete>
