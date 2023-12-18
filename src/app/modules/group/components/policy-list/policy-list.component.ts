@@ -63,7 +63,7 @@ export class PolicyListComponent implements OnInit {
     }
 
     updatePolicyList() {
-        this.apiService.getWorkspacePolicies(this.workspace.id).pipe(
+        this.apiService.getGroupPolicies(this.group.id).pipe(
             tap({
                 next: (data: PolicyListModel) => {
                     console.log("Updating policy list...");
@@ -100,11 +100,11 @@ export class PolicyListComponent implements OnInit {
     }
 
     editPolicy(policyData: PolicyModel) {
-        this.apiService.getWorkspacePermissions().pipe(
+        this.apiService.getGroupPermissions().pipe(
             tap((allPermissions: Permissions) => (
                 this.dialog.open(DialogUpdatePolicyComponent, {
                     data: {
-                        workspace: this.workspace,
+                        group: this.group,
                         allPermissions: allPermissions.permissions,
                         policy: policyData
                     },
