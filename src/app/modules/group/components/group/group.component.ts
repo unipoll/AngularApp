@@ -26,8 +26,8 @@ export class GroupComponent {
 
     tab: string = 'polls';
     tabs: { [key: string]: number } = {
-        'policies': 0,
-        'members': 1
+        'members': 0,
+        'policies': 1
     }
 
     @ViewChild(MemberListComponent) memberList!: MemberListComponent;
@@ -53,8 +53,6 @@ export class GroupComponent {
 
     getGroup(): void {
         this.apiService.getGroup(this.group_id, true, true).subscribe(group => {
-            this.group = group;
-            this.workspace = group.workspace;
             // console.log('group members: ', group.members);
             // group.members.forEach((member: MemberModel) => {
             //     if (member.account_id == this.accountService.getAccount().id) {
@@ -70,8 +68,10 @@ export class GroupComponent {
             // });
             // this.authService.getPermissions()
 
-            this.apiService.getGroupMemberPermissions(this.workspace.id, this.group.id).subscribe(response => {
+            this.apiService.getGroupMemberPermissions(group.workspace.id, group.id).subscribe(response => {
                     this.authService.setPermissions(group.id, response.permissions);
+                    this.group = group;
+                    this.workspace = group.workspace;
             });
         });
     }
