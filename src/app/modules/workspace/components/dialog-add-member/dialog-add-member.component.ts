@@ -40,9 +40,9 @@ export class DialogAddMemberComponent {
 
     workspace!: WorkspaceModel;
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    accountCtrl = new FormControl<string | MemberModel>('');
+    accountCtrl = new FormControl<string | AccountModel>('');
     filteredAccounts: Observable<AccountModel[]>;
-    accounts: MemberModel[] = [];
+    accounts: AccountModel[] = [];
     allAccounts: AccountModel[] = [];
 
     @ViewChild('accountInput')
@@ -81,7 +81,7 @@ export class DialogAddMemberComponent {
     }
 
     // When a chip is removed
-    remove(member: MemberModel): void {
+    remove(member: AccountModel): void {
         const index = this.accounts.indexOf(member);
         // console.log("Index", index);
 
@@ -115,7 +115,7 @@ export class DialogAddMemberComponent {
 
     addMember() {
         // Create array of account ids
-        let newMemberIDs = this.accounts.map((account: MemberModel) => account.id);
+        let newMemberIDs = this.accounts.map((account: AccountModel) => account.id);
         let req = { "accounts": newMemberIDs };
 
         if (this.accounts.length > 0) {
