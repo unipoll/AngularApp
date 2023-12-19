@@ -127,7 +127,7 @@ export class DialogAddMemberComponent {
         let req = { "members": newMemberIDs };
 
         if (this.members.length > 0) {
-            this.apiService.addMemberToGroup(this.group.id, req).subscribe({
+            this.apiService.addMemberToGroup(this.group.workspace.id, this.group.id, req).subscribe({
                 next: (val: any) => {
                     this.snackBarService.openSnackBar('Members added successfully');
                     this.dialog.close(val);
