@@ -133,7 +133,7 @@ export class ApiService {
 
     // Create group in workspace
     createGroup(workspace_id: string, data: any) {
-        return this.http.post(this.settings.apiUrl + '/v1/workspaces/' + workspace_id + '/groups', data);
+        return this.http.post(`${this.settings.apiUrl}/v1/workspaces/${workspace_id}/groups`, data);
     }
 
     // Get group by id
@@ -150,46 +150,47 @@ export class ApiService {
             params = members ? params.append("include", "members") : params;
         }
 
-        return this.http.get<GroupModel>(this.settings.apiUrl + '/groups/' + group_id, { params: params });
+        return this.http.get<GroupModel>(`${this.settings.apiUrl}/v2/groups/${group_id}`, { params: params });
     }
 
     // Delete group by id
     deleteGroup(group_id: string) {
-        return this.http.delete(this.settings.apiUrl + '/groups/' + group_id);
+        return this.http.delete(`${this.settings.apiUrl}'/v2/groups/'${group_id}`);
     }
 
     // Update group
     updateGroup(group_id: string, data: any) {
-        return this.http.patch(this.settings.apiUrl + '/groups/' + group_id, data);
+        return this.http.patch(`${this.settings.apiUrl}'/v2/groups/'${group_id}`, data);
     }
 
     // Get list of members in group
     getGroupMembers(group_id: string): Observable<MemberListModel> {
-        return this.http.get<MemberListModel>(this.settings.apiUrl + '/groups/' + group_id + '/members');
+        let params = { group_id: group_id }
+        return this.http.get<MemberListModel>(`${this.settings.apiUrl}'/v2/members`, { params: params });
     }
 
     // Add member to group
-    addMemberToGroup(group_id: string, data: any) {
+    addMemberToGroup(workspace_id: string, group_id: string, data: any) {
         return this.http.post(this.settings.apiUrl + '/groups/' + group_id + '/members', data);
     }
 
     // Remove member from group
-    removeMemberFromGroup(group_id: string, member_id: string) {
+    removeMemberFromGroup(workspace_id: string, group_id: string, member_id: string) {
         return this.http.delete(this.settings.apiUrl + '/groups/' + group_id + '/members/' + member_id);
     }
 
     // Get group policy for specific account, or current user if account_id was not provided
     getGroupPolicies(group_id: string, account_id?: string): Observable<PolicyListModel> {
-        const options = account_id ? { params: { account_id: account_id } } : {};
-        return this.http.get<PolicyListModel>(this.settings.apiUrl + '/groups/' + group_id + '/policies', options);
+        const params = { group_id: group_id };
+        return this.http.get<PolicyListModel>(`${this.settings.apiUrl}/v2/policies`, { params: params });
     }
 
-    updateGroupPolicy(group_id: string, policy_id: string, data: any) {
-        return this.http.put(this.settings.apiUrl + '/groups/' + group_id + '/policies/' + policy_id, data);
+    updateGroupPolicy(policy_id: string, data: any) {
+        return this.http.put(`${this.settings.apiUrl}/v2/policies/${policy_id}`, data);
     }
 
     getGroupPermissions(): Observable<Permissions> {
-        return this.http.get<Permissions>(this.settings.apiUrl + '/groups/permissions');
+        return this.http.get<Permissions>(`${this.settings.apiUrl}/v2/permissions/groups`);
     }
 
 
