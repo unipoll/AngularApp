@@ -24,7 +24,6 @@ interface DialogData {
 export class DialogUpdatePolicyComponent {
     
     // Dialog Data Input
-    workspace!: WorkspaceModel;
     permissions: string[] = [];  // Current permissions
     allPermissions: string[]; // All permissions available
     policy: PolicyModel;
@@ -60,7 +59,6 @@ export class DialogUpdatePolicyComponent {
                 private dialog: MatDialogRef<DialogUpdatePolicyComponent>,
                 private snackBarService: SnackBarService,
                 @Inject(MAT_DIALOG_DATA) private data: DialogData) {
-        this.workspace = this.data.workspace;
         this.policy = this.data.policy;
         this.permissions = this.data.policy.permissions.map((permission: string) => permission);
         this.allPermissions = this.data.allPermissions;
@@ -84,9 +82,9 @@ export class DialogUpdatePolicyComponent {
             permissions: this.permissions
         };
 
-        this.apiService.updateWorkspacePolicy(this.workspace.id, this.policy.id, request_data).subscribe({
+        this.apiService.updateGroupPolicy(this.policy.id, request_data).subscribe({
             next: (permissionsList: any) => {
-                this.snackBarService.openSnackBar('Workspace updated successfully');
+                this.snackBarService.openSnackBar('Policy successfully');
                 this.dialog.close(permissionsList);
             },
             error: (err: any) => {
