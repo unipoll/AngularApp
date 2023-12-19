@@ -85,7 +85,7 @@ export class MemberListComponent implements OnInit {
         this.dialog.open(DialogRemoveMemberComponent, {
             data: {
                 member: member,
-                workspace: this.workspace
+                group: this.group
             }
         }).afterClosed().subscribe({
             next: (val) => {
