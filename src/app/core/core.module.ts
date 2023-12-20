@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptorService } from './services/token-interceptor.service';
 
 import { MaterialModule } from '../modules/material/material.module';
-import { RouterModule } from '@angular/router';
 
+import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AccountService } from './services/account.service';
 import { AuthorizationService } from './services/authorization.service';
-
 import { RequestErrorHandlerService } from './services/request-error-handler.service';
 
 
 @NgModule({
     declarations: [
         HeaderComponent,
-        SidebarComponent
+        SidebarComponent,
+        NotificationsComponent
     ],
     imports: [
         CommonModule,
@@ -29,7 +29,8 @@ import { RequestErrorHandlerService } from './services/request-error-handler.ser
     ],
     exports: [
         HeaderComponent,
-        SidebarComponent
+        SidebarComponent,
+        NotificationsComponent
     ],
     providers: [
         AuthorizationService,
