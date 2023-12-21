@@ -15,22 +15,17 @@ export class NotificationsComponent {
         private notificationsService: NotificationsService,
         private settings: SettingsService
     ) {
-        // const url = 'https://localhost:8000/subscribe';
         const url = this.settings.apiUrl + '/subscribe';
-        const options = { withCredentials: true };
-        const eventNames = ['myEventName'];
 
-        this.eventSourceSubscription = this.notificationsService.connectToServerSentEvents(url, options, eventNames)
-            .subscribe({
-                    next: data => {
-                        //handle event
-                        console.log(data);
-                    },
-                    error: error => {
-                        //handle error
-                    }
-                }
-            );
+        this.eventSourceSubscription = this.notificationsService.getNotifications(url).subscribe({
+            next: data => {
+                //handle event
+                console.log(data);
+            },
+            error: error => {
+                //handle error
+            }
+        });
     }
 
     ngOnDestroy() {
