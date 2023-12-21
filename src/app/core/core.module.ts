@@ -16,6 +16,20 @@ import { AuthorizationService } from './services/authorization.service';
 import { RequestErrorHandlerService } from './services/request-error-handler.service';
 
 
+const httpInterceptors = [
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TokenInterceptorService,
+        multi: true
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: RequestErrorHandlerService,
+        multi: true
+    }
+];
+
+
 @NgModule({
     declarations: [
         HeaderComponent,
@@ -35,16 +49,7 @@ import { RequestErrorHandlerService } from './services/request-error-handler.ser
     providers: [
         AuthorizationService,
         AccountService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptorService,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: RequestErrorHandlerService,
-            multi: true
-        }
+        httpInterceptors
     ]
 })
 export class CoreModule { }
