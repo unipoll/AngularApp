@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+// import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class TokenInterceptorService implements HttpInterceptor {
 
-    constructor(private router: Router, private authService: AuthService) { }
+    _token = new BehaviorSubject<string>('');
+
+    constructor(private router: Router) {
+        this._token.next(localStorage.getItem('access_token') || '');
+    }
+
+    get token(): string {
+        return this._token.value;
+    }
+
+    set token(value: string) {
+        this._token.next(value);
+        localStorage.setItem('access_token', value);
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const token = this._token ? this._token.value : localStorage.getItem('access_token');
         const request = req.clone({
             setHeaders: {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                Authorization: `Bearer ${token}`
             }
         });
-        return next.handle(request).pipe(
-            tap({
-                // next: (event) => { }, 
-                error: (error) => {
-                                        if (error instanceof HttpErrorResponse) {
-                        if (error.status === 401) {
-                            this.authService.logout();
-                            // console.log('Unauthorized');
-                            this.router.navigate(['/login']);
-                        }
-                    }
-                }
-            })
-        );
+        return next.handle(request);
     }
 }
