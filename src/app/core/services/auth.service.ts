@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { AccountService } from 'src/app/core/services/account.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
 
     constructor(private apiService: ApiService, 
                 private snackBarService: SnackBarService,
-                private accountService: AccountService) {
+                                private accountService: AccountService) {
         const token = localStorage.getItem('access_token');
         this._isLoggedIn$.next(!!token);
     }
@@ -41,10 +42,12 @@ export class AuthService {
                 }
                 throw error;
             }),
-            tap((response: any) => {
-                this._isLoggedIn$.next(true);
-                localStorage.setItem('access_token', response.body.access_token);
-                this.accountService.loadAccount();
+            tap((response: HttpResponse<any>) => {
+                if (response.status === 200) {
+                    this._isLoggedIn$.next(true);
+                    localStorage.setItem('access_token', response.body.access_token);
+                    this.accountService.loadAccount();
+                }
             })
         );
     }
