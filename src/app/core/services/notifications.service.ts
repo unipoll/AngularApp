@@ -1,30 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
+import { SseService } from './sse.service';
+import { NotificationModel } from 'src/app/models/notification.model';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class NotificationsService {
-    private eventSource: EventSource | null = null;
-
-    /**
-     * constructor
-     * @param zone - we need to use zone while working with server-sent events
-     * because it's an asynchronous operations which are run outside of change detection scope
-     * and we need to notify Angular about changes related to SSE events
-     */
-    constructor(private zone: NgZone) { }
-
-    /**
-     * Method for creation of the EventSource instance
-     * @param url - SSE server api path
-     * @param options - configuration object for SSE
-     */
-    getEventSource(url: string, options: EventSourceInit): EventSource {
-        
-        return new EventSource(url, options);
-    }
+    constructor(private zone: NgZone, private sseService: SseService) { }
 
     /**
      * Method for establishing connection and subscribing to events from SSE
@@ -32,22 +16,26 @@ export class NotificationsService {
      * @param options - configuration object for SSE
      * @param eventNames - all event names except error (listens by default) you want to listen to
      */
-    connectToServerSentEvents(url: string, options: EventSourceInit, eventNames: string[] = []): Observable<Event> {
-        this.eventSource = this.getEventSource(url, options);
-        return new Observable((subscriber: Subscriber<Event>) => {
-            if (this.eventSource) {
-                this.eventSource.onerror = error => {
-                    this.zone.run(() => subscriber.error(error));
-                };
-            }
-
-            eventNames.forEach((event: string) => {
-                if (this.eventSource) {
-                    this.eventSource.addEventListener(event, data => {
-                        this.zone.run(() => subscriber.next(data));
-                    });
-                }
-            });
+    getNotifications(url: string): Observable<NotificationModel> {
+        return new Observable((subscriber: Subscriber<NotificationModel>) => {
+            const eventSource = this.sseService.getEventSourceWithGet(url);
+            
+            // Launch query
+            eventSource.stream();
+            
+            // on answer from message listener 
+            eventSource.onmessage = (event) => {
+                this.zone.run(() => {
+                    if (event.data) {
+                        subscriber.next(JSON.parse(event.data));
+                    }
+                });
+            };
+            eventSource.onerror = (error) => {
+                this.zone.run(() => {
+                    subscriber.error(error);
+                });
+            };
         });
     }
 
@@ -55,11 +43,7 @@ export class NotificationsService {
      * Method for closing the connection
      */
     close(): void {
-        if (!this.eventSource) {
-            return;
-        }
-
-        this.eventSource.close();
-        this.eventSource = null;
+        // this.sseService.closeEventSource(eventSource);
+        this.sseService.closeEventSource();
     }
 }
